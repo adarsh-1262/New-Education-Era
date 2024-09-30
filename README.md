@@ -7,3 +7,10 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 # New-Education-Era
+
+#Steps to run the project:-
+1. clone the repo
+2. In the main root directory:
+ i. npm install
+ ii. npm run dev
+3.Open the localhost link in your browser.
