@@ -10,7 +10,11 @@ Currently, two official plugins are available:
 
 #Steps to run the project:-
 1. clone the repo
+
 2. In the main root directory:
+
  i. npm install
+
  ii. npm run dev
+
 3.Open the localhost link in your browser.
