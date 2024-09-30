@@ -18,7 +18,7 @@ export default function Navbar({ className }) {
         {/* Home link */}
         <HoveredLink
           to="/"
-          className={`text-white  transition-colors duration-200 ${activeLink === "/" ? "text-green-600" : ""}`}
+          className={`text-white hover:text-white transition-colors duration-200 ${activeLink === "/" ? "text-green-600" : ""}`}
           onClick={() => handleLinkClick("/")}
         >
           Home
