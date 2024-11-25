@@ -1,3 +1,4 @@
+import React from "react";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
@@ -6,7 +7,6 @@ import LearningHub from './pages/LearningHub';
 import FinancialSupport from './pages/FinancialSupport';
 import ParentPortal from './pages/ParentPortal';
 import SchoolingManagement from './pages/Schooling';
-import './index.css'
 import OnlineConsultation from './pages/OnlineFreeConsultation';
 import ResourceLibrary from './pages/ResourceLibrary';
 import VirtualTutoring from './pages/VirtualTutoring';
@@ -24,39 +24,46 @@ import EveningClasses from './Schooling/EveningClasses';
 import PartTimePrograms from './Schooling/PartTimePrograms';
 import Enrollment from './Schooling/Enrollment';
 import ContactUs from './Schooling/ContactUs';
+import './index.css';
+import Footer from "./components/Footer";
+import About from "./pages/About";
 
 function App() {
   return (
     <Router>
+      {/* Fixed Navbar */}
       <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/early-warning" element={<EarlyWarning />} />
-        <Route path="/learning-hub" element={<LearningHub />} />
-        <Route path="/financial-support" element={<FinancialSupport />} />
-        <Route path="/parental-engagement" element={<ParentPortal />} />
-        
-        <Route path='/learning-hub/online-consultation' element={<OnlineConsultation />} />
-        <Route path='/learning-hub/resource-library' element={<ResourceLibrary />} />
-        <Route path='/learning-hub/virtual-tutoring' element={<VirtualTutoring />} />
-        <Route path='/learning-hub/community-forums' element={<CommunityForums />} />
-        <Route path='/learning-hub/virtual-tutoring/booking' element={<BookingConfirmation />} />
-        <Route path='/financial-support/scholarships' element={<Scholarships />} />
-        <Route path='/financial-support/grants' element={<Grants />} />
-        <Route path='/financial-support/loans' element={<Loans />} />
-        <Route path='/financial-support/faq' element={<FAQ />} />
-        <Route path="/parental-engagement/resources" element={<ParentingResources />} />
-        <Route path="/parental-engagement/communication" element={<CommunicationTips />} />
-        <Route path="/parental-engagement/events" element={<UpcomingEvents />} />
-        <Route path="/parental-engagement/faq" element={<ParentingFAQs />} />
-
-        <Route path="/flexible-schooling" element={<SchoolingManagement />} />
-        <Route path="/schooling/evening-classes" element={<EveningClasses />} />
-        <Route path="/schooling/part-time-programs" element={<PartTimePrograms />} />
-        <Route path="/schooling/enrollment" element={<Enrollment />} />
-        <Route path="/schooling/contact" element={<ContactUs />} />
-
-      </Routes>
+      
+      {/* Content that starts below the navbar */}
+      <div className="mt-16 bg-gray-500"> {/* Add padding-top for the fixed navbar height */}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/early-warning" element={<EarlyWarning />} />
+          <Route path="/learning-hub" element={<LearningHub />} />
+          <Route path="/financial-support" element={<FinancialSupport />} />
+          <Route path="/parental-engagement" element={<ParentPortal />} />
+          <Route path='/learning-hub/online-consultation' element={<OnlineConsultation />} />
+          <Route path='/learning-hub/resource-library' element={<ResourceLibrary />} />
+          <Route path='/learning-hub/virtual-tutoring' element={<VirtualTutoring />} />
+          <Route path='/learning-hub/community-forums' element={<CommunityForums />} />
+          <Route path='/learning-hub/virtual-tutoring/booking' element={<BookingConfirmation />} />
+          <Route path='/financial-support/scholarships' element={<Scholarships />} />
+          <Route path='/financial-support/grants' element={<Grants />} />
+          <Route path='/financial-support/loans' element={<Loans />} />
+          <Route path='/financial-support/faq' element={<FAQ />} />
+          <Route path="/parental-engagement/resources" element={<ParentingResources />} />
+          <Route path="/parental-engagement/communication" element={<CommunicationTips />} />
+          <Route path="/parental-engagement/events" element={<UpcomingEvents />} />
+          <Route path="/parental-engagement/faq" element={<ParentingFAQs />} />
+          <Route path="/flexible-schooling" element={<SchoolingManagement />} />
+          <Route path="/schooling/evening-classes" element={<EveningClasses />} />
+          <Route path="/schooling/part-time-programs" element={<PartTimePrograms />} />
+          <Route path="/schooling/enrollment" element={<Enrollment />} />
+          <Route path="/schooling/contact" element={<ContactUs />} />
+          <Route path="/about" element={<About />} />
+        </Routes>
+      </div>
+      < Footer />
     </Router>
   );
 }

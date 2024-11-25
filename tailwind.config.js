@@ -5,8 +5,11 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      height: {
+        'screen-navbar': 'calc(100vh - 4rem)', // Custom height calculation
+      },
+    },
   },
   plugins: [],
-}
-
+};

@@ -29,7 +29,8 @@ export default function ParentsCorner() {
 
   return (
     <>
-      <div className="pt-24 flex flex-col items-center justify-center w-full min-h-screen bg-gradient-to-r from-gray-900 via-gray-800 to-black">
+      <div className="pt-24 flex flex-col items-center justify-auto w-full min-h-screen bg-gradient-to-b from-gray-50 via-blue-100 to-white">
+      <h1 className="text-4xl font-bold mb-6 text-center text-blue-900">Parent's Corner</h1>
         <AnimatePresence>
           {active && typeof active === "object" && (
             <motion.div
@@ -92,7 +93,6 @@ export default function ParentsCorner() {
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
                       href={active.ctaLink}
-                      target="_blank"
                       className="px-4 py-2 text-sm rounded-full font-bold bg-green-500 text-white"
                     >
                       {active.ctaText}
@@ -116,13 +116,13 @@ export default function ParentsCorner() {
             </div>
           ) : null}
         </AnimatePresence>
-        <ul className="grid grid-cols-1 md:grid-cols-2 gap-6 py-10">
+        <ul className="grid grid-cols-1 lg:grid-cols-4 gap-6 py-10">
           {cards.map((card) => (
             <motion.div
               layoutId={`card-${card.title}-${id}`}
               key={card.title}
               onClick={() => setActive(card)}
-              className="p-4 flex flex-col items-center justify-center bg-black hover:bg-neutral-50 light:hover:bg-neutral-800 rounded-xl cursor-pointer max-w-xs"
+              className="p-4 flex flex-col items-center justify-center bg-white hover:bg-gray-100 rounded-xl cursor-pointer shadow-lg"
             >
               <motion.div layoutId={`image-${card.title}-${id}`}>
                 <img
