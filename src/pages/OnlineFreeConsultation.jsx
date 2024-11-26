@@ -1,39 +1,78 @@
+"use client";
 import React, { useState, useId, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useOutsideClick } from "../hooks/use-outside-click";
-import Expert1 from "../assets/Expert1.jpg";
-import Expert2 from "../assets/Expert2.jpg";
-import Expert3 from "../assets/Expert3.jpg";
-import Expert4 from "../assets/Expert4.jpg";
 
 const experts = [
   {
     id: 1,
-    name: "Expert 1",
+    name: "Dr. Sophia Moore",
     specialization: "Mental Health",
-    image: Expert1,
+    image: "https://via.placeholder.com/400x300.png?text=Expert+1",
     description: "Get expert advice on mental health issues.",
   },
   {
     id: 2,
-    name: "Expert 2",
+    name: "John Smith",
     specialization: "Career Counseling",
-    image: Expert2,
+    image: "https://via.placeholder.com/400x300.png?text=Expert+2",
     description: "Professional career counseling tailored for you.",
   },
   {
     id: 3,
-    name: "Expert 3",
+    name: "Emily Brown",
     specialization: "Nutrition",
-    image: Expert3,
+    image: "https://via.placeholder.com/400x300.png?text=Expert+3",
     description: "Expert advice on balanced nutrition and healthy habits.",
   },
   {
     id: 4,
-    name: "Expert 4",
+    name: "Michael Lee",
     specialization: "Fitness",
-    image: Expert4,
+    image: "https://via.placeholder.com/400x300.png?text=Expert+4",
     description: "Get fit with personalized fitness advice.",
+  },
+  {
+    id: 5,
+    name: "Dr. Amelia Johnson",
+    specialization: "Parenting",
+    image: "https://via.placeholder.com/400x300.png?text=Expert+5",
+    description: "Parenting advice to help you handle challenges effectively.",
+  },
+  {
+    id: 6,
+    name: "William Garcia",
+    specialization: "Financial Planning",
+    image: "https://via.placeholder.com/400x300.png?text=Expert+6",
+    description: "Plan your finances for a brighter future.",
+  },
+  {
+    id: 7,
+    name: "Sophia Martinez",
+    specialization: "Stress Management",
+    image: "https://via.placeholder.com/400x300.png?text=Expert+7",
+    description: "Manage stress and anxiety with proven strategies.",
+  },
+  {
+    id: 8,
+    name: "James Anderson",
+    specialization: "Educational Guidance",
+    image: "https://via.placeholder.com/400x300.png?text=Expert+8",
+    description: "Get advice on education and career pathways.",
+  },
+  {
+    id: 9,
+    name: "Dr. Olivia Wilson",
+    specialization: "Work-Life Balance",
+    image: "https://via.placeholder.com/400x300.png?text=Expert+9",
+    description: "Improve your work-life balance with expert guidance.",
+  },
+  {
+    id: 10,
+    name: "Daniel White",
+    specialization: "Physical Therapy",
+    image: "https://via.placeholder.com/400x300.png?text=Expert+10",
+    description: "Personalized physical therapy to boost recovery.",
   },
 ];
 
@@ -41,8 +80,6 @@ export default function OnlineConsultation() {
   const [active, setActive] = useState(null);
   const [selectedTime, setSelectedTime] = useState("");
   const [isBooked, setIsBooked] = useState(false);
-  const [messages, setMessages] = useState([]);
-  const [chatMessage, setChatMessage] = useState("");
   const id = useId();
   const ref = useRef(null);
 
@@ -66,17 +103,11 @@ export default function OnlineConsultation() {
     }
   };
 
-  const sendMessage = () => {
-    if (chatMessage.trim()) {
-      setMessages([...messages, { text: chatMessage, user: "You" }]);
-      setChatMessage(""); // Clear input after sending
-    }
-  };
-
   return (
-    <div className="pt-24 flex flex-col items-center justify-center w-full min-h-screen bg-gradient-to-r from-gray-900 via-gray-800 to-black">
-      <h1 className="text-3xl font-bold text-white mt-12 mb-6" 
-      style={{textShadow: '0 0 5px rgba(255, 255, 255, 0.5), 0 0 10px rgba(255, 255, 255, 0.3)'}}>Free Consultation</h1>
+    <div className="pt-6 flex flex-col items-center justify-center w-full min-h-screen bg-gradient-to-b from-gray-50 via-blue-100 to-white">
+      <h1 className="text-3xl font-bold text-blue-900 mt-6 mb-6">
+        Free Consultation
+      </h1>
       <AnimatePresence>
         {active && typeof active === "object" && (
           <motion.div
@@ -93,7 +124,7 @@ export default function OnlineConsultation() {
             <motion.div
               layoutId={`card-${active.name}-${id}`}
               ref={ref}
-              className="w-full max-w-[600px] h-fit md:max-h-[90%] flex flex-col bg-white sm:rounded-3xl overflow-hidden" // Reduced max-width
+              className="w-full max-w-[700px] h-fit md:max-h-[90%] flex flex-col bg-white sm:rounded-3xl overflow-hidden shadow-lg"
             >
               <motion.div layoutId={`image-${active.name}-${id}`}>
                 <img
@@ -103,7 +134,7 @@ export default function OnlineConsultation() {
                 />
               </motion.div>
 
-              <div className="p-4 max-h-[300px] overflow-y-auto"> {/* Added max-height and overflow */}
+              <div className="p-4 max-h-[300px] overflow-y-auto">
                 <motion.h3 layoutId={`name-${active.name}-${id}`} className="text-xl font-semibold mb-2">
                   {active.name}
                 </motion.h3>
@@ -120,7 +151,7 @@ export default function OnlineConsultation() {
                   </label>
                   <select
                     id="time"
-                    className="mt-2 p-2 border rounded-lg"
+                    className="mt-2 p-2 border rounded-lg w-full"
                     value={selectedTime}
                     onChange={(e) => {
                       setSelectedTime(e.target.value);
@@ -155,19 +186,19 @@ export default function OnlineConsultation() {
         ) : null}
       </AnimatePresence>
 
-      <ul className="grid  grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 py-10 px-4">
+      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 py-10 px-4">
         {experts.map((expert) => (
           <motion.div
             layoutId={`card-${expert.name}-${id}`}
             key={expert.id}
             onClick={() => setActive(expert)}
-            className="p-4 flex flex-col items-center justify-center bg-white hover:bg-neutral-50 rounded-xl cursor-pointer max-w-[600px] shadow-lg" // Reduced max-width
+            className="p-6 flex flex-col items-center justify-center bg-white hover:bg-neutral-50 rounded-xl cursor-pointer max-w-lg shadow-lg"
           >
             <motion.div layoutId={`image-${expert.name}-${id}`}>
               <img
                 src={expert.image}
                 alt={expert.name}
-                className="h-40 w-full rounded-lg object-cover"
+                className="h-48 w-full rounded-lg object-cover"
               />
             </motion.div>
             <div className="text-center mt-2">
@@ -181,38 +212,6 @@ export default function OnlineConsultation() {
           </motion.div>
         ))}
       </ul>
-
-      <div className="mt-10 p-6 bg-white shadow-lg rounded-lg w-3/4 mx-auto mb-6 shadow-lg shadow-white"
-      style={{ boxShadow: '0 4px 30px rgba(255, 255, 255, 0.5)' }} // Customize as needed
-      >
-      
-        <h2 className="text-2xl font-bold mb-4">Live Chat with an Expert</h2>
-
-        <div className="h-64 overflow-y-auto mb-4 p-4 border rounded-lg bg-gray-50">
-          {messages.length === 0 ? (
-            <p className="text-gray-500">No messages yet.</p>
-          ) : (
-            messages.map((msg, index) => (
-              <p key={index} className="mb-2">
-                <strong>{msg.user}: </strong>{msg.text}
-              </p>
-            ))
-          )}
-        </div>
-
-        <div className="flex">
-          <input
-            type="text"
-            className="flex-1 p-2 border rounded-lg mr-2"
-            placeholder="Type a message..."
-            value={chatMessage}
-            onChange={(e) => setChatMessage(e.target.value)}
-          />
-          <button className="px-4 py-2 bg-blue-500 text-white rounded-lg" onClick={sendMessage}>
-            Send
-          </button>
-        </div>
-      </div>
     </div>
   );
 }

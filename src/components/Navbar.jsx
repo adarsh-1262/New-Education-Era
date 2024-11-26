@@ -10,7 +10,7 @@ export default function Navbar() {
   const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
 
   // Dummy authentication state
-  const isLoggedIn = false; // Replace with actual authentication logic
+  const isLoggedIn = true; // Replace with actual authentication logic
   const profilePicture = "https://via.placeholder.com/40"; // Replace with user's profile picture URL
 
   const toggleMobileMenu = () => {

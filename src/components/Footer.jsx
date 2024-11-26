@@ -45,7 +45,7 @@ const Footer = () => {
         {/* Bottom Footer Section */}
         <div className="mt-10 border-t border-gray-700 pt-4 text-center text-sm">
           <p>&copy; {new Date().getFullYear()} EduHub. All rights reserved.</p>
-          <p>Designed and developed with ❤️ by the EduHub Team.</p>
+          <p>Designed and developed with ❤️ by the AJA-XDeveloper Team.</p>
         </div>
       </footer>
     );
