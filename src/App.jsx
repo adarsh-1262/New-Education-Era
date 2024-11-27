@@ -24,6 +24,7 @@ import EveningClasses from './Schooling/EveningClasses';
 import PartTimePrograms from './Schooling/PartTimePrograms';
 import Enrollment from './Schooling/Enrollment';
 import ContactUs from './Schooling/ContactUs';
+import StudentDashboard from './components/StudentDashboard';
 
 function App() {
   return (
@@ -56,6 +57,7 @@ function App() {
         <Route path="/schooling/enrollment" element={<Enrollment />} />
         <Route path="/schooling/contact" element={<ContactUs />} />
 
+        <Route path='/s/dashboard' element={<StudentDashboard />} />
       </Routes>
     </Router>
   );
