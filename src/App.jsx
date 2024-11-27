@@ -27,6 +27,7 @@ import ContactUs from './Schooling/ContactUs';
 import './index.css';
 import Footer from "./components/Footer";
 import About from "./pages/About";
+import StudentDashboard from './components/StudentDashboard';
 
 function App() {
   return (
@@ -61,6 +62,7 @@ function App() {
           <Route path="/schooling/enrollment" element={<Enrollment />} />
           <Route path="/schooling/contact" element={<ContactUs />} />
           <Route path="/about" element={<About />} />
+        <Route path='/s/dashboard' element={<StudentDashboard />} />
         </Routes>
       </div>
       < Footer />
