@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
+import axiosInstance from "../axiosConfig";
 
 const LoginSignupModal = ({ isOpen, onClose }) => {
   const [isSignup, setIsSignup] = useState(false); // Toggle between Login and Sign Up
@@ -31,7 +32,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/signup", {
+      const response = await axiosInstance.post("/api/auth/signup", {
         username: formData.username,
         email: formData.email,
         password: formData.password,

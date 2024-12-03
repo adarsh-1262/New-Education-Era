@@ -1,5 +1,5 @@
-import axios from 'axios';
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import axiosInstance from '../axiosConfig';
 
 // Create the AuthContext
 const AuthContext = createContext();
@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
   // Simulated API call for login
   const login = async ({email, password}) => {
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/login", {
+      const response = await axiosInstance.post("/api/auth/login", {
         email: email,
         password: password,
       });
@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
   // Logout function
   const logout = async() => {
     try {
-        const response = await axios.post("http://localhost:5000/api/auth/logout");
+        const response = await axiosInstance.post("/api/auth/logout");
         alert(response.data.message); // Optional: Replace with success message display logic
         setIsLoggedIn(false);
         setUser(response.data);
