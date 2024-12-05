@@ -1,17 +1,24 @@
 "use client";
 import React, { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import Logo from "../assets/Logo.webp";
 import LoginSignupModal from "./SignUpLogin";
 import { cn } from "../lib/utils";
+import { useAuth } from "../context/AuthContext";
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate =useNavigate()
   const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
 
-  // Dummy authentication state
-  const isLoggedIn = true; // Replace with actual authentication logic
-  const profilePicture = "https://via.placeholder.com/40"; // Replace with user's profile picture URL
+  const { isLoggedIn, logout} = useAuth();
+  console.log("login status ",isLoggedIn)
+  const profilePicture = "https://imgs.search.brave.com/3KGtNIHen91nrQD1Pmg9Xcxt5-0SCDTPR8zBKG_KzFY/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzLzk4LzFk/LzZiLzk4MWQ2YjJl/MGNjYjVlOTY4YTA2/MThjOGQ0NzY3MWRh/LmpwZw"; // Replace with user's profile picture URL
+
+  const handleLogout = () => {
+    logout();
+    navigate("/")
+  }
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen((prev) => !prev);
@@ -40,12 +47,12 @@ export default function Navbar() {
                 <CustomNavLink to="/learning-hub" label="Learning Hub" />
                 <CustomNavLink to="/financial-support" label="Financial Support" />
                 <CustomNavLink to="/flexible-schooling" label="Schooling Support" />
+                <button onClick={handleLogout} >Log out</button>
               </>
             ) : (
               <>
                 <CustomNavLink to="/" label="Home" />
                 <CustomNavLink to="/about" label="About" />
-                <CustomNavLink to="/contact" label="Contact" />
                 <CustomNavLink to="/parental-engagement" label="Parent's Corner" />
               </>
             )}
@@ -54,7 +61,7 @@ export default function Navbar() {
           {/* Profile or Sign Up/Login Button */}
           <div className="hidden md:flex items-center space-x-4">
             {isLoggedIn ? (
-              <Link to="/s/dashboard" className="flex items-center">
+              <Link to="/student/dashboard" className="flex items-center">
                 <img
                   src={profilePicture}
                   alt="Profile"
@@ -124,6 +131,7 @@ export default function Navbar() {
                 <CustomNavLink to="/learning-hub" label="Learning Hub" />
                 <CustomNavLink to="/financial-support" label="Financial Support" />
                 <CustomNavLink to="/flexible-schooling" label="Schooling Support" />
+
               </>
             ) : (
               <>
@@ -146,7 +154,7 @@ export default function Navbar() {
                   onClick={() => setIsModalOpen(true)}
                   className="block text-center py-2 text-sm text-blue-600 hover:bg-blue-100 rounded"
                 >
-                  Sign In / Sign Up
+                  Sign Up / Login
                 </button>
               )}
             </div>

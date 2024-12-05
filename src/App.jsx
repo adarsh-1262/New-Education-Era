@@ -27,16 +27,16 @@ import ContactUs from './Schooling/ContactUs';
 import './index.css';
 import Footer from "./components/Footer";
 import About from "./pages/About";
-import StudentDashboard from './components/StudentDashboard';
+import StudentDashboard from "./components/StudentDashboard";
 
 function App() {
   return (
     <Router>
       {/* Fixed Navbar */}
       <Navbar />
-      
       {/* Content that starts below the navbar */}
       <div className="mt-16 bg-gray-500"> {/* Add padding-top for the fixed navbar height */}
+      
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/early-warning" element={<EarlyWarning />} />
@@ -62,7 +62,7 @@ function App() {
           <Route path="/schooling/enrollment" element={<Enrollment />} />
           <Route path="/schooling/contact" element={<ContactUs />} />
           <Route path="/about" element={<About />} />
-        <Route path='/s/dashboard' element={<StudentDashboard />} />
+          <Route path="/student/dashboard" element={<StudentDashboard />} />
         </Routes>
       </div>
       < Footer />
