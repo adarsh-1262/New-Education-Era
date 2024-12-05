@@ -10,9 +10,9 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null); // To store user details
 
   // Simulated API call for login
-  const login = async ({email, password}) => {
+  const login = async ({email, password, role}) => {
     try {
-      const response = await axiosInstance.post("/api/auth/login", {
+      const response = await axiosInstance.post(`/api/${role}/login`, {
         email: email,
         password: password,
       });
@@ -27,10 +27,11 @@ export const AuthProvider = ({ children }) => {
   };
 
 
+
   // Logout function
   const logout = async() => {
     try {
-        const response = await axiosInstance.post("/api/auth/logout");
+        const response = await axiosInstance.post("/api/student/logout");
         alert(response.data.message); // Optional: Replace with success message display logic
         setIsLoggedIn(false);
         setUser(response.data);

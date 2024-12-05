@@ -61,7 +61,7 @@ export default function Navbar() {
           {/* Profile or Sign Up/Login Button */}
           <div className="hidden md:flex items-center space-x-4">
             {isLoggedIn ? (
-              <Link to="/s/dashboard" className="flex items-center">
+              <Link to="/student/dashboard" className="flex items-center">
                 <img
                   src={profilePicture}
                   alt="Profile"
@@ -154,7 +154,7 @@ export default function Navbar() {
                   onClick={() => setIsModalOpen(true)}
                   className="block text-center py-2 text-sm text-blue-600 hover:bg-blue-100 rounded"
                 >
-                  Sign In / Sign Up
+                  Sign Up / Login
                 </button>
               )}
             </div>

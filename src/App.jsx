@@ -62,7 +62,7 @@ function App() {
           <Route path="/schooling/enrollment" element={<Enrollment />} />
           <Route path="/schooling/contact" element={<ContactUs />} />
           <Route path="/about" element={<About />} />
-          <Route path="/s/dashboard" element={<StudentDashboard />} />
+          <Route path="/student/dashboard" element={<StudentDashboard />} />
         </Routes>
       </div>
       < Footer />
