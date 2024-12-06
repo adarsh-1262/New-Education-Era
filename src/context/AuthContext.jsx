@@ -10,21 +10,29 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null); // To store user details
 
   // Simulated API call for login
-  const login = async ({email, password, role}) => {
+  const login = async ({ role, email, password }) => {
     try {
       const response = await axiosInstance.post(`/api/${role}/login`, {
-        email: email,
-        password: password,
+        email,
+        password,
       });
-      alert(response.data.message); // Optional: Replace with success message display logic
-      setIsLoggedIn(true);
-      setUser(response.data);
-      localStorage.setItem('isLoggedIn', 'true');
-      localStorage.setItem('user', JSON.stringify(response.data));
+
+      if (response.data.success === true) {
+        alert(response.data.message); // Optional: Replace with success message display logic
+        setIsLoggedIn(true);
+        setUser(response.data);
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('user', JSON.stringify(response.data));
+      }
+      return response; // Return the response
     } catch (error) {
       console.error("Error while logging in:", error);
+
+      // Throw the error to be caught in handleLogin
+      throw error;
     }
   };
+
 
 
 
