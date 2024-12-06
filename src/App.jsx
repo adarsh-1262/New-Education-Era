@@ -28,6 +28,7 @@ import './index.css';
 import Footer from "./components/Footer";
 import About from "./pages/About";
 import StudentDashboard from "./components/StudentDashboard";
+import ChatBox from "./chatbot/ChatBot";
 
 function App() {
   return (
@@ -64,6 +65,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/student/dashboard" element={<StudentDashboard />} />
         </Routes>
+        <ChatBox />
       </div>
       < Footer />
     </Router>
