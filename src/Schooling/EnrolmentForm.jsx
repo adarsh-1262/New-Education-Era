@@ -12,6 +12,7 @@ const EnrolmentForm = () => {
   });
 
   const [message, setMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   // Fetch available classes
   useEffect(() => {
@@ -29,6 +30,7 @@ const EnrolmentForm = () => {
     try {
       const response = await axios.post("/api/enrolments", formData);
       setMessage(response.data.message);
+      setErrorMessage("")
       setFormData({
         studentName: "",
         parentName: "",
@@ -37,16 +39,18 @@ const EnrolmentForm = () => {
         selectedClass: "",
       })
     } catch (error) {
-      setMessage(
+      setErrorMessage(
         error.response?.data?.message || "Something went wrong during sign-up."
       );
+      setMessage("")
     }
   };
 
   return (
     <div className="container mx-auto p-4 bg-gradient-to-b from-gray-50 via-blue-100 to-white">
       <h2 className="text-xl font-bold mb-4">Enroll for Classes</h2>
-      {message && <p className="text-red-500 mb-5">{message}</p>}
+      {errorMessage && <p className="text-red-500 mb-5">{errorMessage}</p>}
+      {message && <p className="text-green-500 mb-5">{message}</p>}
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="text"
