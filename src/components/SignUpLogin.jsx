@@ -84,21 +84,24 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
     e.preventDefault();
     try {
       const response = await login({
+        role: userType,
         email: loginData.email,
         password: loginData.password,
-        role: userType
-      });
-      setErrorMessage(""); // Clear error message
-      setIsLoggedIn(true);
-      onClose();
-      navigate(`/${userType}/dashboard`)
+      });  
+      if (response?.data?.success === true) {
+        setErrorMessage(""); // Clear error message
+        setIsLoggedIn(true);
+        onClose();
+        navigate(`/${userType}/dashboard`);
+      }
     } catch (error) {
       console.error("Error during login:", error);
       setErrorMessage(
-        error.response?.data?.message || "Something went wrong during login."
+        error.response?.data?.message || "Invalid User Type, Email, or Password."
       );
     }
   };
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
