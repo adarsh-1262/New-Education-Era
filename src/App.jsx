@@ -22,7 +22,7 @@ import UpcomingEvents from './Parent\'s Corner/UpcomingEvents';
 import ParentingFAQs from './Parent\'s Corner/ParentingFaq';
 import EveningClasses from './Schooling/EveningClasses';
 import PartTimePrograms from './Schooling/PartTimePrograms';
-import Enrollment from './Schooling/Enrollment';
+import Enrollment from './Schooling/EnrolmentForm';
 import ContactUs from './Schooling/ContactUs';
 import './index.css';
 import Footer from "./components/Footer";
