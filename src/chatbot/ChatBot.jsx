@@ -55,10 +55,10 @@ const ChatBox = () => {
           💬
         </button>
       ) : (
-        <div className="w-80 h-96 bg-gradient-to-b from-blue-100 via-white to-gray-50 border border-blue-500 rounded-lg shadow-lg flex flex-col">
+        <div className="w-80 h-96 bg-gradient-to-b from-black via-blue-300 to-pink-500 border border-blue-500 rounded-lg shadow-lg flex flex-col">
           {/* Header */}
-          <div className="bg-blue-900 text-white flex items-center justify-between p-3 rounded-t-lg">
-            <h3 className="text-lg font-medium">ChatBox</h3>
+          <div className="bg-gradient-to-b from-pink-200 to-red-50 text-black flex items-center justify-between p-3 rounded-t-lg border border-black">
+            <h3 className="text-bold text-lg font-medium">ChatBot</h3>
             <button
               onClick={handleToggle}
               className="text-red-500 text-xl hover:text-red-600"
@@ -68,7 +68,7 @@ const ChatBox = () => {
           </div>
 
           {/* Messages Section */}
-          <div className="flex-1 p-3 overflow-y-auto space-y-3 bg-gradient-to-b from-gray-100 via-blue-50 to-white">
+          <div className="flex-1 p-3 overflow-y-auto space-y-3 bg-blue-50">
             {messages.map((msg, index) => (
               <div
                 key={index}
@@ -79,8 +79,8 @@ const ChatBox = () => {
                 <div
                   className={`max-w-[70%] p-2 rounded-lg ${
                     msg.sender === "user"
-                      ? "bg-blue-900 text-white"
-                      : "bg-blue-100 text-blue-800"
+                      ? "bg-blue-500 text-white"
+                      : "bg-gray-300 text-black"
                   }`}
                 >
                   {msg.text}
@@ -89,7 +89,7 @@ const ChatBox = () => {
             ))}
             {isLoading && (
               <div className="flex justify-start">
-                <div className="max-w-[70%] p-2 rounded-lg bg-gray-300 text-gray-700">
+                <div className="max-w-[70%] p-2 rounded-sm bg-black text-white">
                   <span>Bot is typing...</span>
                 </div>
               </div>
@@ -97,18 +97,18 @@ const ChatBox = () => {
           </div>
 
           {/* Input Section */}
-          <div className="flex items-center p-3 bg-gradient-to-b from-white via-blue-100 to-gray-50 border-t border-blue-300 rounded-b-lg">
+          <div className="flex items-center p-3 bg-gradient-to-b from-red-50 to-pink-200 rounded-b-lg border border-black">
             <input
               type="text"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               placeholder="Type a message..."
-              className="flex-1 p-2 bg-gray-50 text-gray-800 border border-blue-300 rounded-md outline-none focus:ring-2 focus:ring-blue-600"
+              className="flex-1 p-2 bg-gray-50 text-gray-800 border border-black rounded-md outline-none focus:ring-2 focus:ring-blue-600"
               onKeyDown={(e) => e.key === "Enter" && handleSend()}
             />
             <button
               onClick={handleSend}
-              className="ml-2 bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600"
+              className="ml-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-800 border border-black"
             >
               Send
             </button>

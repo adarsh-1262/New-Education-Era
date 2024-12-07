@@ -96,7 +96,6 @@ const SchoolingManagement = () => {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     href={active.ctaLink}
-                    target="_blank"
                     className="px-4 py-2 text-sm rounded-full font-bold bg-green-500 text-white hover:bg-green-600"
                   >
                     {active.ctaText}
@@ -184,11 +183,11 @@ export const CloseIcon = () => (
 
 const cards = [
   {
-    title: "Evening Classes",
-    description: "Join our evening classes tailored for working professionals and students.",
+    title: "Courses",
+    description: "Join our courses tailored for students.",
     src: "https://media.istockphoto.com/id/1051410466/photo/modern-black-student-texting-on-his-mobile-phone-and-smiling-at-night.jpg?s=612x612&w=0&k=20&c=sJf9B4ON9ovtzAl048xet5vXWQbIgjkatTF3eSzanC8=",
     ctaText: "Learn More",
-    ctaLink: "/schooling/evening-classes",
+    ctaLink: "/schooling/courses",
   },
   {
     title: "Part-Time Programs",
@@ -205,11 +204,11 @@ const cards = [
     ctaLink: "/schooling/enrollment",
   },
   {
-    title: "Contact Us",
-    description: "Have questions? Reach out to us for more information.",
+    title: "Student Schedule",
+    description: "Easily view and manage your upcoming classes, events, and deadlines in one calendar.",
     src: "https://media.istockphoto.com/id/482690487/photo/representation-of-digital-communication-channels.jpg?s=612x612&w=0&k=20&c=IE3gIwnf5MgZ4l4vq3lZLlmDDYJqkaccEu67f4wcOuM=",
     ctaText: "Get in Touch",
-    ctaLink: "/schooling/contact",
+    ctaLink: "/schooling/studentSchedule",
   },
 ];
 

@@ -20,15 +20,14 @@ import ParentingResources from './Parent\'s Corner/ParentingResources';
 import CommunicationTips from './Parent\'s Corner/CommunicationTips';
 import UpcomingEvents from './Parent\'s Corner/UpcomingEvents';
 import ParentingFAQs from './Parent\'s Corner/ParentingFaq';
-import EveningClasses from './Schooling/EveningClasses';
-import PartTimePrograms from './Schooling/PartTimePrograms';
-import Enrollment from './Schooling/EnrolmentForm';
-import ContactUs from './Schooling/ContactUs';
 import './index.css';
 import Footer from "./components/Footer";
 import About from "./pages/About";
 import StudentDashboard from "./components/StudentDashboard";
 import ChatBox from "./chatbot/ChatBot";
+import CalendarView from "./Schooling/CalendarView";
+import ProgressPage from "./Schooling/ProgressPage";
+import CombinedPage from "./Schooling/CombinedCourse";
 
 function App() {
   return (
@@ -58,10 +57,9 @@ function App() {
           <Route path="/parental-engagement/events" element={<UpcomingEvents />} />
           <Route path="/parental-engagement/faq" element={<ParentingFAQs />} />
           <Route path="/flexible-schooling" element={<SchoolingManagement />} />
-          <Route path="/schooling/evening-classes" element={<EveningClasses />} />
-          <Route path="/schooling/part-time-programs" element={<PartTimePrograms />} />
-          <Route path="/schooling/enrollment" element={<Enrollment />} />
-          <Route path="/schooling/contact" element={<ContactUs />} />
+          <Route path="/schooling/courses" element={<CombinedPage />} />
+          <Route path="/schooling/progress" element={<ProgressPage />} />
+          <Route path="/schooling/studentSchedule" element={<CalendarView />} />
           <Route path="/about" element={<About />} />
           <Route path="/student/dashboard" element={<StudentDashboard />} />
         </Routes>
