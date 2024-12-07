@@ -2,86 +2,30 @@
 import React, { useState, useId, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useOutsideClick } from "../hooks/use-outside-click";
+import axiosInstance from "../axiosConfig";
+import DateTimePicker from "../components/DatePicker";
 
-const experts = [
-  {
-    id: 1,
-    name: "Dr. Sophia Moore",
-    specialization: "Mental Health",
-    image: "https://via.placeholder.com/400x300.png?text=Expert+1",
-    description: "Get expert advice on mental health issues.",
-  },
-  {
-    id: 2,
-    name: "John Smith",
-    specialization: "Career Counseling",
-    image: "https://via.placeholder.com/400x300.png?text=Expert+2",
-    description: "Professional career counseling tailored for you.",
-  },
-  {
-    id: 3,
-    name: "Emily Brown",
-    specialization: "Nutrition",
-    image: "https://via.placeholder.com/400x300.png?text=Expert+3",
-    description: "Expert advice on balanced nutrition and healthy habits.",
-  },
-  {
-    id: 4,
-    name: "Michael Lee",
-    specialization: "Fitness",
-    image: "https://via.placeholder.com/400x300.png?text=Expert+4",
-    description: "Get fit with personalized fitness advice.",
-  },
-  {
-    id: 5,
-    name: "Dr. Amelia Johnson",
-    specialization: "Parenting",
-    image: "https://via.placeholder.com/400x300.png?text=Expert+5",
-    description: "Parenting advice to help you handle challenges effectively.",
-  },
-  {
-    id: 6,
-    name: "William Garcia",
-    specialization: "Financial Planning",
-    image: "https://via.placeholder.com/400x300.png?text=Expert+6",
-    description: "Plan your finances for a brighter future.",
-  },
-  {
-    id: 7,
-    name: "Sophia Martinez",
-    specialization: "Stress Management",
-    image: "https://via.placeholder.com/400x300.png?text=Expert+7",
-    description: "Manage stress and anxiety with proven strategies.",
-  },
-  {
-    id: 8,
-    name: "James Anderson",
-    specialization: "Educational Guidance",
-    image: "https://via.placeholder.com/400x300.png?text=Expert+8",
-    description: "Get advice on education and career pathways.",
-  },
-  {
-    id: 9,
-    name: "Dr. Olivia Wilson",
-    specialization: "Work-Life Balance",
-    image: "https://via.placeholder.com/400x300.png?text=Expert+9",
-    description: "Improve your work-life balance with expert guidance.",
-  },
-  {
-    id: 10,
-    name: "Daniel White",
-    specialization: "Physical Therapy",
-    image: "https://via.placeholder.com/400x300.png?text=Expert+10",
-    description: "Personalized physical therapy to boost recovery.",
-  },
-];
 
 export default function OnlineConsultation() {
   const [active, setActive] = useState(null);
-  const [selectedTime, setSelectedTime] = useState("");
-  const [isBooked, setIsBooked] = useState(false);
   const id = useId();
   const ref = useRef(null);
+  const [allExperts, setAllExperts] = useState([])
+
+  const getAllExperts = async() => {
+    try {
+      console.log("debug get all experts")
+      const response = await axiosInstance.get('/api/expert/get_experts');
+      setAllExperts(response.data.data)
+    } catch (error) {
+      console.log("error while fetching all experts ",error)
+    }
+  }
+
+  console.log("experts ",allExperts);
+  useEffect(() => {
+    getAllExperts()
+  },[])
 
   useOutsideClick(ref, () => setActive(null));
 
@@ -95,13 +39,51 @@ export default function OnlineConsultation() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
 
+  const [date, setDate] = useState(null);
+  const [time, setTime] = useState(null);
+  const [message, setMessage] = useState("");
+
+  const handleDateChange = (selectedDate) => {
+    setDate(selectedDate.toLocaleDateString());
+  };
+
+  const handleTimeChange = (selectedTime) => {
+    setTime(selectedTime.toLocaleTimeString());
+  };
+
+  const BookingExpert = async() =>{
+    try {
+      const response = await axiosInstance.post('/api/expert/bookExpert', {
+        expertName: active.username,
+        Expertemail: active.email,
+        field: active.consultationField,
+        time: time,
+        date: date,
+      })
+      console.log("expert booking response ",response.data)
+      setMessage(response.data.message)
+    } catch (error) {
+      console.log("error while booking expert ",error)
+      setMessage(error.response?.data?.message || "Something went wrong during booking.")
+    }
+  }
+
   const handleBooking = () => {
-    if (selectedTime) {
-      setIsBooked(true); // Update booking status here
+    if (date && time) {
+      BookingExpert()
     } else {
-      alert("Please select a time slot.");
+      if(!date)
+        alert("Please select a date.");
+      else if(!time)
+        alert("Please select a time slot.");
     }
   };
+
+  useEffect(() => {
+    setDate(null)
+    setTime(null)
+    setMessage("")
+  }, [active])
 
   return (
     <div className="pt-6 flex flex-col items-center justify-center w-full min-h-screen bg-gradient-to-b from-gray-50 via-blue-100 to-white">
@@ -122,48 +104,46 @@ export default function OnlineConsultation() {
         {active && typeof active === "object" ? (
           <div className="fixed inset-0 grid w-full place-items-center z-[100] md:mt-10">
             <motion.div
-              layoutId={`card-${active.name}-${id}`}
+              layoutId={`card-${active.username}-${id}`}
               ref={ref}
               className="w-full max-w-[700px] h-fit md:max-h-[90%] flex flex-col bg-white sm:rounded-3xl overflow-hidden shadow-lg"
             >
-              <motion.div layoutId={`image-${active.name}-${id}`}>
+              <motion.div layoutId={`image-${active.username}-${id}`}>
                 <img
-                  src={active.image}
-                  alt={active.name}
+                  src={active.profilePicture}
+                  alt={active.username}
                   className="w-full h-60 sm:rounded-tr-lg sm:rounded-tl-lg object-cover"
                 />
               </motion.div>
-
+                  <div className="mt-6 bg-green-100 p-4 rounded-lg">
+                    <p className="text-green-700">
+                      {message}
+                    </p>
+                  </div>
               <div className="p-4 max-h-[300px] overflow-y-auto">
-                <motion.h3 layoutId={`name-${active.name}-${id}`} className="text-xl font-semibold mb-2">
-                  {active.name}
+                <motion.h3 layoutId={`name-${active.username}-${id}`} className="text-xl font-semibold mb-2">
+                  {active.username}
                 </motion.h3>
-                <motion.p layoutId={`specialization-${active.specialization}-${id}`} className="text-gray-600 mb-2">
-                  Specialization: {active.specialization}
+                <motion.p layoutId={`specialization-${active.consultationField}-${id}`} className="text-gray-600 mb-2">
+                  Specialization: {active.consultationField}
                 </motion.p>
                 <motion.p layoutId={`description-${active.description}-${id}`} className="text-gray-600">
                   {active.description}
                 </motion.p>
 
-                <div className="mt-4">
-                  <label htmlFor="time" className="block text-gray-700">
-                    Select a Time Slot:
-                  </label>
-                  <select
-                    id="time"
-                    className="mt-2 p-2 border rounded-lg w-full"
-                    value={selectedTime}
-                    onChange={(e) => {
-                      setSelectedTime(e.target.value);
-                      setIsBooked(false); // Reset booking status when changing time
-                    }}
-                  >
-                    <option value="">Select Time</option>
-                    <option value="10:00 AM">10:00 AM</option>
-                    <option value="11:00 AM">11:00 AM</option>
-                    <option value="2:00 PM">2:00 PM</option>
-                    <option value="4:00 PM">4:00 PM</option>
-                  </select>
+                <div className="p-6">
+                  <h1 className="text-2xl font-bold text-center mb-6">Date and Time Selection</h1>
+                  <DateTimePicker onDateChange={handleDateChange} onTimeChange={handleTimeChange} />
+                  {date && time && (
+                    <div className="mt-6 text-center p-4 border border-gray-200 rounded-md shadow">
+                      <p className="text-lg">
+                        <strong>Selected Date:</strong> {date}
+                      </p>
+                      <p className="text-lg">
+                        <strong>Selected Time:</strong> {time}
+                      </p>
+                    </div>
+                  )}
                 </div>
 
                 <button
@@ -172,14 +152,6 @@ export default function OnlineConsultation() {
                 >
                   Confirm Booking
                 </button>
-
-                {isBooked && (
-                  <div className="mt-6 bg-green-100 p-4 rounded-lg">
-                    <p className="text-green-700">
-                      Booking Confirmed for {active.name} at {selectedTime}.
-                    </p>
-                  </div>
-                )}
               </div>
             </motion.div>
           </div>
@@ -187,26 +159,26 @@ export default function OnlineConsultation() {
       </AnimatePresence>
 
       <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 py-10 px-4">
-        {experts.map((expert) => (
+        {allExperts.map((expert) => (
           <motion.div
-            layoutId={`card-${expert.name}-${id}`}
-            key={expert.id}
+            layoutId={`card-${expert.username}-${id}`}
+            key={expert._id}
             onClick={() => setActive(expert)}
             className="p-6 flex flex-col items-center justify-center bg-white hover:bg-neutral-50 rounded-xl cursor-pointer max-w-lg shadow-lg"
           >
-            <motion.div layoutId={`image-${expert.name}-${id}`}>
+            <motion.div layoutId={`image-${expert.username}-${id}`}>
               <img
-                src={expert.image}
-                alt={expert.name}
+                src={expert.profilePicture}
+                alt={expert.username}
                 className="h-48 w-full rounded-lg object-cover"
               />
             </motion.div>
             <div className="text-center mt-2">
-              <motion.h3 layoutId={`name-${expert.name}-${id}`} className="font-medium text-neutral-800 text-lg">
-                {expert.name}
+              <motion.h3 layoutId={`name-${expert.username}-${id}`} className="font-medium text-neutral-800 text-lg">
+                {expert.username}
               </motion.h3>
-              <motion.p layoutId={`specialization-${expert.specialization}-${id}`} className="text-neutral-600 text-sm">
-                {expert.specialization}
+              <motion.p layoutId={`specialization-${expert.consultationField}-${id}`} className="text-neutral-600 text-sm">
+                {expert.consultationField}
               </motion.p>
             </div>
           </motion.div>
