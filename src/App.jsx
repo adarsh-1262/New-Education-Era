@@ -28,6 +28,7 @@ import ChatBox from "./chatbot/ChatBot";
 import CalendarView from "./Schooling/CalendarView";
 import ProgressPage from "./Schooling/ProgressPage";
 import CombinedPage from "./Schooling/CombinedCourse";
+import Admin from "./adminDashboard/Admin";
 
 function App() {
   return (
@@ -62,6 +63,7 @@ function App() {
           <Route path="/schooling/studentSchedule" element={<CalendarView />} />
           <Route path="/about" element={<About />} />
           <Route path="/student/dashboard" element={<StudentDashboard />} />
+          <Route path="/admin" element={<Admin />} />
         </Routes>
         <ChatBox />
       </div>
