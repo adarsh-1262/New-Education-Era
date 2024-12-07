@@ -39,7 +39,7 @@ const StudentDashboard = () => {
   return (
     <div className="flex flex-col items-center bg-gradient-to-r from-blue-900 via-blue-700 to-blue-500 min-h-screen p-8">
       <h1 className="text-4xl font-bold text-white mb-6 animate-pulse">
-        Welcome, Rohini Das!!
+        Welcome, Rohini Dass!!
       </h1>
       <div className="flex flex-col lg:flex-row gap-10 w-full max-w-7xl">
         {/* Left Section */}
