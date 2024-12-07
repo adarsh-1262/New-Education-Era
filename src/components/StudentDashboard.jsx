@@ -59,7 +59,7 @@ const StudentDashboard = () => {
                 <hr className='m-4 bg-gray-500 h-[1.5px]' />
                 <div className='m-4'>
                     <p className='text-center text-gray-900 text-xl font-medium'>
-                        I am studying in ABC Public School. Currently I'm in class 11-A.
+                        I am studying in rec sonbgadra aur kuchh janna hai mai nahi bataunga ab jo krna hai kr lo
                     </p>
                 </div>
                 <hr className='m-4 bg-gray-500 h-[1.5px]' />
