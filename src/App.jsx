@@ -29,6 +29,7 @@ import Footer from "./components/Footer";
 import About from "./pages/About";
 import StudentDashboard from "./components/StudentDashboard";
 import ChatBox from "./chatbot/ChatBot";
+import Admin from "./adminDashboard/Admin";
 
 function App() {
   return (
@@ -64,6 +65,7 @@ function App() {
           <Route path="/schooling/contact" element={<ContactUs />} />
           <Route path="/about" element={<About />} />
           <Route path="/student/dashboard" element={<StudentDashboard />} />
+          <Route path="/admin" element={<Admin />} />
         </Routes>
         <ChatBox />
       </div>
