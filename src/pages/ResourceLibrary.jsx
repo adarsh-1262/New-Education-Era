@@ -1,24 +1,25 @@
 import React, { useState } from "react";
 
-// Extended dummy data for resources
+// Extended dummy data for resources with topics and detailed content
 const resourcesData = [
-  { id: 1, title: "Resource 1", type: "📄", link: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" },
-  { id: 2, title: "Resource 2", type: "🎬", link: "https://www.w3schools.com/html/mov_bbb.mp4" },
-  { id: 3, title: "Resource 3", type: "📝", link: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" },
-  { id: 4, title: "Resource 4", type: "📄", link: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" },
-  { id: 5, title: "Resource 5", type: "🎬", link: "https://www.w3schools.com/html/mov_bbb.mp4" },
-  { id: 6, title: "Resource 6", type: "📝", link: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" },
-  { id: 7, title: "Resource 7", type: "📄", link: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" },
-  { id: 8, title: "Resource 8", type: "🎬", link: "https://www.w3schools.com/html/mov_bbb.mp4" },
-  { id: 9, title: "Resource 9", type: "📝", link: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" },
-  { id: 10, title: "Resource 10", type: "📄", link: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" },
-  { id: 11, title: "Resource 11", type: "🎬", link: "https://www.w3schools.com/html/mov_bbb.mp4" },
-  { id: 12, title: "Resource 12", type: "📝", link: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" },
+  { id: 1, title: "Calculus - Differentiation", type: "📄", link: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf", subject: "Math", content: "Introduction to differentiation, covering limits, derivatives, and real-world applications." },
+  { id: 2, title: "Physics - Newton's Laws", type: "🎬", link: "https://www.w3schools.com/html/mov_bbb.mp4", subject: "Science", content: "An overview of Newton's three laws of motion with real-life examples and demonstrations." },
+  { id: 3, title: "Linear Algebra - Matrices", type: "📝", link: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf", subject: "Math", content: "A detailed guide to matrices, matrix operations, and their applications in computer science." },
+  { id: 4, title: "History - World War I", type: "📄", link: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf", subject: "History", content: "An analysis of the causes, major events, and impact of World War I." },
+  { id: 5, title: "Biology - Cell Structure", type: "🎬", link: "https://www.w3schools.com/html/mov_bbb.mp4", subject: "Science", content: "A video explaining the structure of animal and plant cells, including organelles and their functions." },
+  { id: 6, title: "Geometry - Shapes and Properties", type: "📝", link: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf", subject: "Math", content: "A comprehensive article on various geometric shapes, their properties, and real-world uses." },
+  { id: 7, title: "History - The Cold War", type: "📄", link: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf", subject: "History", content: "A deep dive into the Cold War, its origins, key events, and aftermath." },
+  { id: 8, title: "Chemistry - Atomic Theory", type: "🎬", link: "https://www.w3schools.com/html/mov_bbb.mp4", subject: "Science", content: "A video explaining the history and concepts of atomic theory, from Dalton to modern quantum mechanics." },
+  { id: 9, title: "Algebra - Solving Equations", type: "📝", link: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf", subject: "Math", content: "A step-by-step guide on solving linear equations and inequalities." },
+  { id: 10, title: "History - Ancient Civilizations", type: "📄", link: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf", subject: "History", content: "A historical exploration of ancient civilizations such as Egypt, Mesopotamia, and the Indus Valley." },
+  { id: 11, title: "Chemistry - Periodic Table", type: "🎬", link: "https://www.w3schools.com/html/mov_bbb.mp4", subject: "Science", content: "A video introduction to the periodic table, its organization, and its significance in chemistry." },
+  { id: 12, title: "Algebra - Quadratic Equations", type: "📝", link: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf", subject: "Math", content: "An article detailing the methods of solving quadratic equations, including factoring and the quadratic formula." },
 ];
 
 export default function ResourceLibrary() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState("All");
+  const [filterSubject, setFilterSubject] = useState("All");
   const [favorites, setFavorites] = useState([]);
 
   const handleFavoriteToggle = (resource) => {
@@ -31,11 +32,12 @@ export default function ResourceLibrary() {
 
   const filteredResources = resourcesData.filter((resource) => {
     const matchesSearch = resource.title.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesFilter =
+    const matchesType =
       filterType === "All" ||
       resource.type === filterType ||
       (filterType === "Favorites" && favorites.includes(resource.id));
-    return matchesSearch && matchesFilter;
+    const matchesSubject = filterSubject === "All" || resource.subject === filterSubject;
+    return matchesSearch && matchesType && matchesSubject;
   });
 
   return (
@@ -49,7 +51,7 @@ export default function ResourceLibrary() {
         Resource Library
       </h1>
 
-      {/* Search and Filter */}
+      {/* Search, Filter, and Subject Filter */}
       <div className="flex flex-col md:flex-row justify-center items-center gap-4 mb-8">
         <input
           type="text"
@@ -58,6 +60,18 @@ export default function ResourceLibrary() {
           className="border border-blue-400 p-2 w-full max-w-md bg-gray-100 text-blue-900 rounded-md shadow-sm"
           placeholder="Search resources..."
         />
+       
+        {/* Subject Filter Dropdown */}
+        <select
+          value={filterSubject}
+          onChange={(e) => setFilterSubject(e.target.value)}
+          className="border border-blue-400 p-2 w-full max-w-md bg-gray-100 text-blue-900 rounded-md shadow-sm"
+        >
+          <option value="All">All Subjects</option>
+          <option value="Math">Math</option>
+          <option value="Science">Science</option>
+          <option value="History">History</option>
+        </select>
         <select
           value={filterType}
           onChange={(e) => setFilterType(e.target.value)}
@@ -83,6 +97,8 @@ export default function ResourceLibrary() {
               <div>
                 <h2 className="text-lg font-medium mb-2 text-blue-900">{resource.title}</h2>
                 <p className="mb-4 text-gray-600">Type: {resource.type}</p>
+                <p className="mb-4 text-gray-600">Subject: {resource.subject}</p>
+                <p className="text-gray-700 mb-4">{resource.content}</p>
               </div>
               <div className="flex items-center justify-between">
                 <a
@@ -95,9 +111,7 @@ export default function ResourceLibrary() {
                 </a>
                 <button
                   onClick={() => handleFavoriteToggle(resource)}
-                  className={`py-2 text-sm ${
-                    favorites.includes(resource.id) ? "text-red-500" : "text-gray-500"
-                  } hover:text-red-600`}
+                  className={`py-2 text-sm ${favorites.includes(resource.id) ? "text-red-500" : "text-gray-500"} hover:text-red-600`}
                 >
                   {favorites.includes(resource.id) ? "Remove Favorite" : "Add Favorite"}
                 </button>
