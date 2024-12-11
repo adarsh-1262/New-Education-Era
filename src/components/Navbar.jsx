@@ -47,7 +47,9 @@ export default function Navbar() {
                 <CustomNavLink to="/learning-hub" label="Learning Hub" />
                 <CustomNavLink to="/financial-support" label="Financial Support" />
                 <CustomNavLink to="/flexible-schooling" label="Schooling Support" />
+                <button className="text-yellow-500 font-semibold" onClick={() => navigate('/reward')} >Redeem Rewards</button>
                 <button onClick={handleLogout} >Log out</button>
+                
               </>
             ) : (
               <>
@@ -61,19 +63,19 @@ export default function Navbar() {
           {/* Profile or Sign Up/Login Button */}
           <div className="hidden md:flex items-center space-x-4">
             {isLoggedIn ? (
-              <Link to={`/${userRole}/dashboard`} className="flex items-center">
-                <img
+              <div className="flex items-center">
+                <img onClick={() => navigate(`/${userRole}/dashboard`)}
                   src={profilePicture}
                   alt="Profile"
                   className="w-10 h-10 border border-black rounded-full object-cover"
                 />
-              </Link>
+              </div>
             ) : (
               <button
-                onClick={() => setIsModalOpen(true)}
+                onClick={() => navigate('/signup')}
                 className="text-sm font-medium text-blue-600 border border-blue-600 px-4 py-1 rounded hover:bg-blue-600 hover:text-white transition"
               >
-                Sign In / Sign Up
+                Sign In
               </button>
             )}
           </div>
@@ -151,10 +153,10 @@ export default function Navbar() {
                 </Link>
               ) : (
                 <button
-                  onClick={() => setIsModalOpen(true)}
+                  onClick={() => navigate('/signup')}
                   className="block text-center py-2 text-sm text-blue-600 hover:bg-blue-100 rounded"
                 >
-                  Sign Up / Login
+                  Login
                 </button>
               )}
             </div>
