@@ -48,9 +48,9 @@ const SchoolingManagement = () => {
               >
                 {card.description}
               </motion.p>
-              <motion.button
+              <motion.button disabled={card.ctaText === 'Coming soon....'}
                 layout
-                className="self-start px-4 py-2 text-sm font-bold rounded-full bg-blue-500 text-white hover:bg-blue-600"
+                className={`self-start px-4 py-2 text-sm font-bold ${card.ctaText === 'Coming soon....' ? 'hover:cursor-not-allowed' : ''} rounded-full bg-blue-500 text-white hover:bg-blue-600`}
                 onClick={() => (window.location.href = card.ctaLink)}
               >
                 {card.ctaText}
@@ -65,10 +65,18 @@ const SchoolingManagement = () => {
 
 const cards = [
   {
+    title: "Student Schedule",
+    description:
+      "Manage all your upcoming classes, events, and deadlines in one place. View your full schedule, set reminders, and never miss an important date or event again.",
+    src: "https://cdns.apptivo.com/site/v13.0.6/images/dayview.gif",
+    ctaText: "Get in Touch",
+    ctaLink: "/schooling/studentSchedule",
+  },
+  {
     title: "Courses",
     description:
       "Browse through our wide range of online courses designed to help you learn at your own pace. Whether you're looking to develop new skills or deepen your knowledge, you'll find something for you.",
-    src: "https://media.istockphoto.com/id/1051410466/photo/modern-black-student-texting-on-his-mobile-phone-and-smiling-at-night.jpg?s=612x612&w=0&k=20&c=sJf9B4ON9ovtzAl048xet5vXWQbIgjkatTF3eSzanC8=",
+    src: "https://blog.coursify.me/wp-content/uploads/2018/08/plan-your-online-course.jpg",
     ctaText: "Learn More",
     ctaLink: "/schooling/courses",
   },
@@ -76,18 +84,12 @@ const cards = [
     title: "Part-Time Programs",
     description:
       "Explore flexible part-time programs that fit around your schedule. These programs are perfect for those looking to study while working or managing other responsibilities.",
-    src: "https://media.istockphoto.com/id/1163541808/photo/portrait-of-nice-attractive-confident-content-cheerful-bearded-guy-wearing-checked-shirt.jpg?s=612x612&w=0&k=20&c=JGjOItCa7PeEHnOVbt8uuiINQRx3A4gIaBp9W9C1aZI=",
-    ctaText: "Explore",
+    src: "https://ischoolconnect.com/blog/wp-content/uploads/2019/01/SkillsDeveloping-your-money-management-and-other-useful-skills.jpg",
+    ctaText: "Coming soon....",
     ctaLink: "/schooling/part-time-programs",
+    
   },
-  {
-    title: "Student Schedule",
-    description:
-      "Manage all your upcoming classes, events, and deadlines in one place. View your full schedule, set reminders, and never miss an important date or event again.",
-    src: "https://media.istockphoto.com/id/482690487/photo/representation-of-digital-communication-channels.jpg?s=612x612&w=0&k=20&c=IE3gIwnf5MgZ4l4vq3lZLlmDDYJqkaccEu67f4wcOuM=",
-    ctaText: "Get in Touch",
-    ctaLink: "/schooling/studentSchedule",
-  },
+  
 ];
 
 export default SchoolingManagement;

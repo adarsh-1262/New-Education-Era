@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Swal from 'sweetalert2';
 
 // Extended dummy data for resources with topics and detailed content
 const resourcesData = [
@@ -24,9 +25,27 @@ export default function ResourceLibrary() {
 
   const handleFavoriteToggle = (resource) => {
     if (favorites.includes(resource.id)) {
-      setFavorites(favorites.filter((id) => id !== resource.id)); // Remove from favorites
+      // Remove from favorites
+      setFavorites(favorites.filter((id) => id !== resource.id)); 
+      Swal.fire({
+        title: 'Removed from Favorites',
+        text: `${resource.title} has been removed from your favorites.`,
+        icon: 'info',
+        confirmButtonText: 'OK',
+      });
     } else {
-      setFavorites([...favorites, resource.id]); // Add to favorites
+      // Add to favorites
+      setFavorites([...favorites, resource.id]); 
+      Swal.fire({
+        title: 'Added to Favorites',
+        text: `${resource.title} has been added to your favorites.`,
+        icon: 'success',
+        imageUrl: 'https://img.icons8.com/ios/452/like.png',  // Add custom heart icon (from Icons8)
+        imageWidth: 50,
+        imageHeight: 50,
+        imageAlt: 'Heart Icon',
+        confirmButtonText: 'OK',
+      });
     }
   };
 
@@ -45,7 +64,7 @@ export default function ResourceLibrary() {
       <h1
         className="text-3xl font-semibold text-center text-blue-900 mt-6 mb-6"
         style={{
-          textShadow: "0 0 5px rgba(0, 0, 0, 0.2), 0 0 10px rgba(0, 0, 0, 0.1)",
+          textShadow: "0 0 5px rgba(0, 0, 0, 0.2), 0 0 10px rgba(0, 0, 0, 0.1)"
         }}
       >
         Resource Library
@@ -60,7 +79,7 @@ export default function ResourceLibrary() {
           className="border border-blue-400 p-2 w-full max-w-md bg-gray-100 text-blue-900 rounded-md shadow-sm"
           placeholder="Search resources..."
         />
-       
+
         {/* Subject Filter Dropdown */}
         <select
           value={filterSubject}
