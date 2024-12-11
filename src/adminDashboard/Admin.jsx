@@ -11,7 +11,7 @@ import SideNav from './navigation/SideNav';
 
 function Admin() { // Changed App to Admin
   const [currentPage, setCurrentPage] = useState('dashboard');
-
+  
   const renderPage = () => {
     switch (currentPage) {
       case 'dashboard': return <Dashboard />;

@@ -32,6 +32,7 @@ import Admin from "./adminDashboard/Admin";
 import ExpertDashboard from "./components/ExpertDashboard";
 import TutorDashboard from "./components/TutorDashboard";
 import ParentDashboard from "./components/ParentDashboard";
+import QRScanner from "./components/QRScanner";
 
 function App() {
   return (
@@ -70,6 +71,7 @@ function App() {
           <Route path="/expert/dashboard" element={<ExpertDashboard />} />
           <Route path="/tutor/dashboard" element={<TutorDashboard />} />
           <Route path="/parent/dashboard" element={<ParentDashboard />} />
+          <Route path="/attendance" element={<QRScanner />} />
         </Routes>
         <ChatBox />
       </div>

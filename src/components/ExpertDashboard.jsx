@@ -3,10 +3,6 @@ import user from "../assets/Expert1.jpg";
 import axiosInstance from "../axiosConfig";
 
 const ExpertDashboard = () => {
-  const handleBackToLearning = () => {
-    window.location.href = "/learning-hub";
-  };
-
     const [bookings, setBookings] = useState([]);
   
     useEffect(() => {
@@ -41,12 +37,6 @@ const ExpertDashboard = () => {
             />
             <h2 className="text-2xl font-semibold">Rohini Das</h2>
             <p className="text-sm">Expert in Computer Science</p>
-            <button
-              onClick={handleBackToLearning}
-              className="mt-4 px-4 py-2 bg-white text-green-900 font-semibold rounded-lg shadow-lg hover:bg-gray-200 transition"
-            >
-              Back to Learning
-            </button>
           </div>
           <hr className="my-6 border-gray-300" />
           {/* Info Section */}
