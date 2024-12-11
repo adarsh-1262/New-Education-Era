@@ -8,7 +8,8 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState();
   const [user, setUser] = useState(null); // To store user details
-
+  const [userRole, setUserRole] = useState("");
+  
   // Simulated API call for login
   const login = async ({ role, email, password }) => {
     try {
@@ -20,6 +21,7 @@ export const AuthProvider = ({ children }) => {
       if (response.data.success === true) {
         alert(response.data.message); // Optional: Replace with success message display logic
         setIsLoggedIn(true);
+        setUserRole(role);
         setUser(response.data);
         localStorage.setItem('isLoggedIn', 'true');
         localStorage.setItem('user', JSON.stringify(response.data));
@@ -66,7 +68,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, login, logout, user }}>
+    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, login, logout, userRole }}>
       {children}
     </AuthContext.Provider>
   );
