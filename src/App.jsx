@@ -29,12 +29,19 @@ import CalendarView from "./Schooling/CalendarView";
 import ProgressPage from "./Schooling/ProgressPage";
 import CombinedPage from "./Schooling/CombinedCourse";
 import Admin from "./adminDashboard/Admin";
+import RewardSystem from "./components/RewardSystem";
+import Store from "./components/Store";
 import ExpertDashboard from "./components/ExpertDashboard";
 import TutorDashboard from "./components/TutorDashboard";
 import ParentDashboard from "./components/ParentDashboard";
 import QRScanner from "./components/QRScanner";
+import LoginSignupModal from "./components/SignUpLogin";
+import { useAuth } from "./context/AuthContext";
+import ProtectedRoute from "./components/ProtectRoute";
 
 function App() {
+
+  const {isLoggedIn} = useAuth()
   return (
     <Router>
       {/* Fixed Navbar */}
@@ -66,12 +73,23 @@ function App() {
           <Route path="/schooling/progress" element={<ProgressPage />} />
           <Route path="/schooling/studentSchedule" element={<CalendarView />} />
           <Route path="/about" element={<About />} />
-          <Route path="/student/dashboard" element={<StudentDashboard />} />
+          {/* <Route path="/student/dashboard" element={<StudentDashboard />} /> */}
+          <Route
+            path="/student/dashboard"
+            element={
+              <ProtectedRoute isAuthenticated={isLoggedIn}>
+                <StudentDashboard />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/reward" element={<RewardSystem />} />
+          <Route path="/shop" element={<Store />} />
           <Route path="/expert/dashboard" element={<ExpertDashboard />} />
           <Route path="/tutor/dashboard" element={<TutorDashboard />} />
           <Route path="/parent/dashboard" element={<ParentDashboard />} />
           <Route path="/attendance" element={<QRScanner />} />
+          <Route path="/signup" element={<LoginSignupModal />} />
         </Routes>
         <ChatBox />
       </div>

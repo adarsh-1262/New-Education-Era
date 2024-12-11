@@ -1,34 +1,54 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import tutor1 from "../assets/tutor1.jpg";
 import tutor2 from "../assets/tutor2.jpg";
 import tutor3 from "../assets/tutor3.jpg";
 import tutor4 from "../assets/tutor4.jpg";
+import axiosInstance from "../axiosConfig";
+import { useAuth } from "../context/AuthContext";
 
-// Extended dummy data for tutors
-const tutorsData = [
-  { id: 1, name: "Tutor 1", subject: "Mathematics", image: tutor1, rating: 4.5 },
-  { id: 2, name: "Tutor 2", subject: "Physics", image: tutor2, rating: 4.7 },
-  { id: 3, name: "Tutor 3", subject: "Chemistry", image: tutor3, rating: 4.6 },
-  { id: 4, name: "Tutor 4", subject: "Biology", image: tutor4, rating: 4.8 },
-  { id: 5, name: "Tutor 5", subject: "English Literature", image: "https://via.placeholder.com/400x300.png?text=Tutor+5", rating: 4.9 },
-  { id: 6, name: "Tutor 6", subject: "History", image: "https://via.placeholder.com/400x300.png?text=Tutor+6", rating: 4.4 },
-  { id: 7, name: "Tutor 7", subject: "Geography", image: "https://via.placeholder.com/400x300.png?text=Tutor+7", rating: 4.6 },
-  { id: 8, name: "Tutor 8", subject: "Economics", image: "https://via.placeholder.com/400x300.png?text=Tutor+8", rating: 4.5 },
-  { id: 9, name: "Tutor 9", subject: "Computer Science", image: "https://via.placeholder.com/400x300.png?text=Tutor+9", rating: 4.9 },
-  { id: 10, name: "Tutor 10", subject: "Psychology", image: "https://via.placeholder.com/400x300.png?text=Tutor+10", rating: 4.7 },
-  { id: 11, name: "Tutor 11", subject: "Philosophy", image: "https://via.placeholder.com/400x300.png?text=Tutor+11", rating: 4.8 },
-  { id: 12, name: "Tutor 12", subject: "Art and Design", image: "https://via.placeholder.com/400x300.png?text=Tutor+12", rating: 4.6 },
-];
+
 
 export default function VirtualTutoring() {
   const navigate = useNavigate(); // Hook for navigation
   const [selectedTutor, setSelectedTutor] = useState(null);
+  const [tutors, setTutors] = useState([])
+  const {user} = useAuth()
+
+
+  const getAllTutors = async() => {
+    try {
+      const response = await axiosInstance.get("/api/tutor/getTutors");
+      console.log(response.data.data)
+      setTutors(response.data.data)
+    } catch (error) {
+      console.log("error while getting tuttos", error)
+    }
+  }
+
+  const bookTutor = async(id) => {
+    const response = await axiosInstance.post("/api/tutor/bookTutor", {
+      tutorId: id
+    })
+    console.log("book reponse ",response.data)
+    if(response.data.success) {
+      alert(response.data.message)
+    }
+  }
+
+  console.log("user ",user?._id)
+  console.log("tutors ",tutors)
+  useEffect(() => {
+    getAllTutors()
+  }, [])
+
+
 
   const handleBookSession = (tutor) => {
-    setSelectedTutor(tutor);
-    // Redirect to the booking confirmation page
-    navigate("/learning-hub/virtual-tutoring/booking", { state: { tutor } });
+    bookTutor(tutor._id)
+    // setSelectedTutor(tutor);
+    // // Redirect to the booking confirmation page
+    // navigate("/learning-hub/virtual-tutoring/booking", { state: { tutor } });
   };
 
   return (
@@ -47,26 +67,26 @@ export default function VirtualTutoring() {
 
       {/* Tutors Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {tutorsData.map((tutor) => (
+        {tutors.map((tutor) => (
           <div
             key={tutor.id}
             className="bg-white rounded-lg shadow-lg p-4 transition-transform duration-200 hover:scale-105"
           >
             <img
-              src={tutor.image}
-              alt={tutor.name}
+              src={tutor.profilePicture}
+              alt={tutor.username}
               className="h-48 w-full object-cover mb-4 rounded-md"
             />
             <h2 className="text-xl font-medium mb-2 text-gray-800">
-              {tutor.name}
+              {tutor.username}
             </h2>
             <p className="mb-2 text-gray-600">Subject: {tutor.subject}</p>
-            <p className="mb-4 text-yellow-500">Rating: {tutor.rating} ⭐</p>
+            <p className="mb-4 text-gray-600">Experience: <span className="text-blue-500 font-semibold">{tutor.experienceYears} Yr</span> </p>
             <button
               onClick={() => handleBookSession(tutor)}
               className="w-full py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200"
             >
-              Book Tutoring
+              Book Tutor
             </button>
           </div>
         ))}

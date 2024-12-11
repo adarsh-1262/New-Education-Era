@@ -27,16 +27,16 @@ const Footer = () => {
             <p>Stay connected with us:</p>
             <div className="flex space-x-4 mt-2">
               <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-                <img src="/icons/facebook-icon.svg" alt="Facebook" className="w-6 h-6" />
+                <img src="https://cdn2.iconfinder.com/data/icons/social-media-2285/512/1_Facebook2_colored_svg-512.png" alt="Facebook" className="w-6 h-6" />
               </a>
               <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
-                <img src="/icons/twitter-icon.svg" alt="Twitter" className="w-6 h-6" />
+                <img src="https://cdn2.iconfinder.com/data/icons/social-media-2285/512/1_Twitter_colored_svg-512.png" alt="Twitter" className="w-6 h-6" />
               </a>
               <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                <img src="/icons/linkedin-icon.svg" alt="LinkedIn" className="w-6 h-6" />
+                <img src="https://cdn2.iconfinder.com/data/icons/social-media-2285/512/1_Linkedin_unofficial_colored_svg-512.png" alt="LinkedIn" className="w-6 h-6" />
               </a>
               <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                <img src="/icons/instagram-icon.svg" alt="Instagram" className="w-6 h-6" />
+                <img src="https://cdn2.iconfinder.com/data/icons/social-media-2285/512/1_Instagram_colored_svg_1-512.png" alt="Instagram" className="w-6 h-6" />
               </a>
             </div>
           </div>
