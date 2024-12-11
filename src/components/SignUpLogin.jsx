@@ -21,6 +21,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
     school: "",
     Class: "",
     rollNo: "",
+    profilePicture: null,
   }); // State for form inputs
 
   const [expertData, setExpertData] = useState({
@@ -55,6 +56,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
     school: "",
     Class: "",
     rollNo: "",
+    profilePicture: null,
   }); // State for form inputs
 
   const [adminData, setAdminData] = useState({
@@ -65,6 +67,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
     password: "",  
     school: "",  
     phone: "",
+    profilePicture: null,
   });
 
   const [subAdminData, setSubAdminData] = useState({
@@ -76,6 +79,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
     school: "",  
     Class: "",
     phone: "",
+    profilePicture: null,
   });
 
   const [errorMessage, setErrorMessage] = useState(""); // State for error messages
@@ -155,8 +159,14 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
           phone: formData.phone,
           school: formData.school,
           Class: formData.Class,
+          profilePicture: selectedFile,
           rollNo: parseInt(formData.rollNo), // Ensure rollNo is an integer
-        });
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+      });
       } 
       else if (userType === "expert") {
         response = await axiosInstance.post("/api/expert/signup", {
@@ -203,7 +213,13 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
           school: parentData.school,
           Class: parentData.Class,
           rollNo: parseInt(parentData.rollNo), // Ensure rollNo is an integer
-        });
+          profilePicture: selectedFile,
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+      });
       }
       else if(userType === "admin"){
         response = await axiosInstance.post("/api/admin/signup", {
@@ -213,8 +229,14 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
           email: adminData.email, 
           password: adminData.password, 
           school: adminData.school,  
-          phone: adminData.phone,          
-        });
+          phone: adminData.phone,   
+          profilePicture: selectedFile,       
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+      });
       }
       else if(userType === "subadmin"){
         response = await axiosInstance.post("/api/subadmin/signup", {
@@ -225,8 +247,14 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
           password: subAdminData.password, 
           school: subAdminData.school, 
           Class: subAdminData.Class, 
-          phone: subAdminData.phone,          
-        });
+          phone: subAdminData.phone,  
+          profilePicture: selectedFile,        
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+      });
       }
       setErrorMessage(""); // Clear any previous errors
       setUserType(userType);
@@ -420,6 +448,20 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                             required
                           />
                         </div>
+
+                        <div className="mb-4">
+                        <label className="block text-sm font-medium text-gray-700">
+                          Profile Picture
+                        </label>
+                        <input
+                          type="file"
+                          name="profilePicture"
+                          onChange={handleFileChange}
+                          className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                          placeholder="Upload photo"
+                          required
+                        />
+                      </div>
                     </>
                   )}
 
@@ -773,6 +815,20 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                             required
                           />
                         </div>
+
+                        <div className="mb-4">
+                        <label className="block text-sm font-medium text-gray-700">
+                          Profile Picture
+                        </label>
+                        <input
+                          type="file"
+                          name="profilePicture"
+                          onChange={handleFileChange}
+                          className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                          placeholder="Upload photo"
+                          required
+                        />
+                      </div>
                     </>
                   )}
                    
@@ -866,6 +922,20 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                             required
                           />
                         </div>
+
+                        <div className="mb-4">
+                        <label className="block text-sm font-medium text-gray-700">
+                          Profile Picture
+                        </label>
+                        <input
+                          type="file"
+                          name="profilePicture"
+                          onChange={handleFileChange}
+                          className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                          placeholder="Upload photo"
+                          required
+                        />
+                      </div>
                     </>
                   )}
 
@@ -986,6 +1056,20 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                             <option value="12">12</option>
                           </select>
                         </div>
+
+                        <div className="mb-4">
+                        <label className="block text-sm font-medium text-gray-700">
+                          Profile Picture
+                        </label>
+                        <input
+                          type="file"
+                          name="profilePicture"
+                          onChange={handleFileChange}
+                          className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                          placeholder="Upload photo"
+                          required
+                        />
+                      </div>
 
                     </>
                   )}

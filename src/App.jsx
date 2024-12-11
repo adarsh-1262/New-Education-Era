@@ -29,6 +29,8 @@ import CalendarView from "./Schooling/CalendarView";
 import ProgressPage from "./Schooling/ProgressPage";
 import CombinedPage from "./Schooling/CombinedCourse";
 import Admin from "./adminDashboard/Admin";
+import RewardSystem from "./components/RewardSystem";
+import Store from "./components/Store";
 
 function App() {
   return (
@@ -64,6 +66,8 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/student/dashboard" element={<StudentDashboard />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/reward" element={<RewardSystem />} />
+          <Route path="/shop" element={<Store />} />
         </Routes>
         <ChatBox />
       </div>
