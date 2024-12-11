@@ -1,24 +1,27 @@
 import React from "react";
-import { Carousel } from 'react-carousel-minimal';
+import { Carousel } from "react-carousel-minimal";
 import Home1 from "../assets/Home1.webp";
 import Home2 from "../assets/Home2.webp";
 
 const Home = () => {
   const data = [
     {
-      image: "https://static.mygov.in/innovateindia/2024/03/19/mygov-9999999991667399186.jpg",
+      image:
+        "https://static.mygov.in/innovateindia/2024/03/19/mygov-9999999991667399186.jpg",
     },
     {
-      image: "https://www.education.gov.in/sites/education.gov.in/themes/nexus/images/slides/NMMSS_updated.jpg",
+      image:
+        "https://www.education.gov.in/sites/education.gov.in/themes/nexus/images/slides/NMMSS_updated.jpg",
     },
     {
-      image: "https://www.education.gov.in/sites/education.gov.in/themes/nep/images/slides/NEP_Banner.jpg",
-    }
+      image:
+        "https://www.education.gov.in/sites/education.gov.in/themes/nep/images/slides/NEP_Banner.jpg",
+    },
   ];
 
   const slideNumberStyle = {
-    fontSize: '20px',
-    fontWeight: 'bold',
+    fontSize: "20px",
+    fontWeight: "bold",
   };
 
   return (
@@ -52,6 +55,37 @@ const Home = () => {
               margin: "1px auto",
             }}
           />
+        </div>
+
+        {/* Moving Announcement Bar for Notifications */}
+        <div className="bg-red-100 text-red-800 text-lg font-medium px-4 py-2">
+          <marquee
+            behavior="scroll"
+            direction="left"
+            className="inline-block"
+            scrollamount="15"
+          >
+            {/* First Notification */}
+            <span className="font-bold">📢 NEW:</span>
+            <span>
+              Dropout rates for 2023 have been updated. Check the report for
+              actionable insights!
+            </span>
+
+            {/* Separator "||" */}
+            <span className="mx-2 font-semibold">||</span>
+
+            {/* Second Notification */}
+            <span className="font-bold">📢 Reminder:</span>
+            <span>Submit intervention program proposals by Dec 20, 2024.</span>
+
+            {/* Separator "||" */}
+            <span className="mx-2 font-semibold">||</span>
+
+            {/* Third Notification */}
+            <span className="font-bold">📢 Update:</span>
+            <span>New resources added to the Dropout Prevention Hub.</span>
+          </marquee>
         </div>
       </div>
 
