@@ -34,6 +34,7 @@ import Store from "./components/Store";
 import ExpertDashboard from "./components/ExpertDashboard";
 import TutorDashboard from "./components/TutorDashboard";
 import ParentDashboard from "./components/ParentDashboard";
+import QRScanner from "./components/QRScanner";
 import LoginSignupModal from "./components/SignUpLogin";
 import { useAuth } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectRoute";
@@ -87,6 +88,7 @@ function App() {
           <Route path="/expert/dashboard" element={<ExpertDashboard />} />
           <Route path="/tutor/dashboard" element={<TutorDashboard />} />
           <Route path="/parent/dashboard" element={<ParentDashboard />} />
+          <Route path="/attendance" element={<QRScanner />} />
           <Route path="/signup" element={<LoginSignupModal />} />
         </Routes>
         <ChatBox />

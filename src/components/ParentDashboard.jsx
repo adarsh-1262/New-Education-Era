@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import parentImage from "../assets/Tutor1.jpg"; // Replace with actual parent image path
+import parentImage from "../assets/Tutor1.jpg"; 
 
 const ParentDashboard = () => {
   const handleBackToLearning = () => {
