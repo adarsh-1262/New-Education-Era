@@ -4,8 +4,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import axiosInstance from "../axiosConfig";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import loginImage from '../assets/login.jpg'
+import signupImage from '../assets/signup.jpg'
 
-const LoginSignupModal = ({ isOpen, onClose }) => {
+const LoginSignupModal = () => {
   const [isSignup, setIsSignup] = useState(false); // Toggle between Login and Sign Up
   const [loginData, setLoginData] = useState({
     email: "",
@@ -21,6 +23,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
     school: "",
     Class: "",
     rollNo: "",
+    profilePicture: null,
   }); // State for form inputs
 
   const [expertData, setExpertData] = useState({
@@ -43,6 +46,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
     phone: "",
     subject: "",
     experienceYears: "",
+    profilePicture: null,
   }); // State for expert-specific fields
 
   const [parentData, setParentData] = useState({
@@ -54,6 +58,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
     school: "",
     Class: "",
     rollNo: "",
+    profilePicture: null,
   }); // State for form inputs
 
   const [adminData, setAdminData] = useState({
@@ -64,6 +69,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
     password: "",  
     school: "",  
     phone: "",
+    profilePicture: null,
   });
 
   const [subAdminData, setSubAdminData] = useState({
@@ -75,6 +81,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
     school: "",  
     Class: "",
     phone: "",
+    profilePicture: null,
   });
 
   const [errorMessage, setErrorMessage] = useState(""); // State for error messages
@@ -93,7 +100,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
       if (response?.data?.success === true) {
         setErrorMessage(""); // Clear error message
         setIsLoggedIn(true);
-        onClose();
+        //  navigate to the dashboard page
         navigate(`/${userType}/dashboard`);
       }
     } catch (error) {
@@ -154,8 +161,14 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
           phone: formData.phone,
           school: formData.school,
           Class: formData.Class,
+          profilePicture: selectedFile,
           rollNo: parseInt(formData.rollNo), // Ensure rollNo is an integer
-        });
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+      });
       } 
       else if (userType === "expert") {
         response = await axiosInstance.post("/api/expert/signup", {
@@ -184,7 +197,13 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
           phone: tutorData.phone,
           subject: tutorData.subject,
           experienceYears: tutorData.experienceYears,
-        });
+          profilePicture: selectedFile,
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+      });
       }
       else if(userType === "parent"){
         response = await axiosInstance.post("/api/parent/signup", {
@@ -196,7 +215,13 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
           school: parentData.school,
           Class: parentData.Class,
           rollNo: parseInt(parentData.rollNo), // Ensure rollNo is an integer
-        });
+          profilePicture: selectedFile,
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+      });
       }
       else if(userType === "admin"){
         response = await axiosInstance.post("/api/admin/signup", {
@@ -206,8 +231,14 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
           email: adminData.email, 
           password: adminData.password, 
           school: adminData.school,  
-          phone: adminData.phone,          
-        });
+          phone: adminData.phone,   
+          profilePicture: selectedFile,       
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+      });
       }
       else if(userType === "subadmin"){
         response = await axiosInstance.post("/api/subadmin/signup", {
@@ -218,8 +249,14 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
           password: subAdminData.password, 
           school: subAdminData.school, 
           Class: subAdminData.Class, 
-          phone: subAdminData.phone,          
-        });
+          phone: subAdminData.phone,  
+          profilePicture: selectedFile,        
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+      });
       }
       setErrorMessage(""); // Clear any previous errors
       setUserType(userType);
@@ -227,7 +264,8 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
       setIsLoggedIn(true);
       localStorage.setItem('isLoggedIn', 'true');
       localStorage.setItem('user', JSON.stringify(response.data));
-      onClose();
+      //  navigate to the dashboard
+      navigate(`/${userType}/dashboard`);
     } catch (error) {
       console.error("Error while signing up:", error);
       setErrorMessage(
@@ -236,31 +274,23 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
     }
   };
 
-  if (!isOpen) return null;
-
   return (
-    <AnimatePresence>
-      <motion.div
-        className="fixed inset-0 bg-black bg-opacity-50 z-20 flex items-center justify-center"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-      >
-        <motion.div
-          className="bg-white rounded-lg shadow-lg max-w-md w-full relative overflow-auto max-h-[90vh]"
-          initial={{ scale: 0.9 }}
-          animate={{ scale: 1 }}
-          exit={{ scale: 0.9 }}
-        >
-          <button
-            onClick={onClose}
-            className="absolute top-2 right-2 text-gray-700 hover:text-gray-900"
-          >
-            ✖
-          </button>
-          <h2 className="text-2xl font-bold mb-4 text-blue-900 text-center">
+    <div>
+      <div
+        className="bg-gradient-to-b from-gray-50 via-blue-100 to-white flex justify-evenly p-12 w-full">
+        <div className={`${isSignup ? 'block' : 'hidden'} flex flex-col pt-12 gap-5`}>
+          <h1 className="text-center text-3xl font-semibold text-blue-500">Empowering the Education <p>at all Stages</p></h1>
+          <img src={signupImage} className="object-cover h-[52vh] w-[32vw] rounded-lg shadow-xl shadow-gray-600" alt="signupimage" />
+        </div>
+        <div className={`${isSignup ? 'hidden' : 'block'} flex flex-col pt-12 gap-5`}>
+          <h1 className="text-center text-3xl font-semibold text-blue-500">Empowering the Education <p>at all Stages</p></h1>
+          <img src={loginImage} className="object-cover h-[40vh] w-[30vw] rounded-lg shadow-xl shadow-gray-600" alt="loginimage" />
+        </div>
+        <div
+          className="mt-5 relative overflow-auto max-h-[100vh] p-5">
+          <h1 className="text-3xl font-semibold mb-4 text-blue-500 text-center">
             {isSignup ? "Sign Up" : "Login"}
-          </h2>
+          </h1>
 
           <div className="p-4">
             {errorMessage && (
@@ -280,7 +310,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                       name="userType"
                       value={userType}
                       onChange={(e) => setUserType(e.target.value)}
-                      className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none border-blue-500 focus:ring-blue-500 focus:border-blue-500"
                       required
                     >
                       <option value="select">Select</option>
@@ -295,7 +325,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                   
 
                   {userType === "student" && (
-                    <>
+                    <div className="grid grid-cols-2 gap-4">
                       <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700">
                           Username
@@ -305,7 +335,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                           name="username"
                           value={formData.username}
                           onChange={handleChange}
-                          className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                          className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                           placeholder="Enter your username"
                           required
                         />
@@ -320,7 +350,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                           name="email"
                           value={formData.email}
                           onChange={handleChange}
-                          className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                          className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                           placeholder="Enter your email"
                           required
                         />
@@ -335,7 +365,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                               name="phone"
                               value={formData.phone}
                               onChange={handleChange}
-                              className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                              className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                               placeholder="Enter your phone number"
                               required
                             />
@@ -350,7 +380,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                             name="password"
                             value={formData.password}
                             onChange={handleChange}
-                            className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                            className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                             placeholder="Enter your password"
                             required
                           />
@@ -365,7 +395,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                             name="school"
                             value={formData.school}
                             onChange={handleChange}
-                            className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                            className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                             placeholder="Enter your school"
                             required
                           />
@@ -379,7 +409,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                             name="Class"
                             value={formData.Class}
                             onChange={handleChange}
-                            className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                            className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                             required
                           >
                             <option value="Nur">Nur</option>
@@ -408,16 +438,30 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                             name="rollNo"
                             value={formData.rollNo}
                             onChange={handleChange}
-                            className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                            className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                             placeholder="Enter your roll number"
                             required
                           />
                         </div>
-                    </>
+
+                        <div className="mb-4">
+                        <label className="block text-sm font-medium text-gray-700">
+                          Profile Picture
+                        </label>
+                        <input
+                          type="file"
+                          name="profilePicture"
+                          onChange={handleFileChange}
+                          className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                          placeholder="Upload photo"
+                          required
+                        />
+                      </div>
+                    </div>
                   )}
 
                   {userType === "expert" && (
-                    <>
+                    <div className="grid grid-cols-2 gap-4">
                       <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700">
                           Username
@@ -427,7 +471,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                           name="username"
                           value={expertData.username}
                           onChange={handleChange}
-                          className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                          className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                           placeholder="Enter your username"
                           required
                         />
@@ -442,7 +486,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                           name="email"
                           value={expertData.email}
                           onChange={handleChange}
-                          className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                          className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                           placeholder="Enter your email"
                           required
                         />
@@ -457,7 +501,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                               name="phone"
                               value={expertData.phone}
                               onChange={handleChange}
-                              className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                              className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                               placeholder="Enter your phone number"
                               required
                             />
@@ -472,7 +516,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                             name="password"
                             value={expertData.password}
                             onChange={handleChange}
-                            className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                            className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                             placeholder="Enter your password"
                             required
                           />
@@ -487,7 +531,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                           name="consultationField"
                           value={expertData.consultationField}
                           onChange={handleChange}
-                          className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                          className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                           placeholder="Enter your expertise field"
                           required
                         />
@@ -502,7 +546,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                           name="experienceYears"
                           value={expertData.experienceYears}
                           onChange={handleChange}
-                          className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                          className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                           placeholder="Enter years of experience"
                           required
                         />
@@ -516,7 +560,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                           type="file"
                           name="profilePicture"
                           onChange={handleFileChange}
-                          className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                          className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                           placeholder="Upload photo"
                           required
                         />
@@ -531,16 +575,16 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                           name="description"
                           value={expertData.description}
                           onChange={handleChange}
-                          className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                          className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                           placeholder="Small description field, in which you're expert"
                           required
                         />
                       </div>
-                    </>
+                    </div>
                   )}
 
                   {userType === "tutor" && (
-                    <>
+                    <div className="grid grid-cols-2 gap-4">
                       <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700">
                           Username
@@ -550,7 +594,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                           name="username"
                           value={tutorData.username}
                           onChange={handleChange}
-                          className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                          className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                           placeholder="Enter your username"
                           required
                         />
@@ -565,7 +609,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                           name="email"
                           value={tutorData.email}
                           onChange={handleChange}
-                          className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                          className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                           placeholder="Enter your email"
                           required
                         />
@@ -580,7 +624,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                               name="phone"
                               value={tutorData.phone}
                               onChange={handleChange}
-                              className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                              className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                               placeholder="Enter your phone number"
                               required
                             />
@@ -595,7 +639,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                             name="password"
                             value={tutorData.password}
                             onChange={handleChange}
-                            className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                            className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                             placeholder="Enter your password"
                             required
                           />
@@ -610,7 +654,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                           name="subject"
                           value={tutorData.subject}
                           onChange={handleChange}
-                          className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                          className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                           placeholder="Enter your expertise field"
                           required
                         />
@@ -625,16 +669,30 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                           name="experienceYears"
                           value={tutorData.experienceYears}
                           onChange={handleChange}
-                          className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                          className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                           placeholder="Enter years of experience"
                           required
                         />
                       </div>
-                    </>
+
+                      <div className="mb-4">
+                        <label className="block text-sm font-medium text-gray-700">
+                          Profile Picture
+                        </label>
+                        <input
+                          type="file"
+                          name="profilePicture"
+                          onChange={handleFileChange}
+                          className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                          placeholder="Upload photo"
+                          required
+                        />
+                      </div>
+                    </div>
                   )}
 
                   {userType === "parent" && (
-                    <>
+                    <div className="grid grid-cols-2 gap-4">
                       <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700">
                           Username
@@ -644,7 +702,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                           name="username"
                           value={parentData.username}
                           onChange={handleChange}
-                          className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                          className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                           placeholder="Enter your username"
                           required
                         />
@@ -659,7 +717,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                           name="email"
                           value={parentData.email}
                           onChange={handleChange}
-                          className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                          className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                           placeholder="Enter your email"
                           required
                         />
@@ -674,7 +732,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                               name="phone"
                               value={parentData.phone}
                               onChange={handleChange}
-                              className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                              className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                               placeholder="Enter your phone number"
                               required
                             />
@@ -689,7 +747,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                             name="password"
                             value={parentData.password}
                             onChange={handleChange}
-                            className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                            className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                             placeholder="Enter your password"
                             required
                           />
@@ -704,7 +762,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                             name="school"
                             value={parentData.school}
                             onChange={handleChange}
-                            className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                            className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                             placeholder="Enter your school"
                             required
                           />
@@ -718,7 +776,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                             name="Class"
                             value={parentData.Class}
                             onChange={handleChange}
-                            className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                            className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                             required
                           >
                             <option value="Nur">Nur</option>
@@ -747,16 +805,30 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                             name="rollNo"
                             value={parentData.rollNo}
                             onChange={handleChange}
-                            className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                            className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                             placeholder="Enter your roll number"
                             required
                           />
                         </div>
-                    </>
+
+                        <div className="mb-4">
+                        <label className="block text-sm font-medium text-gray-700">
+                          Profile Picture
+                        </label>
+                        <input
+                          type="file"
+                          name="profilePicture"
+                          onChange={handleFileChange}
+                          className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                          placeholder="Upload photo"
+                          required
+                        />
+                      </div>
+                    </div>
                   )}
                    
                    {userType === "admin" && (
-                    <>
+                    <div className="grid grid-cols-2 gap-4">
                       <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700">
                           Name
@@ -766,7 +838,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                           name="name"
                           value={adminData.name}
                           onChange={handleChange}
-                          className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                          className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                           placeholder="Enter your name"
                           required
                         />
@@ -780,7 +852,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                           name="username"
                           value={adminData.username}
                           onChange={handleChange}
-                          className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                          className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                           placeholder="Enter your username"
                           required
                         />
@@ -795,7 +867,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                           name="email"
                           value={adminData.email}
                           onChange={handleChange}
-                          className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                          className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                           placeholder="Enter your email"
                           required
                         />
@@ -810,7 +882,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                               name="phone"
                               value={adminData.phone}
                               onChange={handleChange}
-                              className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                              className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                               placeholder="Enter your phone number"
                               required
                             />
@@ -825,7 +897,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                             name="password"
                             value={adminData.password}
                             onChange={handleChange}
-                            className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                            className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                             placeholder="Enter your password"
                             required
                           />
@@ -840,16 +912,30 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                             name="school"
                             value={adminData.school}
                             onChange={handleChange}
-                            className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                            className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                             placeholder="Enter your school"
                             required
                           />
                         </div>
-                    </>
+
+                        <div className="mb-4">
+                        <label className="block text-sm font-medium text-gray-700">
+                          Profile Picture
+                        </label>
+                        <input
+                          type="file"
+                          name="profilePicture"
+                          onChange={handleFileChange}
+                          className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                          placeholder="Upload photo"
+                          required
+                        />
+                      </div>
+                    </div>
                   )}
 
                   {userType === "subadmin" && (
-                    <>
+                    <div className="grid grid-cols-2 gap-4">
                       <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700">
                           Name
@@ -859,7 +945,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                           name="name"
                           value={subAdminData.name}
                           onChange={handleChange}
-                          className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                          className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                           placeholder="Enter your name"
                           required
                         />
@@ -873,7 +959,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                           name="username"
                           value={subAdminData.username}
                           onChange={handleChange}
-                          className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                          className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                           placeholder="Enter your username"
                           required
                         />
@@ -888,7 +974,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                           name="email"
                           value={subAdminData.email}
                           onChange={handleChange}
-                          className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                          className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                           placeholder="Enter your email"
                           required
                         />
@@ -903,7 +989,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                               name="phone"
                               value={subAdminData.phone}
                               onChange={handleChange}
-                              className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                              className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                               placeholder="Enter your phone number"
                               required
                             />
@@ -918,7 +1004,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                             name="password"
                             value={subAdminData.password}
                             onChange={handleChange}
-                            className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                            className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                             placeholder="Enter your password"
                             required
                           />
@@ -933,7 +1019,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                             name="school"
                             value={subAdminData.school}
                             onChange={handleChange}
-                            className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                            className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                             placeholder="Enter your school"
                             required
                           />
@@ -946,7 +1032,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                             name="Class"
                             value={subAdminData.Class}
                             onChange={handleChange}
-                            className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                            className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                             required
                           >
                             <option value="Nur">Nur</option>
@@ -966,7 +1052,21 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                           </select>
                         </div>
 
-                    </>
+                        <div className="mb-4">
+                        <label className="block text-sm font-medium text-gray-700">
+                          Profile Picture
+                        </label>
+                        <input
+                          type="file"
+                          name="profilePicture"
+                          onChange={handleFileChange}
+                          className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                          placeholder="Upload photo"
+                          required
+                        />
+                      </div>
+
+                    </div>
                   )}
 
                   <button
@@ -977,7 +1077,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                   </button>
                 </>
               ) : (
-                <>
+                <div className="p-14 pt-0 pb-5">
                   <div className="mb-4">
                     <label className="block text-sm font-medium text-gray-700">
                       User Type
@@ -986,7 +1086,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                       name="userType"
                       value={userType}
                       onChange={(e) => setUserType(e.target.value)}
-                      className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                      className="w-[30vw] px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                       required
                     >
                       <option value="select">Select</option>
@@ -1008,13 +1108,13 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                       name="email"
                       value={loginData.email}
                       onChange={handleChangeLogin}
-                      className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                       placeholder="Enter your email"
                       required
                     />
                   </div>
 
-                  <div className="mb-4">
+                  <div className="mb-6">
                     <label className="block text-sm font-medium text-gray-700">
                       Password
                     </label>
@@ -1023,7 +1123,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                       name="password"
                       value={loginData.password}
                       onChange={handleChangeLogin}
-                      className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full px-3 py-2 border border-blue-500 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                       placeholder="Enter your password"
                       required
                     />
@@ -1035,24 +1135,24 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                   >
                     Login
                   </button>
-                </>
+                </div>
               )}
             </form>
 
-            <div className="text-center mt-4">
+            <div className="text-center mt-2 mb-28">
               <button
                 onClick={() => setIsSignup((prev) => !prev)}
-                className="text-sm text-blue-600 hover:text-blue-800"
+                className="text-lg font-semibold text-blue-600 hover:text-blue-800"
               >
                 {isSignup
-                  ? "Already have an account? Login"
-                  : "Don't have an account? Sign Up"}
+                  ? <p className="text-gray-700">Already have an account? <span className="text-blue-500 hover:underline">Login</span></p>
+                  : <p className="text-gray-700">Dont't have a account? <span className="text-blue-500 hover:underline">Sign Up</span></p>}
               </button>
             </div>
           </div>
-        </motion.div>
-      </motion.div>
-    </AnimatePresence>
+        </div>
+      </div>
+    </div>
   );
 };
 

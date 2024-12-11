@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
         alert(response.data.message); // Optional: Replace with success message display logic
         setIsLoggedIn(true);
         setUserRole(role);
-        setUser(response.data);
+        setUser(response.data.user);
         localStorage.setItem('isLoggedIn', 'true');
         localStorage.setItem('user', JSON.stringify(response.data));
       }
