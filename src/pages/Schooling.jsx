@@ -197,13 +197,6 @@ const cards = [
     ctaLink: "/schooling/part-time-programs",
   },
   {
-    title: "Enrollment",
-    description: "Find out how to enroll in our programs and start your journey.",
-    src: "https://media.istockphoto.com/id/1262645363/vector/vector-of-students-standing-in-line-to-enter-university.jpg?s=612x612&w=0&k=20&c=ngSxj-OZVJS9oFX8h5i6RhxeAB9WzJmOqEY2eGZWSbo=",
-    ctaText: "Enroll Now",
-    ctaLink: "/schooling/enrollment",
-  },
-  {
     title: "Student Schedule",
     description: "Easily view and manage your upcoming classes, events, and deadlines in one calendar.",
     src: "https://media.istockphoto.com/id/482690487/photo/representation-of-digital-communication-channels.jpg?s=612x612&w=0&k=20&c=IE3gIwnf5MgZ4l4vq3lZLlmDDYJqkaccEu67f4wcOuM=",

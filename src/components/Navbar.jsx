@@ -11,7 +11,7 @@ export default function Navbar() {
   const navigate =useNavigate()
   const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
 
-  const { isLoggedIn, logout} = useAuth();
+  const { isLoggedIn, logout, userRole} = useAuth();
   console.log("login status ",isLoggedIn)
   const profilePicture = "https://imgs.search.brave.com/3KGtNIHen91nrQD1Pmg9Xcxt5-0SCDTPR8zBKG_KzFY/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzLzk4LzFk/LzZiLzk4MWQ2YjJl/MGNjYjVlOTY4YTA2/MThjOGQ0NzY3MWRh/LmpwZw"; // Replace with user's profile picture URL
 
@@ -61,7 +61,7 @@ export default function Navbar() {
           {/* Profile or Sign Up/Login Button */}
           <div className="hidden md:flex items-center space-x-4">
             {isLoggedIn ? (
-              <Link to="/student/dashboard" className="flex items-center">
+              <Link to={`/${userRole}/dashboard`} className="flex items-center">
                 <img
                   src={profilePicture}
                   alt="Profile"

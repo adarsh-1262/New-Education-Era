@@ -31,6 +31,9 @@ import CombinedPage from "./Schooling/CombinedCourse";
 import Admin from "./adminDashboard/Admin";
 import RewardSystem from "./components/RewardSystem";
 import Store from "./components/Store";
+import ExpertDashboard from "./components/ExpertDashboard";
+import TutorDashboard from "./components/TutorDashboard";
+import ParentDashboard from "./components/ParentDashboard";
 
 function App() {
   return (
@@ -68,6 +71,9 @@ function App() {
           <Route path="/admin" element={<Admin />} />
           <Route path="/reward" element={<RewardSystem />} />
           <Route path="/shop" element={<Store />} />
+          <Route path="/expert/dashboard" element={<ExpertDashboard />} />
+          <Route path="/tutor/dashboard" element={<TutorDashboard />} />
+          <Route path="/parent/dashboard" element={<ParentDashboard />} />
         </Routes>
         <ChatBox />
       </div>
