@@ -43,6 +43,7 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
     phone: "",
     subject: "",
     experienceYears: "",
+    profilePicture: null,
   }); // State for expert-specific fields
 
   const [parentData, setParentData] = useState({
@@ -184,7 +185,13 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
           phone: tutorData.phone,
           subject: tutorData.subject,
           experienceYears: tutorData.experienceYears,
-        });
+          profilePicture: selectedFile,
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+      });
       }
       else if(userType === "parent"){
         response = await axiosInstance.post("/api/parent/signup", {
@@ -627,6 +634,20 @@ const LoginSignupModal = ({ isOpen, onClose }) => {
                           onChange={handleChange}
                           className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                           placeholder="Enter years of experience"
+                          required
+                        />
+                      </div>
+
+                      <div className="mb-4">
+                        <label className="block text-sm font-medium text-gray-700">
+                          Profile Picture
+                        </label>
+                        <input
+                          type="file"
+                          name="profilePicture"
+                          onChange={handleFileChange}
+                          className="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                          placeholder="Upload photo"
                           required
                         />
                       </div>
