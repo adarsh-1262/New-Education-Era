@@ -83,7 +83,7 @@ export default function Navbar() {
             {isLoggedIn ? (
               <div className="flex items-center gap-6">
                 <img title="Profile"
-                onClick={() => navigate(/${userRole}/dashboard, { replace: true })}
+                onClick={() => navigate(`/${userRole}/dashboard`, { replace: true })}
                 src={profilePicture}
                 alt="Profile"
                 className="w-12 h-12 border-2 border-white rounded-full cursor-pointer hover:opacity-80 transition-opacity"
