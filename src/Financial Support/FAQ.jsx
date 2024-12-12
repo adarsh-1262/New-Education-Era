@@ -3,7 +3,7 @@ import React from 'react';
 const FAQ = () => {
   return (
     <div className="min-h-screen pt-5 px-8  bg-gradient-to-b from-gray-50 via-blue-100 to-white">
-      <h1 className="text-4xl font-semibold text-center mt-12 mb-2 text-center text-blue-900">Frequently Asked Questions</h1>
+      <h1 className="text-4xl font-semibold mt-12 mb-2 text-center text-blue-900">Frequently Asked Questions</h1>
       <p className="text-center max-w-4xl mx-auto  ">
         Here are some common questions regarding financial support for education, along with their answers.
       </p>
@@ -62,7 +62,7 @@ const FAQ = () => {
         </section>
 
         <section>
-          <h2 className="text-2xl font-bold mb-4 mb-4">Miscellaneous Questions</h2>
+          <h2 className="text-2xl font-bold mb-4">Miscellaneous Questions</h2>
           <ul className="space-y-4">
             <li className=" bg-white hover:bg-gray-100 border border-gray-300  rounded-lg shadow-md">
               <h3 className="font-semibold">11. How can I find scholarships that suit my profile?</h3>

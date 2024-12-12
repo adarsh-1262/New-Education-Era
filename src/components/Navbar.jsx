@@ -70,10 +70,8 @@ export default function Navbar() {
               </>
             ) : (
               <>
-                {/* <CustomNavLink to="/" label="Home" /> */}
-                {/* <CustomNavLink to="/about" label="About" /> */}
-                <a href="#home" className="mt-1.5">Home</a>
-                <a href="#about" className="mt-1.5">About</a>
+                <CustomNavLink to="/" label="Home" />
+                <CustomNavLink to="/about" label="About" />
                 {/* <CustomNavLink to="/parental-engagement" label="Parent's Corner" /> */}
                 <CustomNavLink to="/contact" label="Contact Us" />
               </>
@@ -85,10 +83,10 @@ export default function Navbar() {
             {isLoggedIn ? (
               <div className="flex items-center gap-6">
                 <img title="Profile"
-                onClick={() => navigate(`/${userRole}/dashboard`, { replace: true })}
+                onClick={() => navigate(/${userRole}/dashboard, { replace: true })}
                 src={profilePicture}
                 alt="Profile"
-                className="w-12 h-12 border-2 border-white cursor-pointer rounded-full cursor-pointer hover:opacity-80 transition-opacity"
+                className="w-12 h-12 border-2 border-white rounded-full cursor-pointer hover:opacity-80 transition-opacity"
               />
                 <img onClick={handleLogout} title="Logout" src={logoutImage} alt="logout" className="w-12 h-10 object-cover cursor-pointer" />
               </div>
@@ -207,4 +205,3 @@ const CustomNavLink = ({ to, label }) => (
     {label}
   </NavLink>
 );
-

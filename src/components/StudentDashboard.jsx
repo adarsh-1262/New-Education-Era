@@ -125,17 +125,45 @@ const StudentDashboard = () => {
             </p>
           </div>
           <hr className="my-6 border-gray-300" />
-          {/* Achievements Section */}
-          <h3 className="text-xl font-bold mb-4 text-center">Achievements</h3>
-          <div className="grid grid-cols-4 gap-2">
-            {[...Array(12)].map((_, i) => (
-              <div
-                key={i}
-                className="h-12 w-12 bg-white rounded-full hover:scale-105 transition transform duration-200"
-              ></div>
-            ))}
-          </div>
-        </div>
+          <hr className="my-6 border-gray-300" />
+          <hr className="my-6 border-gray-300" />
+{/* Achievements Section */}
+<h3 className="text-xl font-bold mb-4 text-center">Achievements</h3>
+<div className="grid grid-cols-4 gap-2">
+  {Array.from({ length: 12 }).map((_, i) => (
+    <div
+      key={i}
+      className="h-12 w-12 bg-white rounded-full hover:scale-105 transition transform duration-200 flex items-center justify-center border border-gray-200 shadow-sm overflow-hidden"
+    >
+      {i === 0 ? (
+        <img
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQROEjC3IRzGwdrGwSVGZvPjLMe2_bwUb0pCqd3E3r8jWZraOtL88xCRuPKLSe_lU1-0Xc&usqp=CAU"
+          alt="Badge 1"
+          className="h-full w-full object-cover"
+        />
+      ) : i === 2 ? (
+        <img
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRwHFTezTl5wgYbXL2sLLJUaUJw02QV73FNA&s"
+          alt="Badge 2"
+          className="h-full w-full object-cover"
+        />
+      ) : i === 4 ? (
+        <img
+          src="https://img.freepik.com/free-psd/elegant-badge-isolated_23-2150997696.jpg"
+          alt="Badge 3"
+          className="h-full w-full object-cover"
+        />
+      ) : i < 6 ? (
+        <img
+          src="https://png.pngtree.com/png-clipart/20190604/original/pngtree-badge-png-image_996483.jpg"
+          alt={`Achievement badge ${i + 1}`}
+          className="h-full w-full object-cover"
+        />
+      ) : null}
+    </div>
+  ))}
+</div>
+</div>
 
         {/* Right Section */}
         <div className="lg:w-2/3 flex flex-col gap-6">
