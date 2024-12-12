@@ -3,6 +3,7 @@ import { Carousel } from "react-carousel-minimal";
 import Home1 from "../assets/Home1.webp";
 import Home2 from "../assets/Home2.webp";
 import Card from "../components/Card";
+import About from "./About";
 
 const Home = () => {
   const data = [
@@ -28,7 +29,7 @@ const Home = () => {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-gray-50 via-blue-100 to-blue-200">
       {/* Hero Section */}
-      <div className="App w-full">
+      <div id="home" className="App w-full">
         <div
           style={{
             padding: "1px 0",
@@ -137,6 +138,8 @@ const Home = () => {
           </ul>
         </div>
       </div>
+
+      <div id="about"><About /></div>
     </div>
   );
 };

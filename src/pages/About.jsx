@@ -1,6 +1,7 @@
 import React from "react";
 import { Bar } from "react-chartjs-2";
 import "chart.js/auto"; // Automatically register Chart.js components
+import { useNavigate } from "react-router-dom";
 
 const About = () => {
   const chartData = {
@@ -14,6 +15,8 @@ const About = () => {
       },
     ],
   };
+
+  const navigate = useNavigate()
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 via-blue-100 to-white text-gray-800 py-10 px-4 lg:px-20">
@@ -101,7 +104,9 @@ const About = () => {
             Together, we can make education more accessible, impactful, and inclusive. Let’s create a brighter future
             for generations to come.
           </p>
-          <button className="bg-white text-blue-700 px-6 py-2 rounded-lg shadow-md hover:bg-blue-100">
+          <button
+          onClick={() => navigate("/signup")}
+          className="bg-white text-blue-700 px-6 py-2 rounded-lg shadow-md hover:bg-blue-100">
             Get Started
           </button>
         </section>

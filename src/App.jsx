@@ -38,6 +38,8 @@ import QRScanner from "./components/QRScanner";
 import LoginSignupModal from "./components/SignUpLogin";
 import { useAuth } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectRoute";
+// import StudentGrieverence from "./pages/StudentGriverence";
+
 
 function App() {
 
@@ -45,9 +47,9 @@ function App() {
   return (
     <Router>
       {/* Fixed Navbar */}
-      <Navbar />
+      <div className="overflow-hidden"><Navbar /></div>
       {/* Content that starts below the navbar */}
-      <div className="mt-16 bg-gray-500"> {/* Add padding-top for the fixed navbar height */}
+      <div className="mt-16 bg-gray-500 overflow-auto"> {/* Add padding-top for the fixed navbar height */}
       
         <Routes>
           <Route path="/" element={<Home />} />
@@ -73,7 +75,6 @@ function App() {
           <Route path="/schooling/progress" element={<ProgressPage />} />
           <Route path="/schooling/studentSchedule" element={<CalendarView />} />
           <Route path="/about" element={<About />} />
-          {/* <Route path="/student/dashboard" element={<StudentDashboard />} /> */}
           <Route
             path="/student/dashboard"
             element={
@@ -90,6 +91,7 @@ function App() {
           <Route path="/parent/dashboard" element={<ParentDashboard />} />
           <Route path="/attendance" element={<QRScanner />} />
           <Route path="/signup" element={<LoginSignupModal />} />
+          {/* <Route path="/studentGriverence" element={<StudentGrieverence /> } /> */}
         </Routes>
         <ChatBox />
       </div>
