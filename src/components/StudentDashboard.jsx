@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import user from "../assets/Expert1.jpg";
 import StudentAttendanceGraph from "./AttendaceChart";
 import axios from "axios";
+import axiosInstance from "../axiosConfig";
 
 
 const StudentDashboard = () => {
   const [aiScore, setAiScore] = useState(null);
+  const [userData, setUserData] = useState('');
 
   // Data to send to the API
   const studentData = {
@@ -51,22 +53,38 @@ const StudentDashboard = () => {
     fetchAiScore();
   }, []);
 
+  useEffect(() => {
+    const fetchStudentData = async () => {
+      try {
+        const response = await axiosInstance.get('/api/student/studentData');
+        setUserData(response.data.data);
+        console.log("student data",userData);
+      } catch (error) {
+        console.error("Error fetching AI score:", error.response?.data || error.message);
+      }
+    };
+
+    fetchStudentData();
+  }, []);
+
+  console.log("student data", userData);
+
   const handleBackToLearning = () => {
     window.location.href = "/learning-hub";
   };
 
   const Marks = [
-    { subject: "Hindi", marks: "75" },
-    { subject: "English", marks: "80" },
-    { subject: "Math", marks: "95" },
-    { subject: "Science", marks: "88" },
-    { subject: "Social Science", marks: "85" },
-    { subject: "Computer", marks: "92" },
+    { subject: "Hindi", marks: "33" },
+    { subject: "English", marks: "30" },
+    { subject: "Math", marks: "15" },
+    { subject: "Science", marks: "38" },
+    { subject: "Social Science", marks: "45" },
+    { subject: "Computer", marks: "12" },
   ];
 
   const attendance = {
     totalClasses: 100,
-    attendedClasses: 90,
+    attendedClasses: 40,
   };
 
   const Enrolled = [
@@ -77,16 +95,16 @@ const StudentDashboard = () => {
   ];
 
   const courses = [
-    { name: "React Basics", progress: 75 },
+    { name: "React Basics", progress: 35 },
     { name: "Advanced CSS", progress: 50 },
-    { name: "JavaScript Mastery", progress: 90 },
+    { name: "JavaScript Mastery", progress: 80 },
     { name: "Tailwind CSS", progress: 30 },
   ];
 
   return (
     <div className="flex flex-col items-center bg-gradient-to-r from-blue-900 via-blue-700 to-blue-500 min-h-screen p-8">
       <h1 className="text-4xl font-bold text-white mb-6 animate-pulse">
-        Welcome, Rohini Dass!!
+        Welcome, {userData.username}!!
       </h1>
       <div className="flex flex-col lg:flex-row gap-10 w-full max-w-7xl">
         {/* Left Section */}
@@ -98,8 +116,8 @@ const StudentDashboard = () => {
               alt="User"
               className="h-28 w-28 rounded-full object-cover mb-4 border-4 border-white"
             />
-            <h2 className="text-2xl font-semibold">Rohini Das</h2>
-            <p className="text-sm">B.Tech in Computer Science</p>
+            <h2 className="text-2xl font-semibold">{userData.username}</h2>
+            <p className="text-sm">Class : {userData.Class}</p>
             <button
               onClick={handleBackToLearning}
               className="mt-4 px-4 py-2 bg-white text-blue-900 font-semibold rounded-lg shadow-lg hover:bg-gray-200 transition"
@@ -111,31 +129,58 @@ const StudentDashboard = () => {
           {/* Info Section */}
           <div className="text-lg space-y-2">
             <p>
-              <span className="font-semibold">Batch:</span> 2023-2027
+              <span className="font-semibold">Batch:</span> 2024-2025
             </p>
             <p>
-              <span className="font-semibold">College:</span> ABC Institute of
-              Technology
+              <span className="font-semibold">School:</span> {userData.school}
             </p>
             <p>
-              <span className="font-semibold">Branch:</span> Computer Science
+              <span className="font-semibold">Roll No:</span> {userData.rollNo}
             </p>
             <p>
-              <span className="font-semibold">Contact:</span> +91 9876543210
+              <span className="font-semibold">Contact:</span> {userData.phone}
             </p>
           </div>
           <hr className="my-6 border-gray-300" />
-          {/* Achievements Section */}
-          <h3 className="text-xl font-bold mb-4 text-center">Achievements</h3>
-          <div className="grid grid-cols-4 gap-2">
-            {[...Array(12)].map((_, i) => (
-              <div
-                key={i}
-                className="h-12 w-12 bg-white rounded-full hover:scale-105 transition transform duration-200"
-              ></div>
-            ))}
-          </div>
-        </div>
+          <hr className="my-6 border-gray-300" />
+          <hr className="my-6 border-gray-300" />
+{/* Achievements Section */}
+<h3 className="text-xl font-bold mb-4 text-center">Achievements</h3>
+<div className="grid grid-cols-4 gap-2">
+  {Array.from({ length: 12 }).map((_, i) => (
+    <div
+      key={i}
+      className="h-12 w-12 bg-white rounded-full hover:scale-105 transition transform duration-200 flex items-center justify-center border border-gray-200 shadow-sm overflow-hidden"
+    >
+      {i === 0 ? (
+        <img
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQROEjC3IRzGwdrGwSVGZvPjLMe2_bwUb0pCqd3E3r8jWZraOtL88xCRuPKLSe_lU1-0Xc&usqp=CAU"
+          alt="Badge 1"
+          className="h-full w-full object-cover"
+        />
+      ) : i === 2 ? (
+        <img
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRwHFTezTl5wgYbXL2sLLJUaUJw02QV73FNA&s"
+          alt="Badge 2"
+          className="h-full w-full object-cover"
+        />
+      ) : i === 4 ? (
+        <img
+          src="https://img.freepik.com/free-psd/elegant-badge-isolated_23-2150997696.jpg"
+          alt="Badge 3"
+          className="h-full w-full object-cover"
+        />
+      ) : i < 6 ? (
+        <img
+          src="https://png.pngtree.com/png-clipart/20190604/original/pngtree-badge-png-image_996483.jpg"
+          alt={`Achievement badge ${i + 1}`}
+          className="h-full w-full object-cover"
+        />
+      ) : null}
+    </div>
+  ))}
+</div>
+</div>
 
         {/* Right Section */}
         <div className="lg:w-2/3 flex flex-col gap-6">
