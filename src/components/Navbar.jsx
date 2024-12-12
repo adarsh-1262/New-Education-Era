@@ -1,57 +1,38 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import Logo from "../assets/Logo.webp";
 import LoginSignupModal from "./SignUpLogin";
 import { cn } from "../lib/utils";
 import { useAuth } from "../context/AuthContext";
-import axiosInstance from "../axiosConfig";
-import logoutImage from '../assets/logout.png'
+import Hindi from "../components/hindi";
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
-  const [userRole,setUserRole] = useState('')
 
-  const getrole = async() => {
-    try {
-      const response = await axiosInstance.get('/api/student/getRole')
-      setUserRole(response.data.role)
-    } catch (error) {
-      console.log("error while getting role ",error)
-    }
-  }
-
-  useEffect(() => {
-    getrole()
-  }, [])
-
-  const { isLoggedIn, logout} = useAuth();
-  
-  console.log("login status ",isLoggedIn)
-  const profilePicture = "https://imgs.search.brave.com/3KGtNIHen91nrQD1Pmg9Xcxt5-0SCDTPR8zBKG_KzFY/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzLzk4LzFk/LzZiLzk4MWQ2YjJl/MGNjYjVlOTY4YTA2/MThjOGQ0NzY3MWRh/LmpwZw"; // Replace with user's profile picture URL
+  const { isLoggedIn, logout, userRole } = useAuth();
+  console.log("login status ", isLoggedIn);
+  const profilePicture =
+    "https://imgs.search.brave.com/3KGtNIHen91nrQD1Pmg9Xcxt5-0SCDTPR8zBKG_KzFY/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzLzk4LzFk/LzZiLzk4MWQ2YjJl/MGNjYjVlOTY4YTA2/MThjOGQ0NzY3MWRh/LmpwZw"; // Replace with user's profile picture URL
 
   const handleLogout = () => {
     logout();
-    navigate("/")
-  }
+    navigate("/");
+  };
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen((prev) => !prev);
   };
 
   return (
-    <nav className="fixed top-0 inset-x-0 bg-white shadow-md z-80 border-b border-gray-200">
-      <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
+    <nav className="fixed top-0 inset-x-0 bg-white shadow-md z-50 border-b border-gray-200">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo Section */}
           <div className="flex items-center">
-            <img
-              src={Logo}
-              alt="New Education Era"
-              className="h-8 w-auto"
-            />
+            <img src={Logo} alt="New Education Era" className="h-8 w-auto" />
             <span className="ml-3 text-xl font-semibold text-gray-800">
               EduHub
             </span>
@@ -62,37 +43,60 @@ export default function Navbar() {
             {isLoggedIn ? (
               <>
                 <CustomNavLink to="/learning-hub" label="Learning Hub" />
-                <CustomNavLink to="/financial-support" label="Financial Support" />
-                <CustomNavLink to="/flexible-schooling" label="Schooling Support" />
-                <button className="text-yellow-500 font-semibold" onClick={() => navigate('/reward')} >Redeem Rewards</button>
-                {/* <button onClick={handleLogout} >Log out</button> */}
+                <CustomNavLink
+                  to="/financial-support"
+                  label="Financial Support"
+                />
+                <CustomNavLink
+                  to="/flexible-schooling"
+                  label="Schooling Support"
+                />
+                <button
+                  className="text-yellow-500 font-semibold"
+                  onClick={() => navigate("/reward")}
+                >
+                  Redeem Rewards
+                </button>
+                <button onClick={handleLogout}>Log out</button>
                 
               </>
             ) : (
               <>
                 <CustomNavLink to="/" label="Home" />
                 <CustomNavLink to="/about" label="About" />
-                {/* <CustomNavLink to="/parental-engagement" label="Parent's Corner" /> */}
-                <CustomNavLink to="/contact" label="Contact Us" />
+                <CustomNavLink
+                  to="/parental-engagement"
+                  label="Parent's Corner"
+                />
+                
               </>
+              
             )}
+           
+
+
+<button>
+<a href="https://new--education--era-vercel-app.translate.goog/?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp&_x_tr_hist=true"> Translate</a>
+</button>
+
           </div>
+
+          {/* Google Translate Section (Hindi Component) */}
 
           {/* Profile or Sign Up/Login Button */}
           <div className="hidden md:flex items-center space-x-4">
             {isLoggedIn ? (
-              <div className="flex items-center gap-6">
-                <img title="Profile"
-                onClick={() => navigate(`/${userRole}/dashboard`, { replace: true })}
-                src={profilePicture}
-                alt="Profile"
-                className="w-12 h-12 border-2 border-white cursor-pointer rounded-full cursor-pointer hover:opacity-80 transition-opacity"
-              />
-                <img onClick={handleLogout} title="Logout" src={logoutImage} alt="logout" className="w-12 h-10 object-cover cursor-pointer" />
+              <div className="flex items-center">
+                <img
+                  onClick={() => navigate(`/${userRole}/dashboard`)}
+                  src={profilePicture}
+                  alt="Profile"
+                  className="w-10 h-10 border border-black rounded-full object-cover"
+                />
               </div>
             ) : (
               <button
-                onClick={() => navigate('/signup')}
+                onClick={() => navigate("/signup")}
                 className="text-sm font-medium text-blue-600 border border-blue-600 px-4 py-1 rounded hover:bg-blue-600 hover:text-white transition"
               >
                 Sign In
@@ -151,16 +155,24 @@ export default function Navbar() {
             {isLoggedIn ? (
               <>
                 <CustomNavLink to="/learning-hub" label="Learning Hub" />
-                <CustomNavLink to="/financial-support" label="Financial Support" />
-                <CustomNavLink to="/flexible-schooling" label="Schooling Support" />
-
+                <CustomNavLink
+                  to="/financial-support"
+                  label="Financial Support"
+                />
+                <CustomNavLink
+                  to="/flexible-schooling"
+                  label="Schooling Support"
+                />
               </>
             ) : (
               <>
                 <CustomNavLink to="/" label="Home" />
                 <CustomNavLink to="/about" label="About" />
                 <CustomNavLink to="/contact" label="Contact" />
-                <CustomNavLink to="/parental-engagement" label="Parent's Corner" />
+                <CustomNavLink
+                  to="/parental-engagement"
+                  label="Parent's Corner"
+                />
               </>
             )}
             <div className="mt-4 space-y-1">
@@ -173,7 +185,7 @@ export default function Navbar() {
                 </Link>
               ) : (
                 <button
-                  onClick={() => navigate('/signup')}
+                  onClick={() => navigate("/signup")}
                   className="block text-center py-2 text-sm text-blue-600 hover:bg-blue-100 rounded"
                 >
                   Login
@@ -185,7 +197,12 @@ export default function Navbar() {
       )}
 
       {/* Login/Signup Modal */}
-      {isModalOpen && <LoginSignupModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />}
+      {isModalOpen && (
+        <LoginSignupModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
     </nav>
   );
 }
@@ -205,4 +222,3 @@ const CustomNavLink = ({ to, label }) => (
     {label}
   </NavLink>
 );
-

@@ -46,6 +46,7 @@ function App() {
     <Router>
       {/* Fixed Navbar */}
       <Navbar />
+      
       {/* Content that starts below the navbar */}
       <div className="mt-16 bg-gray-500"> {/* Add padding-top for the fixed navbar height */}
       
