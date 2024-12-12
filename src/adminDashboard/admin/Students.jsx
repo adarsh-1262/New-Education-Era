@@ -62,6 +62,7 @@ const Students = () => {
           <Users className="w-6 h-6 text-blue-500" />
           <h1 className="text-2xl font-bold">Students</h1>
         </div>
+       <a href='https://student-dropout1.onrender.com/' target='_blank' className='px-3 py-2 bg-blue-500 rounded-xl text-white'>Drop-out %</a>
         <button
           className="bg-blue-500 text-white px-4 py-2 rounded-lg"
           onClick={() => document.getElementById('addStudentModal').classList.remove('hidden')}
@@ -80,7 +81,7 @@ const Students = () => {
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Class</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">School</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Drop-out %</th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
@@ -115,7 +116,12 @@ const Students = () => {
                     {student.status}
                   </span>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td>
+                  <a href='https://indeividual-student.onrender.com/' target='_blank'>
+                    <button  className='p-2 ml-7 bg-blue-500 rounded-xl text-white hover:scale-105'>Check</button>
+                  </a>
+                </td>
+                {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   <div className="flex space-x-3">
                     <button className="text-blue-500 hover:text-blue-700">
                       <PencilLine className="w-5 h-5" />
@@ -127,7 +133,7 @@ const Students = () => {
                       <MoreVertical className="w-5 h-5" />
                     </button>
                   </div>
-                </td>
+                </td> */}
               </tr>
             ))}
           </tbody>

@@ -2,6 +2,7 @@ import React from "react";
 import { Carousel } from "react-carousel-minimal";
 import Home1 from "../assets/Home1.webp";
 import Home2 from "../assets/Home2.webp";
+import Card from "../components/Card";
 
 const Home = () => {
   const data = [
@@ -37,8 +38,8 @@ const Home = () => {
             data={data}
             time={2000}
             width="6200px"
-            height="340px"
-            radius="10px"
+            height="400px"
+            radius="0px"
             slideNumber={true}
             slideNumberStyle={slideNumberStyle}
             captionPosition="bottom"
@@ -50,8 +51,8 @@ const Home = () => {
             slideImageFit="cover"
             style={{
               textAlign: "center",
-              maxWidth: "1300px",
-              maxHeight: "500px",
+              maxWidth: "1650px",
+              maxHeight: "600px",
               margin: "1px auto",
             }}
           />

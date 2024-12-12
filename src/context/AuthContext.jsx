@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axiosInstance from '../axiosConfig';
+import Swal from 'sweetalert2';
 
 // Create the AuthContext
 const AuthContext = createContext();
@@ -9,7 +10,7 @@ export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState();
   const [user, setUser] = useState(null); // To store user details
   const [userRole, setUserRole] = useState("");
-  
+
   // Simulated API call for login
   const login = async ({ role, email, password }) => {
     try {
@@ -19,38 +20,63 @@ export const AuthProvider = ({ children }) => {
       });
 
       if (response.data.success === true) {
-        alert(response.data.message); // Optional: Replace with success message display logic
+        Swal.fire({
+          title: 'Success!',
+          text: response.data.message,
+          icon: 'success',
+          confirmButtonText: 'OK',
+        });
         setIsLoggedIn(true);
         setUserRole(role);
         setUser(response.data.user);
         localStorage.setItem('isLoggedIn', 'true');
         localStorage.setItem('user', JSON.stringify(response.data));
+      } else {
+        Swal.fire({
+          title: 'Error!',
+          text: response.data.message || 'Login failed. Please try again.',
+          icon: 'error',
+          confirmButtonText: 'Close',
+        });
       }
       return response; // Return the response
     } catch (error) {
       console.error("Error while logging in:", error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'An error occurred during login. Please try again.',
+        icon: 'error',
+        confirmButtonText: 'Close',
+      });
 
       // Throw the error to be caught in handleLogin
       throw error;
     }
   };
 
-
-
-
   // Logout function
   const logout = async() => {
     try {
         const response = await axiosInstance.post("/api/student/logout");
-        alert(response.data.message); // Optional: Replace with success message display logic
+        Swal.fire({
+          title: 'Logged out!',
+          text: response.data.message,
+          icon: 'success',
+          confirmButtonText: 'OK',
+        });
         setIsLoggedIn(false);
         setUser(response.data);
         localStorage.removeItem('isLoggedIn');
         localStorage.removeItem('user');
-      } catch (error) {
-        console.error("Error while logout in:", error);
-      }
-    
+    } catch (error) {
+      console.error("Error while logout in:", error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'There was an issue logging out. Please try again.',
+        icon: 'error',
+        confirmButtonText: 'Close',
+      });
+    }
   };
 
   useEffect(() => {
@@ -60,10 +86,10 @@ export const AuthProvider = ({ children }) => {
       setUser(JSON.parse(storedUser));
     }
     const checkingLogin = () => {
-        const savedStatus = localStorage.getItem('isLoggedIn');
-        return savedStatus === 'true'; // Initialize from localStorage
-    }
-    setIsLoggedIn(checkingLogin())
+      const savedStatus = localStorage.getItem('isLoggedIn');
+      return savedStatus === 'true'; // Initialize from localStorage
+    };
+    setIsLoggedIn(checkingLogin());
 
   }, []);
 
