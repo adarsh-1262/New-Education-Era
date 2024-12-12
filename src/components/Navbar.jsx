@@ -70,8 +70,10 @@ export default function Navbar() {
               </>
             ) : (
               <>
-                <CustomNavLink to="/" label="Home" />
-                <CustomNavLink to="/about" label="About" />
+                {/* <CustomNavLink to="/" label="Home" /> */}
+                {/* <CustomNavLink to="/about" label="About" /> */}
+                <a href="#home" className="mt-1.5">Home</a>
+                <a href="#about" className="mt-1.5">About</a>
                 {/* <CustomNavLink to="/parental-engagement" label="Parent's Corner" /> */}
                 <CustomNavLink to="/contact" label="Contact Us" />
               </>
