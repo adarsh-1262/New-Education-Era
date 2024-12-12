@@ -86,7 +86,7 @@ const cards = [
     ctaLink: "/learning-hub/virtual-tutoring",
   },
   {
-    title: "Community Forums",
+    title: "The Intellect Exchange: A Community Forum",
     description: "Join a vibrant community of learners, mentors, and professionals. Share ideas, ask questions, and engage in meaningful discussions to grow together and build lasting connections.",
     src: "https://t4.ftcdn.net/jpg/05/04/53/15/360_F_504531543_PZU62hPp9L1xOlN1faqIQSIUOBsmNRac.jpg",
     ctaText: "Join Discussion",

@@ -55,7 +55,7 @@ const ChatBox = () => {
           💬
         </button>
       ) : (
-        <div className="w-72 sm:w-80 h-[85vh] sm:h-96 bg-gradient-to-b from-black via-blue-300 to-pink-500 border border-blue-500 rounded-lg shadow-lg flex flex-col">
+        <div className="w-72 sm:w-80 h-[95vh] sm:h-96 bg-gradient-to-b from-black via-blue-300 to-pink-500 border border-blue-500 rounded-lg shadow-lg flex flex-col">
           {/* Header */}
           <div className="bg-gradient-to-b from-pink-200 to-red-50 text-black flex items-center justify-between p-3 rounded-t-lg border border-black">
             <h3 className="text-bold text-lg font-medium">ChatBot</h3>

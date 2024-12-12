@@ -1,41 +1,50 @@
 import React, { useState, useEffect } from "react";
 import user from "../assets/Expert1.jpg";
 import StudentAttendanceGraph from "./AttendaceChart";
+import axios from "axios";
+
 
 const StudentDashboard = () => {
   const [aiScore, setAiScore] = useState(null);
 
   // Data to send to the API
   const studentData = {
-    lastPercentage: 85, // Example data
-    attendancePercentage: 90, // Example data
-    parentsQualification: "Graduate", // Example data
-    area: "Urban", // Example data (can be 'Urban' or 'Rural')
-    teachersPer50Students: 20, // Example data
-    familyIncome: 50000, // Example data in INR
+    last_percentage: 35.0, // Example: Academic performance percentage
+    attendance: 29.0,      // Example: Attendance percentage
+    parents_qualification: "Primary", // Example: Parent's qualification level
+    area: "Urban",         // Example: Residential area ('Urban' or 'Rural')
+    num_teachers: 5,       // Example: Teachers per 50 students
+    income: 50000.0        // Example: Monthly family income in INR
   };
 
   // Fetch AI Score and send student data when the component is mounted
   useEffect(() => {
     const fetchAiScore = async () => {
       try {
-        const response = await fetch("https://indeividual-student.onrender.com", {
-          method: "POST", // Sending data via POST
+        // Create a new FormData object
+        const formData = new FormData();
+        formData.append("last_percentage", studentData.last_percentage);
+        formData.append("attendance", studentData.attendance);
+        formData.append("parents_qualification", studentData.parents_qualification);
+        formData.append("area", studentData.area);
+        formData.append("num_teachers", studentData.num_teachers);
+        formData.append("income", studentData.income);
+
+        // Make a POST request with the FormData object
+        const response = await axios.post("http://localhost:8000/api/predict", formData, {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
           },
-          body: JSON.stringify(studentData), // Sending the student data
         });
 
-        // Check if the response is OK
-        if (response.ok) {
-          const data = await response.json();
-          setAiScore(data.score); // Assuming the response contains a `score` field
+        // Handle the response
+        if (response.data && response.data.dropout_probability !== undefined) {
+          setAiScore(response.data.dropout_probability); // Update with the dropout probability
         } else {
-          console.error("Error fetching AI score:", response.statusText);
+          console.error("Error fetching AI score: No valid data received");
         }
       } catch (error) {
-        console.error("Error fetching AI score:", error);
+        console.error("Error fetching AI score:", error.response?.data || error.message);
       }
     };
 
@@ -130,44 +139,42 @@ const StudentDashboard = () => {
 
         {/* Right Section */}
         <div className="lg:w-2/3 flex flex-col gap-6">
-          {/* AI-Driven Score Section */}
-          <div className="bg-white shadow-lg rounded-xl p-6 hover:scale-105 transition transform duration-300">
-            <h3 className="text-2xl font-semibold mb-4 text-blue-900">
-              AI-Driven Score
-            </h3>
-            {aiScore !== null ? (
-              <div className="space-y-4">
-                {/* AI Score */}
-                <div className="text-center text-3xl font-bold text-blue-900">
-                  {aiScore} / 10
-                </div>
-                
-                {/* Progress Bar */}
-                <div className="relative pt-1">
-                  <div className="flex mb-2 items-center justify-between">
-                    <span className="text-sm font-semibold">0</span>
-                    <span className="text-sm font-semibold">10</span>
-                  </div>
-                  <div className="flex mb-4 items-center justify-between">
-                    <div className="relative w-full">
-                      <div
-                        className={`transition-all duration-500 ease-in-out h-2 rounded-lg ${
-                          aiScore >= 8
-                            ? "bg-green-400"
-                            : aiScore >= 5
-                            ? "bg-yellow-400"
-                            : "bg-red-400"
-                        }`}
-                        style={{ width: `${(aiScore / 10) * 100}%` }}
-                      ></div>
-                    </div>
-                  </div>
+           {/* AI-Driven Score Section */}
+      <div className="bg-white shadow-lg rounded-xl p-6 hover:scale-105 transition transform duration-300">
+        <h3 className="text-2xl font-semibold mb-4 text-blue-900">AI-Driven Score</h3>
+        {aiScore !== null ? (
+          <div className="space-y-4">
+            {/* AI Score */}
+            <div className="text-center text-3xl font-bold text-blue-900">
+              {aiScore*10} / 10
+            </div>
+
+            {/* Progress Bar */}
+            <div className="relative pt-1">
+              <div className="flex mb-2 items-center justify-between">
+                <span className="text-sm font-semibold">0</span>
+                <span className="text-sm font-semibold">10</span>
+              </div>
+              <div className="flex mb-4 items-center justify-between">
+                <div className="relative w-full">
+                  <div
+                    className={`transition-all duration-500 ease-in-out h-2 rounded-lg ${
+                      aiScore >= 8
+                        ? "bg-green-400"
+                        : aiScore >= 5
+                        ? "bg-yellow-400"
+                        : "bg-red-400"
+                    }`}
+                    style={{ width: `${(aiScore*10 / 10) * 100}%` }}
+                  ></div>
                 </div>
               </div>
-            ) : (
-              <div className="text-center text-gray-600">Loading...</div>
-            )}
+            </div>
           </div>
+        ) : (
+          <div className="text-center text-gray-600">Loading...</div>
+        )}
+      </div>
 
           {/* Subject Marks & Attendance */}
           <div className="flex flex-col lg:flex-row gap-6">
