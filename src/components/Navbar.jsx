@@ -86,7 +86,7 @@ export default function Navbar() {
                 onClick={() => navigate(`/${userRole}/dashboard`, { replace: true })}
                 src={profilePicture}
                 alt="Profile"
-                className="w-12 h-12 border-2 border-white cursor-pointer rounded-full cursor-pointer hover:opacity-80 transition-opacity"
+                className="w-12 h-12 border-2 border-white rounded-full cursor-pointer hover:opacity-80 transition-opacity"
               />
                 <img onClick={handleLogout} title="Logout" src={logoutImage} alt="logout" className="w-12 h-10 object-cover cursor-pointer" />
               </div>
