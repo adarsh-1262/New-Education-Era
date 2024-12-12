@@ -126,8 +126,9 @@ const Home = () => {
 
         {/* Description Section */}
         <div className="w-full lg:w-2/3 flex flex-col justify-center">
-          <h2 className="text-3xl font-semibold mb-4">Features of EduHub</h2>
+          <h2 className="text-3xl font-semibold mb-4">EduHub: One Platform, One Solution</h2>
           <ul className="list-disc pl-5 space-y-2">
+            <li>Student performance monitoring and notification</li>
             <li>Live tutoring sessions with experts.</li>
             <li>Comprehensive resources on various subjects.</li>
             <li>Instant feedback on your learning activities.</li>
