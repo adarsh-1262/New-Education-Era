@@ -1,20 +1,59 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Users, MoreVertical, Trash2, PencilLine } from 'lucide-react';
 
 const Students = () => {
-    const students = [
-        { email: 'robert@example.com', stuId: '1', stuName: 'Ayush', college: 'LPS SouthCity', status: 'Active', class: '5th' },
-        { email: 'sarah@example.com', stuId: '2', stuName: 'Narendra', college: 'Army Public School', status: 'Active', class: '5th' },
-        { email: 'tom@example.com', stuId: '3', stuName: 'Adarsh', college: 'Amity Internationals', status: 'Inactive', class: '5th' },
-        { email: 'emma@example.com', stuId: '4', stuName: 'Priya', college: 'DPS Noida', status: 'Pending', class: '6th' },
-        { email: 'john@example.com', stuId: '5', stuName: 'Rahul', college: 'Kendriya Vidyalaya', status: 'Active', class: '6th' },
-        { email: 'lucas@example.com', stuId: '6', stuName: 'Ishita', college: 'Lotus Valley', status: 'Inactive', class: '7th' },
-        { email: 'olivia@example.com', stuId: '7', stuName: 'Arjun', college: 'St. Xavier’s', status: 'Active', class: '8th' },
-        { email: 'james@example.com', stuId: '8', stuName: 'Simran', college: 'The Heritage School', status: 'Inactive', class: '7th' },
-        { email: 'sophia@example.com', stuId: '9', stuName: 'Aditi', college: 'Ryan International', status: 'Active', class: '5th' },
-        { email: 'liam@example.com', stuId: '10', stuName: 'Karan', college: 'Mount Carmel', status: 'Pending', class: '6th' }
-      ];
-      
+  const [students, setStudents] = useState([
+    { email: 'robert@example.com', stuId: '1', stuName: 'Ayush', college: 'LPS SouthCity', status: 'Active', class: '5th' },
+    { email: 'sarah@example.com', stuId: '2', stuName: 'Narendra', college: 'Army Public School', status: 'Active', class: '5th' },
+    { email: 'tom@example.com', stuId: '3', stuName: 'Adarsh', college: 'Amity Internationals', status: 'Inactive', class: '5th' },
+    { email: 'emma@example.com', stuId: '4', stuName: 'Priya', college: 'DPS Noida', status: 'Pending', class: '6th' },
+    { email: 'john@example.com', stuId: '5', stuName: 'Rahul', college: 'Kendriya Vidyalaya', status: 'Active', class: '6th' },
+    { email: 'lucas@example.com', stuId: '6', stuName: 'Ishita', college: 'Lotus Valley', status: 'Inactive', class: '7th' },
+    { email: 'olivia@example.com', stuId: '7', stuName: 'Arjun', college: 'St. Xavier’s', status: 'Active', class: '8th' },
+    { email: 'james@example.com', stuId: '8', stuName: 'Simran', college: 'The Heritage School', status: 'Inactive', class: '7th' },
+    { email: 'sophia@example.com', stuId: '9', stuName: 'Aditi', college: 'Ryan International', status: 'Active', class: '5th' },
+    { email: 'liam@example.com', stuId: '10', stuName: 'Karan', college: 'Mount Carmel', status: 'Pending', class: '6th' }
+  ]);
+
+  const [newStudent, setNewStudent] = useState({
+    email: '',
+    last_percentage: '',
+    attendance: '',
+    parents_qualification: '',
+    area: '',
+    num_teachers: '',
+    income: ''
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewStudent({ ...newStudent, [name]: value });
+  };
+
+  const handleAddStudent = () => {
+    // Add the new student to the list and clear the form
+    setStudents([
+      ...students,
+      {
+        ...newStudent,
+        stuId: (students.length + 1).toString(),
+        stuName: newStudent.email.split('@')[0], // Just an example, you can adjust this logic
+        college: 'Not Available', // Default value, you can adjust
+        status: 'Pending', // Default status
+        class: 'Not Available', // Default value
+      }
+    ]);
+    // Reset form
+    setNewStudent({
+      email: '',
+      last_percentage: '',
+      attendance: '',
+      parents_qualification: '',
+      area: '',
+      num_teachers: '',
+      income: ''
+    });
+  };
 
   return (
     <div className="p-6">
@@ -23,14 +62,18 @@ const Students = () => {
           <Users className="w-6 h-6 text-blue-500" />
           <h1 className="text-2xl font-bold">Students</h1>
         </div>
-       
+        <button
+          className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+          onClick={() => document.getElementById('addStudentModal').classList.remove('hidden')}
+        >
+          Add Student Details
+        </button>
       </div>
 
-      <div className="bg-white rounded-lg shadow">
+      <div className="bg-white rounded-lg shadow mb-6">
         <table className="min-w-full">
           <thead>
             <tr className="bg-gray-50 border-b">
-             
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Student Name</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Student Unique ID</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
@@ -43,8 +86,6 @@ const Students = () => {
           <tbody className="bg-white divide-y divide-gray-200">
             {students.map((student) => (
               <tr key={student.stuId}>
-                
-              
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">
                     <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
@@ -61,13 +102,9 @@ const Students = () => {
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-900">{student.email}</div>
                 </td>
-              
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-900">{student.class}</div>
                 </td>
-            
-              
-                
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-900">{student.college}</div>
                 </td>
@@ -95,6 +132,85 @@ const Students = () => {
             ))}
           </tbody>
         </table>
+      </div>
+
+      {/* Add Student Modal */}
+      <div id="addStudentModal" className="hidden fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center">
+        <div className="bg-white p-8 rounded-lg max-w-md w-full">
+          <h2 className="text-xl font-bold mb-4">Add Student Details</h2>
+          <div className="space-y-4">
+            <input
+              type="email"
+              name="email"
+              value={newStudent.email}
+              onChange={handleInputChange}
+              placeholder="Email"
+              className="w-full px-4 py-2 border rounded-lg"
+            />
+            <input
+              type="number"
+              name="last_percentage"
+              value={newStudent.last_percentage}
+              onChange={handleInputChange}
+              placeholder="Last Percentage"
+              className="w-full px-4 py-2 border rounded-lg"
+            />
+            <input
+              type="number"
+              name="attendance"
+              value={newStudent.attendance}
+              onChange={handleInputChange}
+              placeholder="Attendance Percentage"
+              className="w-full px-4 py-2 border rounded-lg"
+            />
+            <input
+              type="text"
+              name="parents_qualification"
+              value={newStudent.parents_qualification}
+              onChange={handleInputChange}
+              placeholder="Parent's Qualification"
+              className="w-full px-4 py-2 border rounded-lg"
+            />
+            <input
+              type="text"
+              name="area"
+              value={newStudent.area}
+              onChange={handleInputChange}
+              placeholder="Area (Urban/Rural)"
+              className="w-full px-4 py-2 border rounded-lg"
+            />
+            <input
+              type="number"
+              name="num_teachers"
+              value={newStudent.num_teachers}
+              onChange={handleInputChange}
+              placeholder="Number of Teachers per 50 Students"
+              className="w-full px-4 py-2 border rounded-lg"
+            />
+            <input
+              type="number"
+              name="income"
+              value={newStudent.income}
+              onChange={handleInputChange}
+              placeholder="Income"
+              className="w-full px-4 py-2 border rounded-lg"
+            />
+          </div>
+          <div className="mt-4 flex justify-end space-x-4">
+            <button
+              onClick={() => document.getElementById('addStudentModal').classList.add('hidden')}
+              className="px-4 py-2 bg-gray-300 rounded-lg"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleAddStudent}
+              className="px-4 py-2 bg-blue-500 text-white rounded-lg"
+            >
+              Add Student
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

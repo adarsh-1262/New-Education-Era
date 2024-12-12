@@ -4,7 +4,7 @@ import { Users, Settings, UserPlus, Shield, Home } from "lucide-react";
 
 
 const SideNav = ({ onPageChange, currentPage }) => {
-  const user = { role: "superAdmin", name: "Ayush" };
+  const user = { role: "subAdmin", name: "Ayush" };
   // const user = { role: "admin", name: "Rahul"};
   // const user = { role: "subAdmin", name: "Manoj"};
 
