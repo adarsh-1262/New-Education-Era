@@ -5,6 +5,7 @@ import Logo from "../assets/Logo.webp";
 import LoginSignupModal from "./SignUpLogin";
 import { cn } from "../lib/utils";
 import { useAuth } from "../context/AuthContext";
+import logoutImage from '../assets/logout.png'
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -26,7 +27,7 @@ export default function Navbar() {
 
   return (
     <nav className="fixed top-0 inset-x-0 bg-white shadow-md z-50 border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo Section */}
           <div className="flex items-center">
@@ -48,7 +49,7 @@ export default function Navbar() {
                 <CustomNavLink to="/financial-support" label="Financial Support" />
                 <CustomNavLink to="/flexible-schooling" label="Schooling Support" />
                 <button className="text-yellow-500 font-semibold" onClick={() => navigate('/reward')} >Redeem Rewards</button>
-                <button onClick={handleLogout} >Log out</button>
+                {/* <button onClick={handleLogout} >Log out</button> */}
                 
               </>
             ) : (
@@ -63,12 +64,13 @@ export default function Navbar() {
           {/* Profile or Sign Up/Login Button */}
           <div className="hidden md:flex items-center space-x-4">
             {isLoggedIn ? (
-              <div className="flex items-center">
-                <img onClick={() => navigate(`/${userRole}/dashboard`)}
+              <div className="flex items-center gap-6">
+                <img title="Profile" onClick={() => navigate(`/${userRole}/dashboard`)}
                   src={profilePicture}
                   alt="Profile"
-                  className="w-10 h-10 border border-black rounded-full object-cover"
+                  className="w-10 h-10 border border-black cursor-pointer rounded-full object-cover"
                 />
+                <img onClick={handleLogout} title="Logout" src={logoutImage} alt="logout" className="w-12 h-10 object-cover cursor-pointer" />
               </div>
             ) : (
               <button
