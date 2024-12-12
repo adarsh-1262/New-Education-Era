@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
-import user from "../assets/Expert1.jpg";
 import axiosInstance from "../axiosConfig";
 
 const ExpertDashboard = () => {
     const [bookings, setBookings] = useState([]);
+    const [expertData, setExpertData] = useState('');
   
     useEffect(() => {
       const getAllBookings = async () => {
         try {
           const response = await axiosInstance.get("/api/expert/getExpertBookings");
-          console.log(response.data.data);
+          
+          setExpertData(response.data.user)
           setBookings(response.data.data);
         } catch (error) {
           alert("Error fetching courses");
@@ -23,7 +24,7 @@ const ExpertDashboard = () => {
   return (
     <div className="flex flex-col items-center bg-gradient-to-r from-green-900 via-green-700 to-green-500 min-h-screen p-8">
       <h1 className="text-4xl font-bold text-white mb-6 animate-pulse">
-        Welcome, Rohini Dass!!
+        Welcome, {expertData.username}!!
       </h1>
       <div className="flex flex-col lg:flex-row gap-10 w-full max-w-7xl">
         {/* Left Section: Profile */}
@@ -31,25 +32,24 @@ const ExpertDashboard = () => {
           {/* Profile Section */}
           <div className="flex flex-col items-center">
             <img
-              src={user}
+              src={expertData.profilePicture}
               alt="User"
               className="h-28 w-28 rounded-full object-cover mb-4 border-4 border-white"
             />
-            <h2 className="text-2xl font-semibold">Rohini Das</h2>
-            <p className="text-sm">Expert in Computer Science</p>
+            <h2 className="text-2xl font-semibold">{expertData.username}</h2>
+            <p className="text-sm">{expertData.consultationField}</p>
           </div>
           <hr className="my-6 border-gray-300" />
           {/* Info Section */}
           <div className="text-lg space-y-2">
             <p>
-              <span className="font-semibold">Experience:</span> 5 Years
+              <span className="font-semibold">Experience:</span> {expertData.experienceYears}
             </p>
             <p>
-              <span className="font-semibold">Specialization:</span> React.js,
-              Tailwind CSS, JavaScript
+              <span className="font-semibold">Specialization:</span> {expertData.description}
             </p>
             <p>
-              <span className="font-semibold">Contact:</span> +91 9876543210
+              <span className="font-semibold">Contact:</span> {expertData.phone}
             </p>
           </div>
         </div>
