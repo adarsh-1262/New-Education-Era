@@ -38,8 +38,7 @@ import QRScanner from "./components/QRScanner";
 import LoginSignupModal from "./components/SignUpLogin";
 import { useAuth } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectRoute";
-// import StudentGrieverence from "./pages/StudentGriverence";
-
+import StudentGrievanceForm from "./components/GravienceForm";
 
 function App() {
 
@@ -89,7 +88,7 @@ function App() {
           <Route path="/parent/dashboard" element={<ParentDashboard />} />
           <Route path="/attendance" element={<QRScanner />} />
           <Route path="/signup" element={<LoginSignupModal />} />
-          {/* <Route path="/studentGriverence" element={<StudentGrieverence /> } /> */}
+          <Route path="/complaint" element={<StudentGrievanceForm />} />
         </Routes>
         <ChatBox />
       </div>
