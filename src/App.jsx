@@ -78,9 +78,7 @@ function App() {
           <Route
             path="/student/dashboard"
             element={
-              <ProtectedRoute isAuthenticated={isLoggedIn}>
                 <StudentDashboard />
-              </ProtectedRoute>
             }
           />
           <Route path="/admin" element={<Admin />} />
