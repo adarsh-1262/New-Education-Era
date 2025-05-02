@@ -6,6 +6,7 @@ import tutor3 from "../assets/tutor3.jpg";
 import tutor4 from "../assets/tutor4.jpg";
 import axiosInstance from "../axiosConfig";
 import { useAuth } from "../context/AuthContext";
+import { Loader2, LoaderCircle } from "lucide-react";
 
 
 
@@ -14,25 +15,46 @@ export default function VirtualTutoring() {
   const [selectedTutor, setSelectedTutor] = useState(null);
   const [tutors, setTutors] = useState([])
   const {user} = useAuth()
+  const [loading, setLoading] = useState({
+    id: null,
+    flag: false
+  })
+  const [loadingTutor, setTutorLoading] = useState(false)
 
 
   const getAllTutors = async() => {
     try {
+      setTutorLoading()
       const response = await axiosInstance.get("/api/tutor/getTutors");
       console.log(response.data.data)
       setTutors(response.data.data)
     } catch (error) {
       console.log("error while getting tuttos", error)
+    } finally {
+      setTutorLoading(false)
     }
   }
 
   const bookTutor = async(id) => {
-    const response = await axiosInstance.post("/api/tutor/bookTutor", {
-      tutorId: id
-    })
-    console.log("book reponse ",response.data)
-    if(response.data.success) {
-      alert(response.data.message)
+    try {
+      setLoading({
+        id: id,
+        flag: true
+      })
+      const response = await axiosInstance.post("/api/tutor/bookTutor", {
+        tutorId: id
+      })
+      console.log("book reponse ",response.data)
+      if(response.data.success) {
+        alert(response.data.message)
+      }
+    } catch (error) {
+      console.log("error during booking tutor ",error)
+    } finally {
+      setLoading({
+        id: null,
+        flag: false
+      })
     }
   }
 
@@ -66,6 +88,7 @@ export default function VirtualTutoring() {
       </p>
 
       {/* Tutors Grid */}
+      { loadingTutor ? <LoaderCircle className="w-20 h-20 m-auto mt-10 animate-spin" /> :
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {tutors.map((tutor) => (
           <div
@@ -78,19 +101,20 @@ export default function VirtualTutoring() {
               className="h-48 w-full object-cover mb-4 rounded-md"
             />
             <h2 className="text-xl font-medium mb-2 text-gray-800">
-              {tutor.username}
+              {tutor.username.charAt(0).toUpperCase() + tutor.username.slice(1)}
             </h2>
             <p className="mb-2 text-gray-600">Subject: {tutor.subject}</p>
             <p className="mb-4 text-gray-600">Experience: <span className="text-blue-500 font-semibold">{tutor.experienceYears} Yr</span> </p>
-            <button
+            <button disabled={loading.id === tutor._id && loading.flag}
               onClick={() => handleBookSession(tutor)}
-              className="w-full py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200"
+              className="w-full py-2 flex flex-row gap-2 items-center justify-center bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200"
             >
-              Book Tutor
+              Book Tutor {loading.id === tutor._id && loading.flag === true ? <Loader2 className="w-4 h-4 animate-spin" /> : <></>}
             </button>
           </div>
         ))}
       </div>
+      }
     </div>
   );
 }
