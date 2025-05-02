@@ -27,7 +27,8 @@ export default function Navbar() {
     getrole()
   }, [])
 
-  const { isLoggedIn, logout} = useAuth();
+  const { isLoggedIn, logout, user} = useAuth();
+  console.log("user ",user)
   
   console.log("login status ",isLoggedIn)
   const profilePicture = "https://imgs.search.brave.com/3KGtNIHen91nrQD1Pmg9Xcxt5-0SCDTPR8zBKG_KzFY/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzLzk4LzFk/LzZiLzk4MWQ2YjJl/MGNjYjVlOTY4YTA2/MThjOGQ0NzY3MWRh/LmpwZw"; // Replace with user's profile picture URL
@@ -86,7 +87,7 @@ export default function Navbar() {
                 onClick={() => navigate(`/${userRole}/dashboard`, { replace: true })}
                 src={profilePicture}
                 alt="Profile"
-                className="w-12 h-12 border-2 border-white rounded-full cursor-pointer hover:opacity-80 transition-opacity"
+                className="w-12 h-12 border-2 border-blue-800 rounded-full cursor-pointer hover:opacity-80 transition-opacity"
               />
                 <img onClick={handleLogout} title="Logout" src={logoutImage} alt="logout" className="w-12 h-10 object-cover cursor-pointer" />
               </div>
@@ -149,19 +150,19 @@ export default function Navbar() {
         <div className="md:hidden" id="mobile-menu">
           <div className="space-y-1 px-2 pt-2 pb-3 sm:px-3">
             {isLoggedIn ? (
-              <>
+              <div className="flex flex-col items-center">
                 <CustomNavLink to="/learning-hub" label="Learning Hub" />
                 <CustomNavLink to="/financial-support" label="Financial Support" />
                 <CustomNavLink to="/flexible-schooling" label="Schooling Support" />
 
-              </>
+              </div>
             ) : (
-              <>
+              <div className="flex flex-col items-center">
                 <CustomNavLink to="/" label="Home" />
                 <CustomNavLink to="/about" label="About" />
                 <CustomNavLink to="/contact" label="Contact" />
                 <CustomNavLink to="/parental-engagement" label="Parent's Corner" />
-              </>
+              </div>
             )}
             <div className="mt-4 space-y-1">
               {isLoggedIn ? (
@@ -195,7 +196,7 @@ const CustomNavLink = ({ to, label }) => (
     to={to}
     className={({ isActive }) =>
       cn(
-        "text-sm font-medium px-3 py-2 rounded-md transition-colors",
+        "text-[16px] font-medium px-3 py-2 rounded-md transition-colors",
         isActive
           ? "text-white bg-blue-600"
           : "text-gray-800 hover:bg-gray-100 hover:text-gray-900"

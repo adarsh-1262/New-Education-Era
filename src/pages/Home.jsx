@@ -4,6 +4,7 @@ import Home1 from "../assets/Home1.webp";
 import Home2 from "../assets/Home2.webp";
 import Card from "../components/Card";
 import About from "./About";
+import { motion } from "framer-motion";
 
 const Home = () => {
   const data = [
@@ -27,7 +28,7 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-gray-50 via-blue-100 to-blue-200">
+    <div className="min-h-screen flex flex-col bg-blue-100">
       {/* Hero Section */}
       <div id="home" className="App w-full">
         <div
@@ -39,7 +40,7 @@ const Home = () => {
             data={data}
             time={2000}
             width="6200px"
-            height="400px"
+            height="450px"
             radius="0px"
             slideNumber={true}
             slideNumberStyle={slideNumberStyle}
@@ -49,7 +50,7 @@ const Home = () => {
             pauseIconColor="white"
             pauseIconSize="40px"
             slideBackgroundColor="darkgrey"
-            slideImageFit="cover"
+            slideImageFit="fit"
             style={{
               textAlign: "center",
               maxWidth: "1650px",
@@ -92,7 +93,12 @@ const Home = () => {
       </div>
 
       {/* Content Section */}
-      <div className="flex flex-col lg:flex-row py-10 px-4 lg:px-20 gap-10">
+      <div className="p-10">
+      <motion.div 
+      initial={{ x: 100, opacity: 0 }} 
+      animate={{ x: 0, opacity: 1 }}
+      transition={{ duration: 0.6 }}
+      className="flex flex-col lg:flex-row py-10 px-4 lg:px-20 gap-10 bg-gradient-to-b from-blue-100 to-gray-50 rounded-lg">
         {/* Image Section */}
         <div className="w-full lg:w-1/3 flex items-center justify-left">
           <img
@@ -107,27 +113,36 @@ const Home = () => {
           <h2 className="text-3xl font-semibold mb-4 text-left">
             Why Should You Choose EduHub?
           </h2>
-          <ul className="list-disc space-y-2 text-left pr-5">
+          <ul className="list-disc space-y-2 text-left md:pr-5 pl-5">
             <li>AI-powered personalized learning.</li>
             <li>Interactive tutorials and resources.</li>
             <li>Track your progress and improve over time.</li>
             <li>Community-driven platform for better engagement.</li>
           </ul>
         </div>
-      </div>
+      </motion.div>
 
-      <div className="flex flex-col lg:flex-row-reverse py-10 px-4 lg:px-20 gap-10 bg-gradient-to-b from-blue-100 to-gray-50">
+      <div
+      className="flex flex-col lg:flex-row-reverse py-10 px-4 lg:px-20 gap-10 bg-gradient-to-b from-blue-100 to-gray-50 rounded-lg">
         {/* Image Section */}
-        <div className="w-full lg:w-1/3 flex items-center justify-center">
+        <motion.div 
+        initial={{ x: 100, opacity: 0 }} 
+        whileInView={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.6 }}
+        className="w-full lg:w-1/3 flex items-center justify-center">
           <img
             src={Home2}
             alt="Description Image"
             className="rounded-lg shadow-lg"
           />
-        </div>
+        </motion.div>
 
         {/* Description Section */}
-        <div className="w-full lg:w-2/3 flex flex-col justify-center">
+        <motion.div 
+        initial={{ x: -100, opacity: 0 }} 
+        whileInView={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.6 }}
+        className="w-full lg:w-2/3 flex flex-col justify-center">
           <h2 className="text-3xl font-semibold mb-4">EduHub: One Platform, One Solution</h2>
           <ul className="list-disc pl-5 space-y-2">
             <li>Student performance monitoring and notification</li>
@@ -136,7 +151,8 @@ const Home = () => {
             <li>Instant feedback on your learning activities.</li>
             <li>Collaborative learning via community forums.</li>
           </ul>
-        </div>
+        </motion.div>
+      </div>
       </div>
 
       <div id="about"><About /></div>

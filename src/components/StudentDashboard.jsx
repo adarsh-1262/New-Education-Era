@@ -3,10 +3,13 @@ import user from "../assets/Expert1.jpg";
 import StudentAttendanceGraph from "./AttendaceChart";
 import axios from "axios";
 import axiosInstance from "../axiosConfig";
+import studentimg from '../../public/self-growth.png'
+import { ArrowBigRight, Award, BookOpenText, CircleArrowRight, CircleUser, LibraryBig, ListOrdered, School } from "lucide-react";
+import AttendanceTrendChart from "./AttendanceTrendChart";
 
 
 const StudentDashboard = () => {
-  const [aiScore, setAiScore] = useState(null);
+  const [aiScore, setAiScore] = useState(0.8);
   const [userData, setUserData] = useState('');
 
   // Data to send to the API
@@ -102,13 +105,14 @@ const StudentDashboard = () => {
   ];
 
   return (
-    <div className="flex flex-col items-center bg-gradient-to-r from-blue-900 via-blue-700 to-blue-500 min-h-screen p-8">
-      <h1 className="text-4xl font-bold text-white mb-6 animate-pulse">
-        Welcome, {userData.username}!!
-      </h1>
-      <div className="flex flex-col lg:flex-row gap-10 w-full max-w-7xl">
+    <div className="flex flex-col relative items-center bg-blue-50 min-h-screen p-14">
+      
+      <div className="absolute ml-[63%] top-4">
+          <img src={studentimg} draggable={false} className="h-60 mb-10 w-60" />
+        </div>
+        <div className="flex flex-col lg:flex-row gap-10 w-full max-w-7xl">
         {/* Left Section */}
-        <div className="lg:w-1/3 bg-gradient-to-b from-blue-600 to-blue-800 shadow-xl rounded-xl p-6 text-white">
+        <div className="lg:w-1/3 bg-blue-500 shadow-xl rounded-xl p-6 text-white">
           {/* Profile Section */}
           <div className="flex flex-col items-center">
             <img
@@ -120,128 +124,119 @@ const StudentDashboard = () => {
             <p className="text-sm">Class : {userData.Class}</p>
             <button
               onClick={handleBackToLearning}
-              className="mt-4 px-4 py-2 bg-white text-blue-900 font-semibold rounded-lg shadow-lg hover:bg-gray-200 transition"
+              className="mt-4 px-4 py-2 flex flex-row items-center gap-2 bg-gray-200 text-blue-700 font-semibold rounded-lg shadow-lg hover:bg-gray-100 transition"
             >
-              Back to Learning
+              <ArrowBigRight className="rotate-180" />  Back to Learning
             </button>
           </div>
           <hr className="my-6 border-gray-300" />
           {/* Info Section */}
           <div className="text-lg space-y-2">
             <p>
-              <span className="font-semibold">Batch:</span> 2024-2025
+              <span className="font-semibold flex flex-row items-center"><Award className="text-yellow-400" />Batch: 2024-2025</span> 
             </p>
             <p>
-              <span className="font-semibold">School:</span> {userData.school}
+              <span className="font-semibold flex flex-row items-center gap-1"><School className="text-rose-400" />  School: {userData.school}</span> 
             </p>
             <p>
-              <span className="font-semibold">Roll No:</span> {userData.rollNo}
+              <span className="font-semibold flex flex-row items-center gap-1"><ListOrdered /> Roll No: {userData.rollNo}</span> 
             </p>
             <p>
-              <span className="font-semibold">Contact:</span> {userData.phone}
+              <span className="font-semibold flex flex-row items-center gap-1"><CircleUser className="text-blue-900" /> Contact: {userData.phone}</span> 
             </p>
           </div>
           <hr className="my-6 border-gray-300" />
           <hr className="my-6 border-gray-300" />
           <hr className="my-6 border-gray-300" />
-{/* Achievements Section */}
-<h3 className="text-xl font-bold mb-4 text-center">Achievements</h3>
-<div className="grid grid-cols-4 gap-2">
-  {Array.from({ length: 12 }).map((_, i) => (
-    <div
-      key={i}
-      className="h-12 w-12 bg-white rounded-full hover:scale-105 transition transform duration-200 flex items-center justify-center border border-gray-200 shadow-sm overflow-hidden"
-    >
-      {i === 0 ? (
-        <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQROEjC3IRzGwdrGwSVGZvPjLMe2_bwUb0pCqd3E3r8jWZraOtL88xCRuPKLSe_lU1-0Xc&usqp=CAU"
-          alt="Badge 1"
-          className="h-full w-full object-cover"
-        />
-      ) : i === 2 ? (
-        <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRwHFTezTl5wgYbXL2sLLJUaUJw02QV73FNA&s"
-          alt="Badge 2"
-          className="h-full w-full object-cover"
-        />
-      ) : i === 4 ? (
-        <img
-          src="https://img.freepik.com/free-psd/elegant-badge-isolated_23-2150997696.jpg"
-          alt="Badge 3"
-          className="h-full w-full object-cover"
-        />
-      ) : i < 6 ? (
-        <img
-          src="https://png.pngtree.com/png-clipart/20190604/original/pngtree-badge-png-image_996483.jpg"
-          alt={`Achievement badge ${i + 1}`}
-          className="h-full w-full object-cover"
-        />
-      ) : null}
-    </div>
-  ))}
-</div>
-</div>
+          {/* Achievements Section */}
+          <h3 className="text-xl font-bold mb-4 text-center">Achievements</h3>
+          <div className="grid grid-cols-4 gap-2">
+            {Array.from({ length: 12 }).map((_, i) => (
+              <div
+                key={i}
+                className="h-12 w-12 bg-white rounded-full hover:scale-105 transition transform duration-200 flex items-center justify-center border border-gray-200 shadow-sm overflow-hidden"
+              >
+                {i === 0 ? (
+                  <img
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQROEjC3IRzGwdrGwSVGZvPjLMe2_bwUb0pCqd3E3r8jWZraOtL88xCRuPKLSe_lU1-0Xc&usqp=CAU"
+                    alt="Badge 1"
+                    className="h-full w-full object-cover"
+                  />
+                ) : i === 2 ? (
+                  <img
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRwHFTezTl5wgYbXL2sLLJUaUJw02QV73FNA&s"
+                    alt="Badge 2"
+                    className="h-full w-full object-cover"
+                  />
+                ) : i === 4 ? (
+                  <img
+                    src="https://img.freepik.com/free-psd/elegant-badge-isolated_23-2150997696.jpg"
+                    alt="Badge 3"
+                    className="h-full w-full object-cover"
+                  />
+                ) : i < 6 ? (
+                  <img
+                    src="https://png.pngtree.com/png-clipart/20190604/original/pngtree-badge-png-image_996483.jpg"
+                    alt={`Achievement badge ${i + 1}`}
+                    className="h-full w-full object-cover"
+                  />
+                ) : null}
+              </div>
+            ))}
+          </div>
+          </div>
 
         {/* Right Section */}
-        <div className="lg:w-2/3 flex flex-col gap-6">
-           {/* AI-Driven Score Section */}
-      <div className="bg-white shadow-lg rounded-xl p-6 hover:scale-105 transition transform duration-300">
-        <h3 className="text-2xl font-semibold mb-4 text-blue-900">AI-Driven Score</h3>
-        {aiScore !== null ? (
-          <div className="space-y-4">
-            {/* AI Score */}
-            <div className="text-center text-3xl font-bold text-blue-900">
-              {aiScore*10} / 10
-            </div>
+        <div className="lg:w-2/3 flex flex-col gap-10">
 
-            {/* Progress Bar */}
-            <div className="relative pt-1">
-              <div className="flex mb-2 items-center justify-between">
-                <span className="text-sm font-semibold">0</span>
-                <span className="text-sm font-semibold">10</span>
-              </div>
-              <div className="flex mb-4 items-center justify-between">
-                <div className="relative w-full">
-                  <div
-                    className={`transition-all duration-500 ease-in-out h-2 rounded-lg ${
-                      aiScore >= 8
-                        ? "bg-green-400"
-                        : aiScore >= 5
-                        ? "bg-yellow-400"
-                        : "bg-red-400"
-                    }`}
-                    style={{ width: `${(aiScore*10 / 10) * 100}%` }}
-                  ></div>
+           {/* AI-Driven Score Section */}
+          <div className="shadow-lg flex flex-row rounded-xl bg-[#d8efff] h-52 p-10">
+            <div className="w-[45%]">
+            <h3 className="text-2xl font-semibold mb-2 text-blue-600">Hello User,</h3>
+            <p className="text-left text-gray-800 text-sm mb-2">Here is your Dropout score keep it as low as possible otherwise notice will be sent to your parents</p>
+            <div className="relative">
+              {aiScore !== null ? (
+                <div className="space-y-1">
+                  {/* AI Score */}
+                  <div className="text-left text-lg p-1 font-bold text-blue-900">
+                    Dropout Rate - {aiScore*10} / 10
+                  </div>
+
+                  {/* Progress Bar */}
+                  <div className="relative">
+                    
+                    <div className="flex mb-4 items-center justify-between">
+                      <div className="flex flex-row gap-1 items-center w-full">
+                        <span>0</span>
+                        <div className="w-full bg-gray-500 rounded-lg">
+                        <div
+                          className={`transition-all duration-500 ease-in-out h-2 rounded-lg ${
+                            aiScore*10 >= 8
+                              ? "bg-green-400"
+                              : aiScore*10 >= 5
+                              ? "bg-yellow-400"
+                              : "bg-red-400"
+                          }`}
+                          style={{ width: `${(aiScore*10 / 10) * 100}%` }}
+                        ></div>
+                        </div>
+                        <span>10</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div className="text-center text-gray-600">Loading...</div>
+              )}
+            </div>
             </div>
           </div>
-        ) : (
-          <div className="text-center text-gray-600">Loading...</div>
-        )}
-      </div>
 
-          {/* Subject Marks & Attendance */}
+          {/* Attendance */}
           <div className="flex flex-col lg:flex-row gap-6">
-            {/* Marks Card */}
-            <div className="flex-1 bg-white shadow-lg rounded-xl p-6 hover:scale-105 transition transform duration-300">
-              <h3 className="text-2xl font-semibold mb-4 text-blue-900">
-                Subject Marks
-              </h3>
-              <div className="grid grid-cols-2 gap-4">
-                {Marks.map((item, index) => (
-                  <div
-                    key={index}
-                    className="flex justify-between text-gray-800"
-                  >
-                    <span className="font-medium">{item.subject}</span>
-                    <span>{item.marks}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            {/* Attendance Graph */}
-            <div className="flex-1 bg-white shadow-lg rounded-xl p-6 hover:scale-105 transition transform duration-300">
+            <div className="flex-1 bg-gray-100 border-t-2 border-gray-200 border-x-2 shadow-xl rounded-xl">
+              <h1 className="p-5 ml-5 font-semibold text-2xl text-blue-600">Attendance Overview...</h1>
+              <AttendanceTrendChart />
               <StudentAttendanceGraph
                 totalClasses={attendance.totalClasses}
                 attendedClasses={attendance.attendedClasses}
@@ -249,56 +244,62 @@ const StudentDashboard = () => {
             </div>
           </div>
 
-          {/* Enrolled Courses */}
-          <div className="bg-white shadow-lg rounded-xl p-6 hover:scale-105 transition transform duration-300">
-            <h3 className="text-2xl font-semibold mb-4 text-blue-900">
-              Enrolled Courses
-            </h3>
-            <div className="space-y-4">
-              {Enrolled.map((course, index) => (
-                <div
-                  key={index}
-                  className="flex justify-between items-center bg-gray-100 p-3 rounded-lg hover:bg-blue-100"
-                >
-                  <span className="text-gray-800 font-medium">
-                    {course.name}
-                  </span>
-                  <span
-                    className={`font-bold ${
-                      course.status === "Completed"
-                        ? "text-green-500"
-                        : "text-red-500"
-                    }`}
-                  >
-                    {course.status}
-                  </span>
+          {/* My Courses */}
+          <div className="flex md:flex-row flex-col gap-6 w-full">
+            <div className="bg-white w-full shadow-xl rounded-xl p-6">
+              <h3 className="text-xl flex flex-row items-center gap-2 font-semibold mb-5 text-blue-600">
+                <BookOpenText className="text-lg" />  Ongoing Courses...
+              </h3>
+              {courses.map((course, index) => (
+                <div key={index} className="mb-4 bg-blue-100 p-3 rounded-lg">
+                  <div className="flex justify-between mb-2">
+                    <span className="font-medium text-[16px] text-gray-800">
+                      {course.name}
+                    </span>
+                    <div className="flex flex-row gap-5">
+                      <span title="view" className="px-2 flex flex-row items-center gap-1 rounded-md  text-gray-800 hover:text-blue-600 cursor-pointer"><CircleArrowRight className="h-6 w-6" /></span>
+                    </div>
+                  </div>
+                  <div title={`${course.progress}%`} className="w-full cursor-pointer bg-gray-400 h-2 rounded-lg">
+                    <div
+                      className="bg-blue-500 h-2 rounded-lg"
+                      style={{ width: `${course.progress}%` }}
+                    ></div>
+                  </div>
                 </div>
               ))}
             </div>
+
+          {/* Enrolled Courses */}
+            <div className="bg-white w-full shadow-xl rounded-xl p-6">
+              <h3 className="text-xl flex flex-row items-center gap-2 font-semibold mb-5 text-blue-600">
+                <LibraryBig className="text-lg" />  Enrolled Courses
+              </h3>
+              <div className="space-y-4">
+                {Enrolled.map((course, index) => (
+                  <div
+                    key={index}
+                    className="flex justify-between items-center bg-blue-100 p-3 rounded-lg"
+                  >
+                    <span className="text-gray-800 text-[16px] font-medium">
+                      {course.name}
+                    </span>
+                    <span
+                      className={`font-bold flex flex-row cursor-pointer gap-2 items-center ${
+                        course.status === "Completed"
+                          ? "text-green-500"
+                          : "text-red-500"
+                      }`}
+                    >
+                      {course.status}
+                      <CircleArrowRight className="h-5 w-5" />
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
 
-          {/* My Courses */}
-          <div className="bg-white shadow-lg rounded-xl p-6 hover:scale-105 transition transform duration-300">
-            <h3 className="text-2xl font-semibold mb-4 text-blue-900">
-              My Courses
-            </h3>
-            {courses.map((course, index) => (
-              <div key={index} className="mb-4">
-                <div className="flex justify-between mb-2">
-                  <span className="font-medium text-gray-800">
-                    {course.name}
-                  </span>
-                  <span className="text-gray-600">{course.progress}%</span>
-                </div>
-                <div className="w-full bg-gray-200 h-4 rounded-lg">
-                  <div
-                    className="bg-blue-500 h-4 rounded-lg"
-                    style={{ width: `${course.progress}%` }}
-                  ></div>
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
     </div>

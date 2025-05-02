@@ -39,8 +39,8 @@ const StudentAttendanceGraph = ({ totalClasses, attendedClasses }) => {
   };
 
   return (
-    <div className="p-5 shadow-md rounded-md w-full">
-      <h2 className="text-2xl font-semibold text-gray-800 text-center">Attendance Overview</h2>
+    <div className="p-4 shadow-md rounded-md w-full">
+      <h2 className="text-2xl font-semibold mb-4 text-blue-900 text-center">Overall Attendance</h2>
       <div className="flex flex-row items-center justify-center gap-10">
         <div className="w-44 text-gray-100">
             <Pie data={data} options={options} />

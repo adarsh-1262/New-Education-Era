@@ -55,7 +55,7 @@ const Store = () => {
           ].map((item, index) => (
             <div
               key={index}
-              className="bg-white shadow-md rounded-lg p-6 text-center"
+              className="bg-blue-50 mb-5 shadow-xl border-t border-l border-r border-b-[3px] border-blue-500 hover:scale-105 transition-all duration-300 cursor-pointer shadow-blue-300 rounded-lg p-6 text-center"
             >
               <h3 className="text-xl font-semibold text-gray-800 mb-2">
                 {item.title}
