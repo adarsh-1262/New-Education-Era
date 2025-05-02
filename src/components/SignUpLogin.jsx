@@ -87,10 +87,12 @@ const LoginSignupModal = () => {
   const [errorMessage, setErrorMessage] = useState(""); // State for error messages
   const { login, setIsLoggedIn } = useAuth();
   const [userType, setUserType] = useState("");
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true)
     try {
       const response = await login({
         role: userType,
@@ -108,6 +110,8 @@ const LoginSignupModal = () => {
       setErrorMessage(
         error.response?.data?.message || "Invalid User Type, Email, or Password."
       );
+    } finally {
+      setLoading(false)
     }
   };
   
@@ -149,6 +153,7 @@ const LoginSignupModal = () => {
   }
 
   const handleSignUp = async (e) => {
+    setLoading(true)
     e.preventDefault();
     try {
       let response = null;
@@ -261,7 +266,7 @@ const LoginSignupModal = () => {
       setErrorMessage(""); // Clear any previous errors
       setUserType(userType);
       alert(response?.data.message); // Optional: Replace with success message display logic
-      setIsLoggedIn(true);
+      setIsLoggedIn(true); 
       localStorage.setItem('isLoggedIn', 'true');
       localStorage.setItem('user', JSON.stringify(response.data));
       //  navigate to the dashboard
@@ -271,6 +276,8 @@ const LoginSignupModal = () => {
       setErrorMessage(
         error.response?.data?.message || "Something went wrong during sign-up."
       );
+    } finally {
+      setLoading(false)
     }
   };
 
@@ -1073,7 +1080,7 @@ const LoginSignupModal = () => {
                     type="submit"
                     className="w-full py-2 px-4 bg-blue-600 text-white font-bold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none"
                   >
-                    {isSignup ? "Sign Up" : "Login"}
+                    {loading ? 'signing...' : 'Sign Up'}
                   </button>
                 </>
               ) : (
@@ -1133,7 +1140,7 @@ const LoginSignupModal = () => {
                     type="submit"
                     className="w-full py-2 px-4 bg-blue-600 text-white font-bold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none"
                   >
-                    Login
+                    {loading ? 'Logging...' : 'Login'}
                   </button>
                 </div>
               )}
