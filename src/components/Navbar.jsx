@@ -12,7 +12,7 @@ export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
-  const [userRole,setUserRole] = useState('')
+  const [userRole, setUserRole] = useState('')
 
   const getrole = async() => {
     try {
