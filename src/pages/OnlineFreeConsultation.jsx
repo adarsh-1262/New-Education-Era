@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useOutsideClick } from "../hooks/use-outside-click";
 import axiosInstance from "../axiosConfig";
 import DateTimePicker from "../components/DatePicker";
+import { BadgeCheck, BadgeCheckIcon, Loader2, LoaderCircle } from "lucide-react";
 
 
 export default function OnlineConsultation() {
@@ -11,14 +12,19 @@ export default function OnlineConsultation() {
   const id = useId();
   const ref = useRef(null);
   const [allExperts, setAllExperts] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [loadingExpert, setloadingExpert] = useState(false)
 
   const getAllExperts = async() => {
     try {
+      setloadingExpert(true)
       console.log("debug get all experts")
       const response = await axiosInstance.get('/api/expert/get_experts');
       setAllExperts(response.data.data)
     } catch (error) {
       console.log("error while fetching all experts ",error)
+    } finally {
+      setloadingExpert(false)
     }
   }
 
@@ -53,6 +59,7 @@ export default function OnlineConsultation() {
 
   const BookingExpert = async() =>{
     try {
+      setLoading(true)
       const response = await axiosInstance.post('/api/expert/bookExpert', {
         expertName: active.username,
         Expertemail: active.email,
@@ -65,6 +72,8 @@ export default function OnlineConsultation() {
     } catch (error) {
       console.log("error while booking expert ",error)
       setMessage(error.response?.data?.message || "Something went wrong during booking.")
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -90,6 +99,7 @@ export default function OnlineConsultation() {
       <h1 className="text-3xl font-bold text-blue-900 mt-6 mb-6">
         Free Consultation
       </h1>
+      <p className="text-xl font-semibold text-gray-600 text-center">Get personalized advice from experienced professionals at no cost</p>
       <AnimatePresence>
         {active && typeof active === "object" && (
           <motion.div
@@ -120,37 +130,28 @@ export default function OnlineConsultation() {
                       {message}
                     </p>
                   </div>
-              <div className="p-4 max-h-[300px] overflow-y-auto">
-                <motion.h3 layoutId={`name-${active.username}-${id}`} className="text-xl font-semibold mb-2">
-                  {active.username}
+              <div className="px-8 py-2 max-h-[300px] overflow-y-auto">
+                <motion.h3 layoutId={`name-${active.username}-${id}`} className="text-xl flex flex-row items-center gap-2 font-semibold mb-2">
+                  {active.username.charAt(0).toUpperCase() + active.username.slice(1)}
+                  <BadgeCheckIcon className="w-5 h-5" />
                 </motion.h3>
-                <motion.p layoutId={`specialization-${active.consultationField}-${id}`} className="text-gray-600 mb-2">
-                  Specialization: {active.consultationField}
+                <motion.p layoutId={`specialization-${active.consultationField}-${id}`} className="text-gray-800 flex flex-row items-center gap-2 mb-2">
+                  <p className="font-semibold text-gray-800">Specialization:</p> {active.consultationField}
                 </motion.p>
-                <motion.p layoutId={`description-${active.description}-${id}`} className="text-gray-600">
+                <motion.p layoutId={`description-${active.description}-${id}`} className="text-blue-800">
                   {active.description}
                 </motion.p>
 
                 <div className="p-6">
-                  <h1 className="text-2xl font-bold text-center mb-6">Date and Time Selection</h1>
+                  {/* <h1 className="text-2xl font-bold text-center mb-6">Date and Time Selection</h1> */}
                   <DateTimePicker onDateChange={handleDateChange} onTimeChange={handleTimeChange} />
-                  {date && time && (
-                    <div className="mt-6 text-center p-4 border border-gray-200 rounded-md shadow">
-                      <p className="text-lg">
-                        <strong>Selected Date:</strong> {date}
-                      </p>
-                      <p className="text-lg">
-                        <strong>Selected Time:</strong> {time}
-                      </p>
-                    </div>
-                  )}
                 </div>
 
-                <button
-                  className="mt-4 px-4 py-2 bg-green-500 text-white rounded-lg"
+                <button disabled={loading}
+                  className={`px-4 ml-[72%] py-2 flex items-center flex-row gap-2 bg-green-500 text-white rounded-lg ${loading ? 'opacity-65' : 'opacity-100'}`}
                   onClick={handleBooking}
                 >
-                  Confirm Booking
+                  Confirm Booking {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <></>}
                 </button>
               </div>
             </motion.div>
@@ -158,13 +159,14 @@ export default function OnlineConsultation() {
         ) : null}
       </AnimatePresence>
 
+    { loadingExpert ? <LoaderCircle className="w-20 h-20 m-auto mt-10 animate-spin" /> :
       <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 py-10 px-4">
         {allExperts.map((expert) => (
           <motion.div
             layoutId={`card-${expert.username}-${id}`}
             key={expert._id}
             onClick={() => setActive(expert)}
-            className="p-6 flex flex-col items-center justify-center bg-white hover:bg-neutral-50 rounded-xl cursor-pointer max-w-lg shadow-lg"
+            className="p-6 flex flex-col hover:scale-105 transition-all duration-300 border-b-[3px] border border-blue-500 shadow-lg shadow-blue-400 items-center justify-center bg-white hover:bg-neutral-50 rounded-xl cursor-pointer max-w-lg"
           >
             <motion.div layoutId={`image-${expert.username}-${id}`}>
               <img
@@ -175,7 +177,7 @@ export default function OnlineConsultation() {
             </motion.div>
             <div className="text-center mt-2">
               <motion.h3 layoutId={`name-${expert.username}-${id}`} className="font-medium text-neutral-800 text-lg">
-                {expert.username}
+                {expert.username.charAt(0).toUpperCase() + expert.username.slice(1)}
               </motion.h3>
               <motion.p layoutId={`specialization-${expert.consultationField}-${id}`} className="text-neutral-600 text-sm">
                 {expert.consultationField}
@@ -184,6 +186,7 @@ export default function OnlineConsultation() {
           </motion.div>
         ))}
       </ul>
+    }
     </div>
   );
 }

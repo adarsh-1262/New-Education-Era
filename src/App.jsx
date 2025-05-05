@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useParams } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import EarlyWarning from './pages/EarlyWarning';
@@ -39,6 +39,7 @@ import LoginSignupModal from "./components/SignUpLogin";
 import { useAuth } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectRoute";
 import StudentGrievanceForm from "./components/GravienceForm";
+import CommunityPage from "./components/CommunityPage";
 
 function App() {
 
@@ -60,6 +61,7 @@ function App() {
           <Route path='/learning-hub/resource-library' element={<ResourceLibrary />} />
           <Route path='/learning-hub/virtual-tutoring' element={<VirtualTutoring />} />
           <Route path='/learning-hub/community-forums' element={<CommunityForums />} />
+          <Route path='/learning-hub/community-forums/:forumName' element={<CommunityPage />} />
           <Route path='/learning-hub/virtual-tutoring/booking' element={<BookingConfirmation />} />
           <Route path='/financial-support/scholarships' element={<Scholarships />} />
           <Route path='/financial-support/grants' element={<Grants />} />
