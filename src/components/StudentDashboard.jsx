@@ -116,7 +116,7 @@ const StudentDashboard = () => {
           {/* Profile Section */}
           <div className="flex flex-col items-center">
             <img
-              src={user}
+              src={userData?.profilePicture || user}
               alt="User"
               className="h-28 w-28 rounded-full object-cover mb-4 border-4 border-white"
             />
@@ -192,7 +192,7 @@ const StudentDashboard = () => {
            {/* AI-Driven Score Section */}
           <div className="shadow-lg flex flex-row rounded-xl bg-[#d8efff] h-52 p-10">
             <div className="w-[45%]">
-            <h3 className="text-2xl font-semibold mb-2 text-blue-600">Hello User,</h3>
+            <h3 className="text-2xl font-semibold mb-2 text-blue-600">Hello {userData && userData?.username},</h3>
             <p className="text-left text-gray-800 text-sm mb-2">Here is your Dropout score keep it as low as possible otherwise notice will be sent to your parents</p>
             <div className="relative">
               {aiScore !== null ? (
