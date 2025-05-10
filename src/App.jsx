@@ -36,14 +36,12 @@ import TutorDashboard from "./components/TutorDashboard";
 import ParentDashboard from "./components/ParentDashboard";
 import QRScanner from "./components/QRScanner";
 import LoginSignupModal from "./components/SignUpLogin";
-import { useAuth } from "./context/AuthContext";
-import ProtectedRoute from "./components/ProtectRoute";
 import StudentGrievanceForm from "./components/GravienceForm";
 import CommunityPage from "./components/CommunityPage";
+import ProtectedRoute from "./ProtctRoute";
 
 function App() {
 
-  const {isLoggedIn} = useAuth()
   return (
     <Router>
       {/* Fixed Navbar */}
@@ -54,43 +52,159 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/early-warning" element={<EarlyWarning />} />
-          <Route path="/learning-hub" element={<LearningHub />} />
-          <Route path="/financial-support" element={<FinancialSupport />} />
-          <Route path="/parental-engagement" element={<ParentPortal />} />
-          <Route path='/learning-hub/online-consultation' element={<OnlineConsultation />} />
-          <Route path='/learning-hub/resource-library' element={<ResourceLibrary />} />
-          <Route path='/learning-hub/virtual-tutoring' element={<VirtualTutoring />} />
-          <Route path='/learning-hub/community-forums' element={<CommunityForums />} />
-          <Route path='/learning-hub/community-forums/:forumName' element={<CommunityPage />} />
-          <Route path='/learning-hub/virtual-tutoring/booking' element={<BookingConfirmation />} />
-          <Route path='/financial-support/scholarships' element={<Scholarships />} />
-          <Route path='/financial-support/grants' element={<Grants />} />
-          <Route path='/financial-support/loans' element={<Loans />} />
-          <Route path='/financial-support/faq' element={<FAQ />} />
-          <Route path="/parental-engagement/resources" element={<ParentingResources />} />
-          <Route path="/parental-engagement/communication" element={<CommunicationTips />} />
-          <Route path="/parental-engagement/events" element={<UpcomingEvents />} />
-          <Route path="/parental-engagement/faq" element={<ParentingFAQs />} />
-          <Route path="/flexible-schooling" element={<SchoolingManagement />} />
-          <Route path="/schooling/courses" element={<CombinedPage />} />
-          <Route path="/schooling/progress" element={<ProgressPage />} />
-          <Route path="/schooling/studentSchedule" element={<CalendarView />} />
-          <Route path="/about" element={<About />} />
-          <Route
-            path="/student/dashboard"
-            element={
-                <StudentDashboard />
-            }
-          />
-          <Route path="/admin" element={<Admin />} />
-          <Route path="/reward" element={<RewardSystem />} />
-          <Route path="/shop" element={<Store />} />
-          <Route path="/expert/dashboard" element={<ExpertDashboard />} />
-          <Route path="/tutor/dashboard" element={<TutorDashboard />} />
-          <Route path="/parent/dashboard" element={<ParentDashboard />} />
-          <Route path="/attendance" element={<QRScanner />} />
+          <Route path="/learning-hub" element={
+            <ProtectedRoute>
+              <LearningHub />
+            </ProtectedRoute>
+          }/>
+          <Route path="/financial-support" element={
+            <ProtectedRoute>
+              <FinancialSupport />
+            </ProtectedRoute>
+          } />
+          <Route path="/parental-engagement" element={
+            <ProtectedRoute>
+              <ParentPortal />
+            </ProtectedRoute>
+          } />
+          <Route path='/learning-hub/online-consultation' element={
+            <ProtectedRoute>
+              <OnlineConsultation />
+            </ProtectedRoute>
+          } />
+          <Route path='/learning-hub/resource-library' element={
+            <ProtectedRoute>
+              <ResourceLibrary />
+            </ProtectedRoute>
+          } />
+          <Route path='/learning-hub/virtual-tutoring' element={
+            <ProtectedRoute>
+              <VirtualTutoring />
+            </ProtectedRoute>
+          } />
+          <Route path='/learning-hub/community-forums' element={
+            <ProtectedRoute>
+              <CommunityForums />
+            </ProtectedRoute>
+          } />
+          <Route path='/learning-hub/community-forums/:forumName' element={
+            <ProtectedRoute>
+              <CommunityPage />
+            </ProtectedRoute>
+          } />
+          <Route path='/learning-hub/virtual-tutoring/booking' element={
+            <ProtectedRoute>
+              <BookingConfirmation />
+            </ProtectedRoute>
+          } />
+          <Route path='/financial-support/scholarships' element={
+            <ProtectedRoute>
+              <Scholarships />
+            </ProtectedRoute>
+          } />
+          <Route path='/financial-support/grants' element={
+            <ProtectedRoute>
+              <Grants />
+            </ProtectedRoute>
+          } />
+          <Route path='/financial-support/loans' element={
+            <ProtectedRoute>
+              <Loans />
+            </ProtectedRoute>
+          } />
+          <Route path='/financial-support/faq' element={
+            <ProtectedRoute>
+              <FAQ />
+            </ProtectedRoute>
+          } />
+          <Route path="/parental-engagement/resources" element={
+            <ProtectedRoute>
+              <ParentingResources />
+            </ProtectedRoute>
+          } />
+          <Route path="/parental-engagement/communication" element={
+            <ProtectedRoute>
+              <CommunicationTips />
+            </ProtectedRoute>
+          } />
+          <Route path="/parental-engagement/events" element={
+            <ProtectedRoute>
+              <UpcomingEvents />
+            </ProtectedRoute>
+          } />
+          <Route path="/parental-engagement/faq" element={
+            <ProtectedRoute>
+              <ParentingFAQs />
+            </ProtectedRoute>
+          } />
+          <Route path="/flexible-schooling" element={
+            <ProtectedRoute>
+              <SchoolingManagement />
+            </ProtectedRoute>
+          } />
+          <Route path="/schooling/courses" element={
+            <ProtectedRoute>
+              <CombinedPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/schooling/progress" element={
+            <ProtectedRoute>
+              <ProgressPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/schooling/studentSchedule" element={
+            <ProtectedRoute>
+              <CalendarView />
+            </ProtectedRoute>
+          } />
+          <Route path="/about" element={<About /> } />
+          <Route path="/student/dashboard" element={
+            <ProtectedRoute>
+              <StudentDashboard />
+            </ProtectedRoute>
+          } />
+          <Route path="/admin" element={
+            <ProtectedRoute>
+              <Admin />
+            </ProtectedRoute>
+          } />
+          <Route path="/reward" element={
+            <ProtectedRoute>
+              <RewardSystem />
+            </ProtectedRoute>
+          } />
+          <Route path="/shop" element={
+            <ProtectedRoute>
+              <Store />
+            </ProtectedRoute>
+          } />
+          <Route path="/expert/dashboard" element={
+            <ProtectedRoute>
+              <ExpertDashboard />
+            </ProtectedRoute>
+          } />
+          <Route path="/tutor/dashboard" element={
+            <ProtectedRoute>
+              <TutorDashboard />
+            </ProtectedRoute>
+          } />
+          <Route path="/parent/dashboard" element={
+            <ProtectedRoute>
+              <ParentDashboard />
+            </ProtectedRoute>
+          } />
+          <Route path="/attendance" element={
+            <ProtectedRoute>
+              <QRScanner />
+            </ProtectedRoute>
+          } />
+
           <Route path="/signup" element={<LoginSignupModal />} />
-          <Route path="/complaint" element={<StudentGrievanceForm />} />
+          <Route path="/complaint" element={
+            <ProtectedRoute>
+              <StudentGrievanceForm />
+            </ProtectedRoute>
+          } />
         </Routes>
         <ChatBox />
       </div>

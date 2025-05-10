@@ -12,26 +12,25 @@ export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
-  const [userRole, setUserRole] = useState('')
 
-  const getrole = async() => {
-    try {
-      const response = await axiosInstance.get('/api/student/getRole')
-      setUserRole(response.data.role)
-    } catch (error) {
-      console.log("error while getting role ",error)
-    }
-  }
+  // const getrole = async() => {
+  //   try {
+  //     const response = await axiosInstance.get('/api/student/getRole')
+  //     setUserRole(response.data.role)
+  //   } catch (error) {
+  //     console.log("error while getting role ",error)
+  //   }
+  // }
 
-  useEffect(() => {
-    getrole()
-  }, [])
+  // useEffect(() => {
+  //   getrole()
+  // }, [])
 
   const { isLoggedIn, logout, user} = useAuth();
   console.log("user ",user)
   
   console.log("login status ",isLoggedIn)
-  const profilePicture = "https://imgs.search.brave.com/3KGtNIHen91nrQD1Pmg9Xcxt5-0SCDTPR8zBKG_KzFY/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzLzk4LzFk/LzZiLzk4MWQ2YjJl/MGNjYjVlOTY4YTA2/MThjOGQ0NzY3MWRh/LmpwZw"; // Replace with user's profile picture URL
+  const profilePicture = user && user?.profilePicture || "https://imgs.search.brave.com/3KGtNIHen91nrQD1Pmg9Xcxt5-0SCDTPR8zBKG_KzFY/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzLzk4LzFk/LzZiLzk4MWQ2YjJl/MGNjYjVlOTY4YTA2/MThjOGQ0NzY3MWRh/LmpwZw"; // Replace with user's profile picture URL
 
   const handleLogout = () => {
     logout();
@@ -84,10 +83,10 @@ export default function Navbar() {
             {isLoggedIn ? (
               <div className="flex items-center gap-6">
                 <img title="Profile"
-                onClick={() => navigate(`/${userRole}/dashboard`, { replace: true })}
+                onClick={() => navigate(`/${user.userType}/dashboard`, { replace: true })}
                 src={profilePicture}
                 alt="Profile"
-                className="w-12 h-12 border-2 border-blue-800 rounded-full cursor-pointer hover:opacity-80 transition-opacity"
+                className="w-12 h-12 object-cover border-2 border-blue-800 rounded-full cursor-pointer hover:opacity-80 transition-opacity"
               />
                 <img onClick={handleLogout} title="Logout" src={logoutImage} alt="logout" className="w-12 h-10 object-cover cursor-pointer" />
               </div>

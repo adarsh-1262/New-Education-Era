@@ -55,7 +55,7 @@ const ExpertDashboard = () => {
         </div>
 
         {/* Right Section: Bookings */}
-        <div className="lg:w-2/3 bg-white shadow-lg rounded-xl p-6 hover:scale-105 transition transform duration-300">
+        <div className="lg:w-2/3 bg-white shadow-lg rounded-xl p-6">
           <h3 className="text-2xl font-semibold mb-4 text-green-900">
             Booking Details
           </h3>

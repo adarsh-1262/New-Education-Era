@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
         setUserRole(role);
         setUser(response.data.user);
         localStorage.setItem('isLoggedIn', 'true');
-        localStorage.setItem('user', JSON.stringify(response.data));
+        localStorage.setItem('user', JSON.stringify(response.data.user));
       } else {
         Swal.fire({
           title: 'Error!',
