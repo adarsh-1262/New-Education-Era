@@ -37,6 +37,15 @@ export default function Navbar() {
     navigate("/")
   }
 
+  const navigateDashboard = () => {
+    if(user.userType === 'admin') {
+      navigate('/admin')
+    }
+    else {
+      navigate(`/${user.userType}/dashboard`)
+    }
+  }
+
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen((prev) => !prev);
   };
@@ -83,7 +92,7 @@ export default function Navbar() {
             {isLoggedIn ? (
               <div className="flex items-center gap-6">
                 <img title="Profile"
-                onClick={() => navigate(`/${user.userType}/dashboard`, { replace: true })}
+                onClick={navigateDashboard}
                 src={profilePicture}
                 alt="Profile"
                 className="w-12 h-12 object-cover border-2 border-blue-800 rounded-full cursor-pointer hover:opacity-80 transition-opacity"

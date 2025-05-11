@@ -103,7 +103,11 @@ const LoginSignupModal = () => {
         setErrorMessage(""); // Clear error message
         setIsLoggedIn(true);
         //  navigate to the dashboard page
-        navigate(`/${userType}/dashboard`);
+        if(userType === 'admin') {
+          navigate('/admin');
+        }
+        else 
+          navigate(`/${userType}/dashboard`);
       }
     } catch (error) {
       console.error("Error during login:", error);
