@@ -1,11 +1,20 @@
 import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
+import { Loader2 } from "lucide-react";
 
 const ProtectedRoute = ({ children }) => {
   const isLoggedIn = localStorage.getItem('isLoggedIn')
-  const {user} = useAuth()
+  const {user, loading} = useAuth()
   const location = useLocation();
+
+  if(loading) {
+    return (
+      <div className="flex justify-center mx-auto items-center">
+        <Loader2 className="w-20 h-20 animate-spin" />
+      </div>
+    )
+  }
 
   if (!isLoggedIn) {
     // Redirect to login page if not authenticated

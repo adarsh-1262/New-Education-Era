@@ -10,6 +10,7 @@ export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState();
   const [user, setUser] = useState(null); // To store user details
   const [userRole, setUserRole] = useState("");
+  const [loading, setLoading] = useState(true)
 
   // Simulated API call for login
   const login = async ({ role, email, password }) => {
@@ -90,11 +91,11 @@ export const AuthProvider = ({ children }) => {
       return savedStatus === 'true'; // Initialize from localStorage
     };
     setIsLoggedIn(checkingLogin());
-
+    setLoading(false)
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, login, user, logout, userRole }}>
+    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, login, user, logout, userRole, loading }}>
       {children}
     </AuthContext.Provider>
   );
