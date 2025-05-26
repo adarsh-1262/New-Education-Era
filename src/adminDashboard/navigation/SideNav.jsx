@@ -1,19 +1,22 @@
 import React from "react";
 import { Users, Settings, UserPlus, Shield, Home } from "lucide-react";
+import { useAuth } from "../../context/AuthContext";
 
 
 
 const SideNav = ({ onPageChange, currentPage }) => {
-  const user = { role: "subAdmin", name: "Ayush" };
+  // const user = { role: "subAdmin", name: "Ayush" };
   // const user = { role: "admin", name: "Rahul"};
   // const user = { role: "subAdmin", name: "Manoj"};
+
+   const {user, loading} = useAuth()
 
   return (
     <div className="w-64 bg-gray-800 text-white h-screen  left-0 mt-1 overflow-y-auto">
       <div className="p-4 border-b border-gray-700">
         <div className="flex items-center space-x-3">
           <Shield className="w-8 h-8 text-blue-400" />
-          <span className="text-xl font-semibold">Name: {user.name} <hr /> Role: {user.role}</span>
+          <span className="text-xl font-semibold">Name: {user.name} <hr /> Role: {user.userType}</span>
         </div>
       </div>
 
@@ -44,7 +47,7 @@ const SideNav = ({ onPageChange, currentPage }) => {
           <div className="mt-4">
             <div className="space-y-2">
 {/* SUPER ADMIN CASE */}
-              {user.role === "superAdmin" && (
+              {user.userType === "superAdmin" && (
                 <>
                   <button
                     onClick={() => onPageChange("superadmins")}
@@ -128,7 +131,7 @@ const SideNav = ({ onPageChange, currentPage }) => {
                 </>
               )}
  {/*  ADMIN CASE */}
- {user.role === "admin" && (
+ {user.userType === "admin" && (
                 <>
            
               <button
@@ -140,9 +143,9 @@ const SideNav = ({ onPageChange, currentPage }) => {
                 }`}
               >
                 <Users className="w-5 h-5" />
-                <span>SubAdmins (Class Teacher)</span>
+                <span>SubAdmins</span>
               </button>
-              <button
+              {/* <button
                     onClick={() => onPageChange("parents")}
                     className={`flex items-center space-x-3 w-full p-3 rounded-lg ${
                       currentPage === "parents"
@@ -152,12 +155,12 @@ const SideNav = ({ onPageChange, currentPage }) => {
                   >
                     <Users className="w-5 h-5" />
                     <span>Parents</span>
-                  </button>
+                  </button> */}
               </>
                )}
 
  {/* SUB ADMIN CASE */}
-              {user.role === "subAdmin" && (
+              {user.userType === "subadmin" && (
                 <>
                   <button
                     onClick={() => onPageChange("parents")}

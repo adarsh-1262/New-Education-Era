@@ -22,7 +22,9 @@ const Students = () => {
     parents_qualification: '',
     area: '',
     num_teachers: '',
-    income: ''
+    income: '',
+    class: '',
+    school: ''
   });
 
   const handleInputChange = (e) => {
@@ -38,10 +40,10 @@ const Students = () => {
         ...newStudent,
         stuId: (students.length + 1).toString(),
         stuName: newStudent.email.split('@')[0], // Just an example, you can adjust this logic
-        college: 'Not Available', // Default value, you can adjust
+        college: newStudent.school,
         status: 'Pending', // Default status
-        class: 'Not Available', // Default value
-      }
+        class: newStudent.class
+      },
     ]);
     // Reset form
     setNewStudent({
@@ -53,6 +55,7 @@ const Students = () => {
       num_teachers: '',
       income: ''
     });
+    document.getElementById('addStudentModal').classList.add('hidden')
   };
 
   return (
@@ -80,7 +83,7 @@ const Students = () => {
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Class</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">School</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+              {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th> */}
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Drop-out %</th>
             </tr>
           </thead>
@@ -109,13 +112,13 @@ const Students = () => {
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-900">{student.college}</div>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
+                {/* <td className="px-6 py-4 whitespace-nowrap">
                   <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
                     student.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
                   }`}>
                     {student.status}
                   </span>
-                </td>
+                </td> */}
                 <td>
                   <a href='https://indeividual-student.onrender.com/' target='_blank'>
                     <button  className='p-2 ml-7 bg-blue-500 rounded-xl text-white hover:scale-105'>Check</button>
@@ -154,11 +157,19 @@ const Students = () => {
               className="w-full px-4 py-2 border rounded-lg"
             />
             <input
-              type="number"
-              name="last_percentage"
-              value={newStudent.last_percentage}
+              type="text"
+              name="class"
+              value={newStudent.class}
               onChange={handleInputChange}
-              placeholder="Last Percentage"
+              placeholder="Class"
+              className="w-full px-4 py-2 border rounded-lg"
+            />
+            <input
+              type="text"
+              name="school"
+              value={newStudent.school}
+              onChange={handleInputChange}
+              placeholder="Coolege/School"
               className="w-full px-4 py-2 border rounded-lg"
             />
             <input

@@ -103,7 +103,7 @@ const LoginSignupModal = () => {
         setErrorMessage(""); // Clear error message
         setIsLoggedIn(true);
         //  navigate to the dashboard page
-        if(userType === 'admin') {
+        if(userType === 'admin' || userType === 'subadmin') {
           navigate('/admin');
         }
         else 
@@ -329,7 +329,7 @@ const LoginSignupModal = () => {
                       <option value="expert">Expert</option>
                       <option value="tutor">Tutor</option>
                       <option value="parent">Parent</option>
-                      <option value="admin">Admin</option>
+                      {/* <option value="admin">Admin</option> */}
                       <option value="subadmin">Sub-Admin</option>
                     </select>
                   </div>
