@@ -1,5 +1,6 @@
-import React from 'react';
-import { UserPlus, MoreVertical, Trash2, PencilLine } from 'lucide-react';
+import React, { useState } from 'react';
+import { UserPlus, MoreVertical, Trash2, PencilLine, CheckCircle } from 'lucide-react';
+import Swal from 'sweetalert2';
 
 const SubAdmins = () => {
   const subAdmins = [
@@ -7,6 +8,19 @@ const SubAdmins = () => {
     { id: 2, name: 'Bob Martin', email: 'bob@example.com', class: '6th', status: 'Active' },
     { id: 3, name: 'Carol White', email: 'carol@example.com', class: '11th', status: 'Inactive' },
   ];
+
+  const [subAdminsData, setSubAdminData] = useState(subAdmins)
+
+  const handleAction = (id, message) => {
+    const updated = subAdminsData.filter((subadmin) => subadmin.id !== id)
+    setSubAdminData(updated)
+    Swal.fire({
+      title: 'Admin Approval',
+      text: message,
+      icon: 'success',
+      confirmButtonText: 'OK',
+    });
+  }
 
   return (
     <div className="p-6">
@@ -30,7 +44,7 @@ const SubAdmins = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {subAdmins.map((admin) => (
+            {subAdminsData.map((admin) => (
               <tr key={admin.id}>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">
@@ -56,16 +70,14 @@ const SubAdmins = () => {
                   </span>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  <div className="flex space-x-3">
-                    <button className="text-blue-500 hover:text-blue-700">
-                      <PencilLine className="w-5 h-5" />
+                  <div className="flex space-x-5">
+                    <button onClick={() => handleAction(admin.id, 'Approved')} title='Approve' className="text-blue-500 hover:text-blue-700">
+                      <CheckCircle className="w-5 h-5" />
                     </button>
-                    <button className="text-red-500 hover:text-red-700">
+                    <button onClick={() => handleAction(admin.id, 'Rejected')} title='Reject' className="text-red-500 hover:text-red-700">
                       <Trash2 className="w-5 h-5" />
                     </button>
-                    <button className="text-gray-500 hover:text-gray-700">
-                      <MoreVertical className="w-5 h-5" />
-                    </button>
+                    
                   </div>
                 </td>
               </tr>

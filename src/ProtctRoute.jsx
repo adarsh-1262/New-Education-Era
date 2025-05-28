@@ -31,7 +31,7 @@ const ProtectedRoute = ({ children }) => {
 
   const isAdmin = location.pathname.includes('/admin');
   if(isAdmin) {
-    if (!user || user.userType !== 'admin') {
+    if (!user || user.userType !== 'admin' && user.userType !== 'subadmin') {
         return <Navigate to='/' replace />;
     }
   } 

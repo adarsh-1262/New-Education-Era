@@ -39,6 +39,8 @@ import LoginSignupModal from "./components/SignUpLogin";
 import StudentGrievanceForm from "./components/GravienceForm";
 import CommunityPage from "./components/CommunityPage";
 import ProtectedRoute from "./ProtctRoute";
+import StudentAdminDashboard from "./adminDashboard/studentdetails/StudentAdminDash";
+import CoolegeWiseDropout from "./adminDashboard/admin/collegeWiseDropout";
 
 function App() {
 
@@ -196,6 +198,18 @@ function App() {
           <Route path="/attendance" element={
             <ProtectedRoute>
               <QRScanner />
+            </ProtectedRoute>
+          } />
+
+          <Route path="/subadmin/student-details" element={
+            <ProtectedRoute>
+              <StudentAdminDashboard />
+            </ProtectedRoute>
+          } />
+
+          <Route path="/admin/college-droput" element={
+            <ProtectedRoute>
+              <CoolegeWiseDropout />
             </ProtectedRoute>
           } />
 
