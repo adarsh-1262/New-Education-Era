@@ -6,6 +6,7 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import loginImage from '../assets/login.jpg'
 import signupImage from '../assets/signup.jpg'
+import Swal from "sweetalert2";
 
 const LoginSignupModal = () => {
   const [isSignup, setIsSignup] = useState(false); // Toggle between Login and Sign Up
@@ -268,13 +269,18 @@ const LoginSignupModal = () => {
       });
       }
       setErrorMessage(""); // Clear any previous errors
-      setUserType(userType);
-      alert(response?.data.message); // Optional: Replace with success message display logic
-      setIsLoggedIn(true); 
-      localStorage.setItem('isLoggedIn', 'true');
-      localStorage.setItem('user', JSON.stringify(response.data));
+      // setUserType(userType);
+      Swal.fire({
+        title: 'SignUp !',
+        text: response?.data.message,
+        icon: 'success',
+        confirmButtonText: 'OK',
+      });
+      // setIsLoggedIn(true); 
+      // localStorage.setItem('isLoggedIn', 'true');
+      // localStorage.setItem('user', JSON.stringify(response.data));
       //  navigate to the dashboard
-      navigate(`/${userType}/dashboard`);
+      window.location.href = '/signup'
     } catch (error) {
       console.error("Error while signing up:", error);
       setErrorMessage(

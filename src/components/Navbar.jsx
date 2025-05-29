@@ -38,7 +38,7 @@ export default function Navbar() {
   }
 
   const navigateDashboard = () => {
-    if(user.userType === 'admin') {
+    if(user.userType === 'admin' || user.userType === 'subadmin') {
       navigate('/admin')
     }
     else {
